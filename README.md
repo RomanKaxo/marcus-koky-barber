@@ -28,7 +28,7 @@ nedovoluje vložení do iframe.
 
 Web je zatím ukázka: obě HTML stránky mají `noindex` a `robots.txt` zakazuje indexaci, aby nekonkurovaly
 současné doméně. Před přechodem na marcuskoky.cz je potřeba omezení odstranit a upravit absolutní URL
-v `og:image`, `og:url` a JSON-LD.
+v `og:image`, `og:url`, canonical, JSON-LD a `sitemap.xml`. Klíčová slova a celý postup jsou v `SEO.md`.
 
 `getOpeningStatus(day, minutes)` v `assets/js/main.js` počítá živý stav otevírací doby (den 0 = neděle)
 a stránka mu předává čas v zóně Europe/Prague. Codex funkci ověřil přes všech 10 080 minut týdne.
