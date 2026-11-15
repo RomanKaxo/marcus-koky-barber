@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Správa rezervací · Marcus Koky Barber</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#0A0A0A">
+<link rel="icon" href="assets/img/icon-32.png" sizes="32x32">
+<link rel="stylesheet" href="assets/fonts/fonts.css">
+<link rel="stylesheet" href="assets/css/style.css">
+<link rel="stylesheet" href="assets/css/spravce.css">
+<script src="assets/js/spravce.js" defer></script>
+</head>
+<body class="admin-page">
+<header class="site-header is-scrolled">
+<div class="header-inner">
+<a class="brand" href="./" aria-label="Marcus Koky Barber – web">
+<img class="brand-emblem" src="assets/img/emblem-gold.png" width="331" height="362" alt="">
+<span class="admin-brand">Správa <em>rezervací</em></span>
+</a>
+<a class="text-link admin-link" href="rezervace.html">Rezervace pro klienty<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg></a>
+</div>
+</header>
+
+<main class="admin container" id="obsah">
+<p class="demo-note" role="note"><strong>Návrh</strong> Pohled majitele. Klienti v&nbsp;ukázce jsou smyšlení, změny se ukládají jen v&nbsp;tomto prohlížeči.</p>
+
+<div class="admin-top">
+<div>
+<p class="eyebrow" id="today-eyebrow">Dnes</p>
+<h1 id="day-title">Pondělí 16. listopadu</h1>
+</div>
+<div class="toolbar">
+<div class="seg" role="tablist" aria-label="Zobrazení">
+<button type="button" role="tab" aria-selected="true" data-view="day">Den</button>
+<button type="button" role="tab" aria-selected="false" data-view="week">Týden</button>
+</div>
+<div class="date-nav">
+<button type="button" class="icon-button" id="prev" aria-label="Předchozí"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></button>
+<button type="button" class="button button--outline today-btn" id="today">Dnes</button>
+<button type="button" class="icon-button" id="next" aria-label="Další"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button>
+</div>
+</div>
+</div>
+
+<dl class="stats" id="stats"></dl>
+
+<div class="admin-layout">
+<section class="schedule" id="schedule" aria-live="polite"></section>
+
+<aside class="detail" id="detail" aria-label="Detail rezervace" hidden>
+<button type="button" class="detail-close icon-button" id="detail-close" aria-label="Zavřít detail"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+<div id="detail-body"></div>
+</aside>
+</div>
+</main>
+</body>
+</html>

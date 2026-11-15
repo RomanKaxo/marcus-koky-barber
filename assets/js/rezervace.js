@@ -74,6 +74,12 @@
     x = (x ^ (x >>> 7)) * 2654435761 >>> 0;
     return x % 100 < 45;
   };
+  // rezervace a blokace uložené v tomto prohlížeči (sdílí je spravce.html)
+  const stored = (k) => { try { return JSON.parse(localStorage.getItem(k)) || []; } catch { return []; } };
+  const taken = (d, h) => {
+    const key = `${iso(d)}|${h}`;
+    return stored('mkb-blokace').includes(key) || stored('mkb-rezervace').some((b) => `${b.date}|${b.hour}` === key);
+  };
   const slotsFor = (d) => {
     const range = HOURS[d.getDay()];
     if (!range) return null;
@@ -81,7 +87,7 @@
     const out = [];
     for (let h = range[0]; h < range[1]; h++) {
       const start = new Date(d); start.setHours(h);
-      out.push({ h, free: start > now && !busy(d, h) });
+      out.push({ h, free: start > now && !busy(d, h) && !taken(d, h) });
     }
     return out;
   };
@@ -247,6 +253,13 @@
   }
 
   function finish() {
+    try {
+      const all = stored('mkb-rezervace');
+      all.push({ id: `web-${Date.now()}`, date: iso(state.date), hour: state.hour, name: form.name.value.trim(),
+        phone: form.phone.value.trim(), email: form.email.value.trim(), note: form.note.value.trim(),
+        service: state.service.name, price: state.service.price, voucher: state.voucher });
+      localStorage.setItem('mkb-rezervace', JSON.stringify(all));
+    } catch { /* bez úložiště se ukázka jen neuloží */ }
     const first = form.name.value.trim().split(/\s+/)[0];
     $('#done-name').textContent = first || 'králi';
     $('#done-text').innerHTML = `<strong>${state.service.name}</strong> · ${when()}.<br>Potvrzení a připomínku den předem pošlu na <strong>${form.email.value.trim().replace(/[<>&"]/g, '')}</strong>.`;
