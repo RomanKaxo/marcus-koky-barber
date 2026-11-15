@@ -34,3 +34,11 @@ v `og:image`, `og:url`, canonical, JSON-LD a `sitemap.xml`. Klíčová slova a c
 a stránka mu předává čas v zóně Europe/Prague. Codex funkci ověřil přes všech 10 080 minut týdne.
 V headless Chromiu jsou zkontrolované šířky 1440 a 390 px: bez chyb v konzoli a bez vodorovného posuvu.
 Ostatní šířky, ovládání klávesnicí a výkon zatím ověřené nejsou.
+
+## Návrh rezervace
+
+`rezervace.html` (+ `assets/css/rezervace.css`, `assets/js/rezervace.js`) je klikací návrh vlastního rezervačního
+systému ve stylu webu: služba → termín → údaje (včetně kódu ze Slevomatu) → potvrzení s .ics do kalendáře.
+Běží jen v prohlížeči, nic neodesílá, obsazenost je smyšlená. Hlavní web dál odkazuje na Termino.
+Pro ostrý provoz chybí server (ukládání, e-maily, správa termínů pro Marcuse) a token Slevomat Partner API
+(`voucherCheck` při zadání kódu, `voucherApply` po potvrzení).

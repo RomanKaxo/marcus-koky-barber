@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rezervace · Marcus Koky Barber · Brno</title>
+<meta name="description" content="Online rezervace do barbershopu Marcus Koky Barber v Brně. Vyber službu, termín a přijď si pro korunu.">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#0A0A0A">
+<link rel="icon" href="assets/img/icon-32.png" sizes="32x32">
+<link rel="apple-touch-icon" href="assets/img/icon-180.png">
+<link rel="stylesheet" href="assets/fonts/fonts.css">
+<link rel="stylesheet" href="assets/css/style.css">
+<link rel="stylesheet" href="assets/css/rezervace.css">
+<script src="assets/js/rezervace.js" defer></script>
+</head>
+<body class="booking-page">
+<a class="skip-link" href="#rezervace">Přeskočit na rezervaci</a>
+<header class="site-header is-scrolled">
+<div class="header-inner">
+<a class="brand" href="./" aria-label="Marcus Koky Barber – zpět na web">
+<img class="brand-emblem" src="assets/img/emblem-gold.png" width="331" height="362" alt="">
+<img class="brand-wordmark" src="assets/img/wordmark-gold.png" width="636" height="130" alt="Marcus Koky Barber">
+</a>
+<a class="text-link booking-back" href="./"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>Zpět na web</a>
+</div>
+</header>
+
+<main id="rezervace" class="booking container" tabindex="-1">
+<p class="demo-note" role="note"><strong>Návrh</strong> Ukázka rezervačního systému. Nic se neodesílá, obsazené termíny jsou smyšlené.</p>
+
+<div class="booking-head">
+<p class="eyebrow">Rezervace · Brno · Ponávka Tower</p>
+<h1>Zarezervuj si <em>trůn</em>.</h1>
+</div>
+
+<ol class="steps" aria-label="Kroky rezervace">
+<li data-step-label="1" aria-current="step"><span>01</span>Služba</li>
+<li data-step-label="2"><span>02</span>Termín</li>
+<li data-step-label="3"><span>03</span>Údaje</li>
+<li data-step-label="4"><span>04</span>Hotovo</li>
+</ol>
+
+<div class="booking-layout">
+<form class="booking-form" id="booking-form" novalidate>
+
+<!-- 1 SLUŽBA -->
+<section class="step" data-step="1" aria-labelledby="s1-title">
+<h2 id="s1-title" class="step-title">Co si dáme?</h2>
+<div class="service-groups" id="service-list"></div>
+</section>
+
+<!-- 2 TERMÍN -->
+<section class="step" data-step="2" aria-labelledby="s2-title" hidden>
+<h2 id="s2-title" class="step-title">Kdy přijdeš?</h2>
+<div class="calendar">
+<div class="calendar-bar">
+<button type="button" class="icon-button" id="week-prev" aria-label="Předchozí týden"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></button>
+<p class="calendar-range" id="week-label" aria-live="polite"></p>
+<button type="button" class="icon-button" id="week-next" aria-label="Další týden"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button>
+</div>
+<div class="days" id="day-list" role="radiogroup" aria-label="Den"></div>
+<div class="slots-wrap">
+<p class="slots-title" id="slots-title"></p>
+<div class="slots" id="slot-list" role="radiogroup" aria-labelledby="slots-title"></div>
+</div>
+</div>
+</section>
+
+<!-- 3 ÚDAJE -->
+<section class="step" data-step="3" aria-labelledby="s3-title" hidden>
+<h2 id="s3-title" class="step-title">Na koho píšu?</h2>
+<div class="fields">
+<label class="field">
+<span>Jméno a příjmení</span>
+<input name="name" autocomplete="name" required>
+<small class="field-error" hidden>Napiš, prosím, jméno.</small>
+</label>
+<label class="field">
+<span>Telefon</span>
+<input name="phone" type="tel" autocomplete="tel" inputmode="tel" placeholder="+420" required>
+<small class="field-error" hidden>Telefon potřebuju pro případ změny.</small>
+</label>
+<label class="field field--wide">
+<span>E-mail <i>(potvrzení a připomínka)</i></span>
+<input name="email" type="email" autocomplete="email" required>
+<small class="field-error" hidden>Zkontroluj e-mail.</small>
+</label>
+<label class="field field--wide">
+<span>Poznámka <i>(nepovinné)</i></span>
+<textarea name="note" rows="3" placeholder="Např. jaký střih chceš, fotka na Instagramu…"></textarea>
+</label>
+</div>
+
+<details class="voucher" id="voucher">
+<summary>Mám voucher ze Slevomatu</summary>
+<div class="voucher-body">
+<label class="field">
+<span>Kód voucheru</span>
+<input name="voucher" autocomplete="off" spellcheck="false" placeholder="Kód z voucheru">
+</label>
+<button type="button" class="button button--outline" id="voucher-check">Ověřit kód</button>
+<p class="voucher-status" id="voucher-status" role="status" aria-live="polite"></p>
+</div>
+</details>
+
+<label class="consent">
+<input type="checkbox" name="consent" required>
+<span>Souhlasím se <a href="https://www.marcuskoky.cz/gdpr/" target="_blank" rel="noopener">zpracováním osobních údajů</a> pro účely rezervace.</span>
+</label>
+<small class="field-error consent-error" hidden>Bez souhlasu rezervaci uložit nejde.</small>
+</section>
+
+<!-- 4 HOTOVO -->
+<section class="step step--done" data-step="4" aria-labelledby="s4-title" hidden>
+<img class="done-emblem" src="assets/img/emblem-gold.png" width="331" height="362" alt="">
+<h2 id="s4-title" class="step-title">Trůn je tvůj, <em id="done-name">králi</em>.</h2>
+<p class="done-text" id="done-text"></p>
+<div class="button-row">
+<a class="button button--yellow" id="calendar-link" download="marcus-koky-rezervace.ics" href="#">Přidat do kalendáře<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7 3v4M17 3v4M4 9h16M5 5h14v15H5zM12 12v5M9.5 14.5h5"/></svg></a>
+<a class="button button--outline" href="https://www.google.com/maps/search/?api=1&amp;query=Bratislavsk%C3%A1%20201%2F14%2C%20602%2000%20Brno" target="_blank" rel="noopener">Navigovat<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg></a>
+</div>
+<p class="done-small">Potřebuješ termín změnit? Zavolej na <a href="tel:+420732165547">+420&nbsp;732&nbsp;165&nbsp;547</a> nebo použij odkaz v potvrzovacím e-mailu.</p>
+</section>
+
+<div class="step-nav" id="step-nav">
+<button type="button" class="button button--outline" id="back-btn" hidden><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>Zpět</button>
+<button type="submit" class="button button--yellow" id="next-btn" disabled>Vybrat termín<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+</div>
+</form>
+
+<aside class="summary" id="summary" aria-label="Shrnutí rezervace">
+<p class="summary-title">Tvoje rezervace</p>
+<dl>
+<div><dt>Služba</dt><dd id="sum-service">—</dd></div>
+<div><dt>Termín</dt><dd id="sum-time">—</dd></div>
+<div><dt>Kde</dt><dd>Bratislavská 201/14<br><span class="muted">Ponávka Tower, Brno</span></dd></div>
+<div class="sum-voucher" id="sum-voucher-row" hidden><dt>Voucher</dt><dd id="sum-voucher">—</dd></div>
+</dl>
+<p class="summary-price"><span id="sum-price-label">Celkem</span><strong id="sum-price">—</strong></p>
+<p class="summary-note" id="sum-note">Platí se na místě v salonu.</p>
+</aside>
+</div>
+</main>
+
+<footer class="booking-footer container">
+<p>Marcus Koky Barber · Bratislavská 201/14, Brno · <a href="tel:+420732165547">+420&nbsp;732&nbsp;165&nbsp;547</a></p>
+</footer>
+</body>
+</html>

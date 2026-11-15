@@ -1,0 +1,155 @@
+/* Rezervace: návrh vlastního rezervačního systému ve stylu webu */
+.booking-page [hidden] { display: none !important; }
+.booking-page .site-header { position: sticky; }
+.booking-back { padding-block: 8px; border-bottom-color: transparent; gap: 12px; }
+.booking-back:hover svg { transform: translateX(-3px); }
+.booking { padding-block: 40px 96px; }
+
+.demo-note { display: flex; gap: 14px; align-items: baseline; max-width: none; margin-bottom: 48px; padding: 12px 18px; border: 1px dashed var(--line); color: var(--muted); font-size: 14px; }
+.demo-note strong { color: var(--black); background: var(--yellow); padding: 1px 8px; font-size: 11px; letter-spacing: .14em; text-transform: uppercase; }
+
+.booking-head h1 { font-size: clamp(48px, 5.4vw, 92px); margin-bottom: 44px; }
+
+.steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; margin: 0 0 56px; padding: 0; list-style: none; counter-reset: s; }
+.steps li { display: flex; flex-direction: column; gap: 6px; padding-top: 16px; border-top: 2px solid rgba(244,239,230,.12); color: var(--muted); font-size: 14px; font-weight: 600; transition: border-color .35s var(--ease), color .35s; }
+.steps li span { font-family: var(--display); font-size: 15px; color: rgba(244,239,230,.35); transition: color .35s; }
+.steps li.is-done { border-top-color: var(--gold-dark); color: var(--text); }
+.steps li.is-done span { color: var(--gold-dark); }
+.steps li[aria-current="step"] { border-top-color: var(--yellow); color: var(--text); }
+.steps li[aria-current="step"] span { color: var(--yellow); }
+
+.booking-layout { display: grid; grid-template-columns: minmax(0, 1fr) 380px; gap: clamp(32px, 4vw, 72px); align-items: start; }
+.step-title { font-family: var(--display); font-weight: 600; font-size: clamp(32px, 2.8vw, 46px); line-height: 1.1; margin-bottom: 32px; }
+.step-title em { font-weight: 500; }
+.step { animation: step-in .45s var(--ease); }
+@keyframes step-in { from { opacity: 0; transform: translateY(12px); } }
+
+/* 1 služby */
+.service-groups { display: grid; gap: 36px; }
+.service-group { margin: 0; padding: 0; border: 0; min-width: 0; }
+.service-group legend { padding: 0; margin: 0 0 14px; color: var(--gold); font-size: 12px; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; }
+.service-group legend small { margin-left: 10px; color: var(--muted); font-weight: 600; letter-spacing: .06em; text-transform: none; }
+.service-options { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.option { position: relative; display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 76px; padding: 16px 20px; border: 1px solid var(--line); border-radius: 3px; background: var(--layer); cursor: pointer; transition: border-color .25s, background .25s, transform .25s var(--ease); }
+.option:hover { border-color: var(--gold-dark); transform: translateY(-2px); }
+.option input { position: absolute; opacity: 0; pointer-events: none; }
+.option-name { display: flex; flex-direction: column; font-size: 15px; font-weight: 600; line-height: 1.35; }
+.option-name small { color: var(--muted); font-size: 12px; font-weight: 400; }
+.option-price { flex-shrink: 0; font-family: var(--display); font-size: 24px; color: var(--gold); }
+.option-price small { font-family: var(--body); font-size: 12px; margin-left: 2px; }
+.option:has(input:checked) { border-color: var(--yellow); background: rgba(255,212,0,.07); }
+.option:has(input:checked)::after { content: ''; position: absolute; top: -1px; left: 20px; width: 40px; height: 2px; background: var(--yellow); }
+.option:has(input:focus-visible) { outline: 2px solid var(--yellow); outline-offset: 4px; }
+
+/* 2 kalendář */
+.calendar-bar { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 18px; }
+.calendar-range { font-weight: 700; text-align: center; }
+.icon-button { display: grid; place-items: center; width: 48px; height: 48px; border: 1px solid rgba(244,239,230,.25); border-radius: 2px; background: none; color: var(--text); cursor: pointer; transition: border-color .25s, color .25s; }
+.icon-button:hover:not(:disabled) { border-color: var(--gold); color: var(--gold); }
+.icon-button:disabled { opacity: .3; cursor: default; }
+.days { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 8px; margin-bottom: 36px; }
+.day { display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 14px 4px 12px; border: 1px solid var(--line); border-radius: 3px; background: var(--layer); color: var(--text); cursor: pointer; transition: border-color .25s, background .25s; }
+.day b { font-family: var(--display); font-size: 28px; font-weight: 600; line-height: 1.1; }
+.day span { font-size: 12px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+.day small { font-size: 11px; color: var(--gold-dark); }
+.day:hover:not(:disabled) { border-color: var(--gold-dark); }
+.day[aria-checked="true"] { border-color: var(--yellow); background: var(--yellow); color: var(--black); }
+.day[aria-checked="true"] span, .day[aria-checked="true"] small { color: var(--black); }
+.day:disabled { opacity: .35; cursor: default; background: transparent; }
+.slots-title { margin-bottom: 14px; color: var(--muted); font-size: 14px; }
+.slots { display: grid; grid-template-columns: repeat(auto-fill, minmax(96px, 1fr)); gap: 8px; }
+.slot { min-height: 52px; border: 1px solid rgba(244,239,230,.22); border-radius: 2px; background: none; color: var(--text); font-weight: 700; font-size: 15px; cursor: pointer; font-variant-numeric: tabular-nums; transition: border-color .2s, background .2s, color .2s; }
+.slot:hover:not(:disabled) { border-color: var(--gold); color: var(--gold); }
+.slot[aria-checked="true"] { border-color: var(--yellow); background: var(--yellow); color: var(--black); }
+.slot:disabled { color: rgba(244,239,230,.25); text-decoration: line-through; cursor: default; border-style: dashed; }
+.slots-empty { grid-column: 1 / -1; padding: 22px; border: 1px dashed var(--line); color: var(--muted); max-width: none; }
+.slots-empty a { color: var(--gold); border-bottom: 1px solid var(--gold-dark); }
+
+/* 3 údaje */
+.fields { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px 16px; margin-bottom: 28px; }
+.field { display: flex; flex-direction: column; gap: 8px; }
+.field--wide { grid-column: 1 / -1; }
+.field > span { font-size: 13px; font-weight: 700; letter-spacing: .04em; }
+.field > span i { font-style: normal; font-weight: 400; color: var(--muted); }
+.field input, .field textarea { width: 100%; min-height: 54px; padding: 14px 16px; border: 1px solid rgba(244,239,230,.22); border-radius: 2px; background: var(--layer); color: var(--text); font: inherit; transition: border-color .2s; }
+.field textarea { resize: vertical; min-height: 96px; }
+.field input::placeholder, .field textarea::placeholder { color: rgba(185,178,166,.55); }
+.field input:focus, .field textarea:focus { outline: none; border-color: var(--yellow); }
+.field.is-invalid input { border-color: #e2705a; }
+.field-error { color: #f08a75; font-size: 13px; }
+
+.voucher { margin-bottom: 28px; border: 1px solid var(--line); border-radius: 3px; background: var(--layer); }
+.voucher summary { display: flex; align-items: center; justify-content: space-between; padding: 18px 20px; cursor: pointer; font-weight: 700; list-style: none; }
+.voucher summary::-webkit-details-marker { display: none; }
+.voucher summary::after { content: '+'; font-family: var(--display); font-size: 26px; line-height: 1; color: var(--gold); transition: transform .25s; }
+.voucher[open] summary::after { transform: rotate(45deg); }
+.voucher-body { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: end; gap: 12px; padding: 0 20px 20px; }
+.voucher-status { grid-column: 1 / -1; font-size: 14px; min-height: 1px; }
+.voucher-status.is-ok { color: var(--gold); }
+.voucher-status.is-bad { color: #f08a75; }
+
+.consent { display: flex; gap: 14px; align-items: flex-start; font-size: 14px; color: var(--muted); cursor: pointer; }
+.consent input { width: 20px; height: 20px; margin: 3px 0 0; accent-color: var(--yellow); flex-shrink: 0; }
+.consent a { color: var(--text); border-bottom: 1px solid var(--gold-dark); }
+.consent-error { display: block; margin-top: 8px; }
+
+/* 4 hotovo */
+.step--done { padding: clamp(32px, 4vw, 56px); border: 1px solid var(--line); background: radial-gradient(circle at 100% 0, rgba(232,196,102,.09), transparent 55%), var(--layer); }
+.done-emblem { width: 64px; margin-bottom: 28px; }
+.done-text { margin-bottom: 32px; color: var(--muted); font-size: 18px; }
+.done-text strong { color: var(--text); }
+.done-small { margin-top: 28px; color: var(--muted); font-size: 14px; }
+.done-small a { color: var(--gold); }
+
+.step-nav { display: flex; justify-content: space-between; gap: 12px; margin-top: 44px; padding-top: 28px; border-top: 1px solid var(--line); }
+.step-nav #next-btn { margin-left: auto; }
+.button:disabled { opacity: .35; cursor: not-allowed; transform: none; }
+
+/* shrnutí */
+.summary { position: sticky; top: 110px; padding: 32px; border: 1px solid var(--line); border-radius: 3px; background: var(--layer); }
+.summary::before { content: ''; position: absolute; top: -1px; left: 32px; width: 56px; height: 2px; background: var(--gold); }
+.summary-title { margin-bottom: 24px; font-family: var(--display); font-size: 28px; font-weight: 600; }
+.summary dl { display: grid; gap: 18px; margin: 0 0 26px; }
+.summary dl div { display: grid; gap: 2px; }
+.summary dt { color: var(--gold); font-size: 11px; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; }
+.summary dd { margin: 0; font-weight: 600; line-height: 1.5; }
+.summary-price { display: flex; justify-content: space-between; align-items: baseline; padding-top: 20px; border-top: 1px solid var(--line); }
+.summary-price strong { font-family: var(--display); font-size: 34px; color: var(--yellow); font-weight: 600; }
+.summary-price strong.is-text { font-size: 24px; font-style: italic; }
+.summary-price s { color: var(--muted); font-size: 18px; margin-right: 10px; }
+.summary-note { margin-top: 12px; color: var(--muted); font-size: 13px; }
+
+.booking-footer { padding-block: 32px 48px; border-top: 1px solid var(--line); color: var(--muted); font-size: 14px; }
+
+@media (max-width: 1099px) {
+  .booking-layout { grid-template-columns: 1fr; }
+  .summary { position: static; order: -1; padding: 20px 24px; }
+  .summary::before { left: 24px; }
+  .summary-title { display: none; }
+  .summary dl { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px 20px; margin-bottom: 16px; }
+  .summary-price { padding-top: 14px; }
+  .summary-price strong { font-size: 28px; }
+}
+@media (max-width: 759px) {
+  .booking { padding-block: 24px 120px; }
+  .demo-note { flex-direction: column; gap: 6px; margin-bottom: 32px; }
+  .booking-back { font-size: 13px; }
+  .steps { margin-bottom: 32px; }
+  .steps li { font-size: 12px; }
+  .service-options, .fields { grid-template-columns: 1fr; }
+  .days { grid-template-columns: repeat(7, minmax(44px, 1fr)); gap: 4px; }
+  .day { padding: 10px 0 8px; }
+  .day b { font-size: 21px; }
+  .day span { font-size: 10px; letter-spacing: .06em; }
+  .day small { display: none; }
+  .slots { grid-template-columns: repeat(3, 1fr); }
+  .voucher-body { grid-template-columns: 1fr; }
+  .summary dl { grid-template-columns: 1fr; }
+  .summary dl div:nth-child(3) { display: none; }
+  .step-nav { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; margin: 0; padding: 12px 16px calc(12px + env(safe-area-inset-bottom)); background: rgba(10,10,10,.96); backdrop-filter: blur(12px); }
+  .step-nav .button { flex: 1; gap: 12px; padding-inline: 16px; }
+  .step-nav #back-btn { flex: 0 0 auto; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .step { animation: none; }
+}
