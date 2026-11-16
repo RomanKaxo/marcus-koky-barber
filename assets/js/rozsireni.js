@@ -8,48 +8,121 @@
   const DEMO = /github\.io$/.test(location.hostname) || location.protocol === 'file:';
 
   /* ---------- rezervační okno ---------- */
+  const SERVICES = [
+    { tab: 'První návštěva', items: [['Klasický střih', 499, 'první návštěva'], ['Střih + vousy HOT TOWEL', 799, 'první návštěva']] },
+    { tab: 'Střih', items: [['Klasický střih', 640, 'od 12 let'], ['Střih strojkem', 540], ['Střih dlouhých vlasů', 860], ['Dětský střih', 390]] },
+    { tab: 'Vousy', items: [['Úprava vousů HOT TOWEL', 560], ['Úprava vousů strojkem', 430], ['Holení celé tváře HOT TOWEL', 590], ['Barvení vousů', 220]] },
+    { tab: 'Kombinace', items: [['Klasický střih + vousy HOT TOWEL', 1120], ['Klasický střih + vousy strojkem', 1050], ['Střih strojkem + vousy HOT TOWEL', 1020], ['Střih strojkem + vousy strojkem', 950], ['Klasický střih + holení tváře', 1090], ['Střih strojkem + holení tváře', 990]] },
+    { tab: '14denní restart', items: [['Klasický střih', 499, 'návrat do 14 dnů'], ['Střih + vousy HOT TOWEL', 849, 'návrat do 14 dnů']] },
+  ];
+  // otevírací doba: Po 14–20, Út–Pá 9–20, víkend dle domluvy
+  const OPEN = { 1: [14, 20], 2: [9, 20], 3: [9, 20], 4: [9, 20], 5: [9, 20] };
+  const TIMES = [['Dopoledne', 9, 12], ['Odpoledne', 12, 16], ['Večer', 16, 20], ['Kdykoli', 0, 24]];
+
   const dialog = document.getElementById('booking-dialog');
   if (dialog && typeof dialog.showModal === 'function') {
     const form = dialog.querySelector('#bd-form');
-    const formView = dialog.querySelector('.bd-form-view');
     const done = dialog.querySelector('.bd-done');
     const errorBox = dialog.querySelector('.bd-error');
     const submit = dialog.querySelector('.bd-submit');
-    const dateInput = form.elements.den;
-    let opener = null;
-
+    const tabs = dialog.querySelector('#bd-tabs');
+    const list = dialog.querySelector('#bd-services');
+    const daysBox = dialog.querySelector('#bd-days');
+    const timesBox = dialog.querySelector('#bd-times');
     const pad = (n) => String(n).padStart(2, '0');
-    const isoToday = () => { const d = new Date(); return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`; };
+    const iso = (d) => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+    const fmtWd = new Intl.DateTimeFormat('cs-CZ', { weekday: 'short' });
+    const fmtLong = new Intl.DateTimeFormat('cs-CZ', { weekday: 'long', day: 'numeric', month: 'numeric' });
+    const esc = (t) => String(t).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+    let opener = null;
+    let activeTab = 0;
+
+    // 1 — služby
+    tabs.innerHTML = SERVICES.map((g, i) => `<button type="button" role="tab" aria-selected="${i === 0}" data-tab="${i}">${g.tab}</button>`).join('');
+    const renderServices = () => {
+      const chosen = form.querySelector('input[name="sluzba"]:checked')?.value;
+      list.innerHTML = SERVICES[activeTab].items.map(([name, price, sub]) => {
+        const value = `${SERVICES[activeTab].tab === 'Střih' || SERVICES[activeTab].tab === 'Vousy' || SERVICES[activeTab].tab === 'Kombinace' ? '' : SERVICES[activeTab].tab + ': '}${name} · ${price} Kč`;
+        return `<label class="bd-service"><input type="radio" name="sluzba" value="${esc(value)}" data-name="${esc(name)}" data-price="${price}" ${value === chosen ? 'checked' : ''}>
+          <span class="bd-service-name">${esc(name)}${sub ? `<small>${esc(sub)}</small>` : ''}</span><span class="bd-service-price">${price}<small> Kč</small></span></label>`;
+      }).join('');
+      tabs.querySelectorAll('button').forEach((b) => b.setAttribute('aria-selected', String(Number(b.dataset.tab) === activeTab)));
+    };
+    // vybraná služba z jiné záložky zůstává zaškrtnutá ve skrytém inputu
+      let selected = null; // {value, name, price}
+    tabs.addEventListener('click', (e) => {
+      const b = e.target.closest('[data-tab]'); if (!b) return;
+      activeTab = Number(b.dataset.tab);
+      renderServices();
+      if (selected) { const r = [...list.querySelectorAll('input')].find((i) => i.value === selected.value); if (r) r.checked = true; }
+    });
+
+    // 2 — dny a časy
+    const renderDays = () => {
+      const start = new Date(); start.setHours(0, 0, 0, 0);
+      const now = new Date();
+      const out = [];
+      for (let i = 0; i < 14; i++) {
+        const d = new Date(start); d.setDate(start.getDate() + i);
+        const r = OPEN[d.getDay()];
+        const closedToday = i === 0 && (!r || now.getHours() >= r[1] - 1);
+        const disabled = !r || closedToday;
+        const label = i === 0 ? 'Dnes' : i === 1 ? 'Zítra' : fmtWd.format(d).replace('.', '');
+        out.push(`<label class="bd-day${disabled ? ' is-off' : ''}"><input type="radio" name="den" value="${iso(d)}" ${disabled ? 'disabled' : ''}>
+          <span>${label}</span><b>${d.getDate()}.</b><small>${d.getMonth() + 1}.</small></label>`);
+      }
+      daysBox.innerHTML = out.join('');
+    };
+    const renderTimes = () => {
+      const val = form.querySelector('input[name="den"]:checked')?.value;
+      const prev = form.querySelector('input[name="cas"]:checked')?.value || 'Kdykoli';
+      let r = null; let isToday = false;
+      if (val) { const [y, m, d] = val.split('-').map(Number); const day = new Date(y, m - 1, d); r = OPEN[day.getDay()]; isToday = val === iso(new Date()); }
+      const nowH = new Date().getHours();
+      timesBox.innerHTML = TIMES.map(([name, from, to]) => {
+        const off = r && name !== 'Kdykoli' && (to <= r[0] || from >= r[1] || (isToday && to <= nowH + 1));
+        const checked = !off && name === prev;
+        return `<label class="bd-time${off ? ' is-off' : ''}"><input type="radio" name="cas" value="${name}${name === 'Kdykoli' ? '' : ` (${from}–${to})`}" ${off ? 'disabled' : ''} ${checked ? 'checked' : ''}><span>${name}</span>${name === 'Kdykoli' ? '' : `<small>${from}–${to}</small>`}</label>`;
+      }).join('');
+      if (!form.querySelector('input[name="cas"]:checked')) form.querySelector('input[name="cas"]:not(:disabled)')?.click();
+    };
+
+    // souhrn dole
+    const sumService = dialog.querySelector('#bd-sum-service');
+    const sumWhen = dialog.querySelector('#bd-sum-when');
+    const sumPrice = dialog.querySelector('#bd-sum-price');
+    const summary = () => {
+      const den = form.querySelector('input[name="den"]:checked')?.value;
+      const cas = form.querySelector('input[name="cas"]:checked')?.value?.replace(/ \(.*\)/, '');
+      sumService.textContent = selected ? selected.name : 'Vyber službu';
+      sumPrice.textContent = selected ? `${selected.price} Kč` : '';
+      if (den) { const [y, m, d] = den.split('-').map(Number); sumWhen.textContent = `${fmtLong.format(new Date(y, m - 1, d))}${cas && cas !== 'Kdykoli' ? `, ${cas.toLowerCase()}` : ''}`; }
+      else sumWhen.textContent = 'a den';
+    };
 
     const open = (trigger, service) => {
       if (dialog.open) return;
       opener = trigger || null;
-      dateInput.min = isoToday();
+      renderDays(); renderTimes();
       if (service) {
-        const option = [...form.elements.sluzba.options].find((o) => o.text.startsWith(service));
-        if (option) form.elements.sluzba.value = option.value;
-      }
-      formView.hidden = false; done.hidden = true;
+        activeTab = SERVICES.findIndex((g) => g.tab === 'První návštěva');
+        renderServices();
+        const r = list.querySelector('input'); if (r) { r.checked = true; r.dispatchEvent(new Event('change', { bubbles: true })); }
+      } else renderServices();
+      form.hidden = false; done.hidden = true;
+      summary();
       dialog.showModal();
       document.documentElement.classList.add('dialog-open');
       try { sessionStorage.setItem('mkb-popup', '1'); } catch { /* bez úložiště */ }
     };
-    const close = () => dialog.close();
-    dialog.addEventListener('close', () => {
-      document.documentElement.classList.remove('dialog-open');
-      opener?.focus?.();
-    });
-    dialog.addEventListener('click', (e) => {
-      if (e.target === dialog || e.target.closest('[data-close]')) close();
-    });
+    dialog.addEventListener('close', () => { document.documentElement.classList.remove('dialog-open'); opener?.focus?.(); });
+    dialog.addEventListener('click', (e) => { if (e.target === dialog || e.target.closest('[data-close]')) dialog.close(); });
     document.addEventListener('click', (e) => {
       const link = e.target.closest('[data-booking]');
       if (!link || e.metaKey || e.ctrlKey || e.shiftKey || e.button === 1) return;
       e.preventDefault();
       open(link, link.dataset.service);
     });
-
-    // Na mobilu rovnou nabídni rezervaci (jednou za návštěvu).
     let seen = false;
     try { seen = sessionStorage.getItem('mkb-popup') === '1'; } catch { /* bez úložiště */ }
     if (mobile.matches && !seen && !location.hash) {
@@ -61,10 +134,8 @@
       jmeno: (v) => v.trim().length >= 2,
       telefon: (v) => v.replace(/\D/g, '').length >= 9,
       email: (v) => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.trim()),
-      sluzba: (v) => v !== '',
-      den: (v) => v !== '' && v >= isoToday(),
     };
-    const check = (name, show) => {
+    const checkField = (name, show) => {
       const input = form.elements[name];
       const ok = rules[name](input.value);
       const field = input.closest('.bd-field');
@@ -75,41 +146,50 @@
       }
       return ok;
     };
-    form.addEventListener('input', (e) => { if (rules[e.target.name]) check(e.target.name, false); });
-    form.addEventListener('change', (e) => { if (rules[e.target.name]) check(e.target.name, false); });
+    const flag = (key, ok) => { dialog.querySelector(`.bd-error-msg[data-for="${key}"]`).hidden = ok; return ok; };
+    form.addEventListener('input', (e) => { if (rules[e.target.name]) checkField(e.target.name, false); });
+    form.addEventListener('change', (e) => {
+      const t = e.target;
+      if (t.name === 'sluzba') { selected = { value: t.value, name: t.dataset.name, price: t.dataset.price }; flag('sluzba', true); }
+      if (t.name === 'den') { renderTimes(); flag('den', true); }
+      if (t.name === 'souhlas') flag('souhlas', t.checked);
+      summary();
+    });
 
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
       errorBox.hidden = true;
-      const results = Object.keys(rules).map((n) => check(n, true));
-      const consent = form.elements.souhlas.checked;
-      dialog.querySelector('.bd-consent-error').hidden = consent;
-      if (results.includes(false) || !consent) {
-        form.querySelector('[aria-invalid="true"]')?.focus();
+      const okService = flag('sluzba', !!selected);
+      const okDay = flag('den', !!form.querySelector('input[name="den"]:checked'));
+      const okFields = Object.keys(rules).map((n) => checkField(n, true)).every(Boolean);
+      const okConsent = flag('souhlas', form.elements.souhlas.checked);
+      if (!(okService && okDay && okFields && okConsent)) {
+        const first = !okService ? dialog.querySelector('#bd-s1') : !okDay ? dialog.querySelector('#bd-s2') : form.querySelector('[aria-invalid="true"]') || form.elements.souhlas;
+        first.scrollIntoView({ behavior: reduced.matches ? 'auto' : 'smooth', block: 'center' });
+        if (first.focus && first.tagName !== 'H3') first.focus({ preventScroll: true });
         return;
       }
-      submit.disabled = true;
-      submit.classList.add('is-loading');
+      const data = new FormData(form);
+      data.set('sluzba', selected.value);
+      submit.disabled = true; submit.classList.add('is-loading');
       try {
-        if (DEMO) {
-          await new Promise((r) => setTimeout(r, 700));
-        } else {
-          const res = await fetch(ENDPOINT, { method: 'POST', body: new FormData(form), headers: { Accept: 'application/json' } });
-          const data = await res.json().catch(() => ({}));
-          if (!res.ok || !data.ok) throw new Error(data.error || 'Odeslání se nepovedlo.');
+        if (DEMO) await new Promise((r) => setTimeout(r, 700));
+        else {
+          const res = await fetch(ENDPOINT, { method: 'POST', body: data, headers: { Accept: 'application/json' } });
+          const json = await res.json().catch(() => ({}));
+          if (!res.ok || !json.ok) throw new Error(json.error || 'Odeslání se nepovedlo.');
         }
-        const first = form.elements.jmeno.value.trim().split(/\s+/)[0];
-        dialog.querySelector('.bd-done-name').textContent = first || 'králi';
+        dialog.querySelector('.bd-done-name').textContent = form.elements.jmeno.value.trim().split(/\s+/)[0] || 'králi';
+        dialog.querySelector('.bd-done-recap').textContent = `${sumService.textContent} · ${sumWhen.textContent}`;
         if (DEMO) dialog.querySelector('.bd-done-text').textContent = 'Ukázka: na tomhle náhledu se rezervace neodesílá. Na ostrém webu dorazí Marcusovi e-mailem a tobě potvrzení.';
-        formView.hidden = true; done.hidden = false;
-        form.reset();
+        form.hidden = true; done.hidden = false;
+        form.reset(); selected = null;
         done.querySelector('button').focus();
       } catch (err) {
-        errorBox.textContent = `${err.message} Zavolej prosím na +420 732 165 547 nebo použij online kalendář.`;
+        errorBox.textContent = `${err.message} Zavolej prosím na +420 732 165 547.`;
         errorBox.hidden = false;
       } finally {
-        submit.disabled = false;
-        submit.classList.remove('is-loading');
+        submit.disabled = false; submit.classList.remove('is-loading');
       }
     });
   }
