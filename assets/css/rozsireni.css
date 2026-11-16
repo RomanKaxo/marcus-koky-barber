@@ -219,3 +219,36 @@
 .bd-select select:disabled { opacity: .45; cursor: default; }
 .bd-select select option, .bd-select select optgroup { background: #121212; color: var(--text); }
 .bd-select--time { max-width: 260px; margin-top: 4px; }
+
+/* ---------- newsletter: přihlášení k odběru nad patičkou ---------- */
+.newsletter { padding-top: 0; }
+.nl-box { position: relative; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(32px, 6vw, 96px); align-items: center; padding: clamp(32px, 4.5vw, 64px); border: 1px solid var(--line); border-top: 3px solid var(--gold); background: var(--layer); }
+.nl-box::after { content: ''; position: absolute; inset: 10px; border: 1px solid rgba(232,196,102,.08); pointer-events: none; }
+.nl-copy h2 { font-size: clamp(36px, 3.4vw, 56px); margin-bottom: 18px; }
+.nl-copy p:not(.eyebrow) { color: var(--muted); }
+.nl-demo { margin-left: 4px; padding: 1px 8px; background: var(--yellow); color: var(--black); font-size: 10px; letter-spacing: .14em; }
+.nl-form { position: relative; z-index: 1; display: grid; gap: 16px; }
+.nl-row { display: flex; gap: 10px; }
+.nl-field { flex: 1; min-width: 0; }
+.nl-field input { width: 100%; min-height: 56px; padding: 14px 16px; border: 1px solid rgba(244,239,230,.2); border-radius: 2px; background: var(--black); color: var(--text); font: inherit; font-size: 16px; transition: border-color .2s; }
+.nl-field input::placeholder { color: rgba(244,239,230,.35); }
+.nl-field input:focus { outline: none; border-color: var(--yellow); }
+.nl-field input[aria-invalid="true"] { border-color: #e2705a; }
+.nl-submit { flex-shrink: 0; gap: 14px; }
+.nl-submit.is-loading { opacity: .6; pointer-events: none; }
+.nl-consent { display: flex; gap: 12px; align-items: flex-start; color: var(--muted); font-size: 14px; line-height: 1.6; cursor: pointer; }
+.nl-consent input { width: 20px; height: 20px; margin: 2px 0 0; accent-color: var(--yellow); flex-shrink: 0; }
+.nl-consent a { color: var(--text); border-bottom: 1px solid var(--gold-dark); }
+.nl-msg { min-height: 1.6em; font-size: 14px; font-weight: 600; }
+.nl-msg.is-ok { color: #8fd6a2; }
+.nl-msg.is-err { color: #f08a75; }
+.bd-consent--news { margin-top: -4px; }
+@media (max-width: 1099px) {
+  .nl-box { grid-template-columns: 1fr; }
+}
+@media (max-width: 759px) {
+  .nl-box { padding: 32px 20px; }
+  .nl-box::after { inset: 6px; }
+  .nl-row { flex-direction: column; }
+  .nl-submit { width: 100%; }
+}

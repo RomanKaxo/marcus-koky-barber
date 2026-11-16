@@ -1,0 +1,5 @@
+# Konfigurace a vzor nastavení nejsou pro web.
+<FilesMatch "^(config|config\.example)\.php$">
+  Require all denied
+</FilesMatch>
+Options -Indexes

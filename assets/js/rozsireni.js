@@ -4,6 +4,7 @@
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
   const mobile = window.matchMedia('(max-width: 759px)');
   const ENDPOINT = 'api/rezervace.php';
+  const NL_ENDPOINT = 'api/newsletter.php';
   // Na náhledu (GitHub Pages, lokální soubor) není PHP: formulář jen předvede úspěch, nic neodešle.
   const DEMO = /github\.io$/.test(location.hostname) || location.protocol === 'file:';
 
@@ -116,7 +117,10 @@
     });
     let seen = false;
     try { seen = sessionStorage.getItem('mkb-popup') === '1'; } catch { /* bez úložiště */ }
-    if (mobile.matches && !seen && !location.hash) {
+    // odkaz „Rezervovat termín“ z newsletteru (…/#rezervovat)
+    window.addEventListener('hashchange', () => { if (location.hash === '#rezervovat') open(null); });
+    if (location.hash === '#rezervovat') open(null);
+    else if (mobile.matches && !seen && !location.hash) {
       window.setTimeout(() => { if (!document.documentElement.classList.contains('menu-open')) open(null); }, 1600);
     }
 
@@ -170,10 +174,12 @@
           const res = await fetch(ENDPOINT, { method: 'POST', body: data, headers: { Accept: 'application/json' } });
           const json = await res.json().catch(() => ({}));
           if (!res.ok || !json.ok) throw new Error(json.error || 'Odeslání se nepovedlo.');
+          if (data.get('novinky')) subscribe(data.get('email'), 'rezervace').catch(() => { /* rezervace je hlavní, odběr jen navíc */ });
         }
         dialog.querySelector('.bd-done-name').textContent = form.elements.jmeno.value.trim().split(/\s+/)[0] || 'králi';
         dialog.querySelector('.bd-done-recap').textContent = `${sumService.textContent} · ${sumWhen.textContent}`;
         if (DEMO) dialog.querySelector('.bd-done-text').textContent = 'Ukázka: na tomhle náhledu se rezervace neodesílá. Na ostrém webu dorazí Marcusovi e-mailem a tobě potvrzení.';
+        else if (data.get('novinky')) dialog.querySelector('.bd-done-text').textContent = 'Rezervace dorazila. Ozvu se a termín potvrdím. K novinkám se přihlásíš odkazem, který ti právě přišel e-mailem.';
         form.hidden = true; done.hidden = false;
         form.reset(); selected = null; renderTimes();
         done.querySelector('button').focus();
@@ -182,6 +188,44 @@
         errorBox.hidden = false;
       } finally {
         submit.disabled = false; submit.classList.remove('is-loading');
+      }
+    });
+  }
+
+  /* ---------- newsletter: přihlášení k odběru (double opt-in) ---------- */
+  async function subscribe(email, source) {
+    const body = new FormData();
+    body.set('a', 'prihlasit'); body.set('email', email); body.set('souhlas', '1'); body.set('zdroj', source);
+    const res = await fetch(NL_ENDPOINT, { method: 'POST', body, headers: { Accept: 'application/json' } });
+    const json = await res.json().catch(() => ({}));
+    if (!res.ok || !json.ok) throw new Error(json.error || 'Přihlášení se nepovedlo.');
+  }
+  const nlForm = document.getElementById('nl-form');
+  if (nlForm) {
+    const msg = nlForm.querySelector('.nl-msg');
+    const btn = nlForm.querySelector('.nl-submit');
+    const email = nlForm.elements.email;
+    if (DEMO) nlForm.closest('.newsletter').querySelector('.nl-demo').hidden = false;
+    const say = (text, ok) => { msg.textContent = text; msg.className = `nl-msg ${ok ? 'is-ok' : 'is-err'}`; };
+    email.addEventListener('input', () => email.removeAttribute('aria-invalid'));
+    nlForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email.value.trim())) {
+        email.setAttribute('aria-invalid', 'true'); email.focus(); say('Zadej platný e-mail.', false); return;
+      }
+      if (!nlForm.elements.souhlas.checked) { nlForm.elements.souhlas.focus(); say('Zaškrtni prosím souhlas se zasíláním.', false); return; }
+      if (nlForm.elements.web.value) return;
+      btn.disabled = true; btn.classList.add('is-loading'); msg.textContent = '';
+      try {
+        if (DEMO) await new Promise((r) => setTimeout(r, 600));
+        else await subscribe(email.value.trim(), 'web');
+        say(DEMO ? 'Ukázka: na tomhle náhledu se nic neodesílá. Na ostrém webu ti teď přijde e-mail s odkazem k potvrzení.'
+          : 'Skoro hotovo. Poslal jsem ti e-mail, odběr potvrď kliknutím na odkaz.', true);
+        nlForm.reset();
+      } catch (err) {
+        say(err.message, false);
+      } finally {
+        btn.disabled = false; btn.classList.remove('is-loading');
       }
     });
   }

@@ -667,6 +667,25 @@
 </div>
 </div>
 </section>
+<section class="newsletter section container" id="novinky" tabindex="-1" aria-labelledby="nl-title">
+<div class="nl-box" data-reveal>
+<div class="nl-copy">
+<p class="eyebrow">Novinky ze salonu <span class="nl-demo" hidden>Návrh</span></p>
+<h2 id="nl-title">Volný trůn <em>dřív</em> než ostatní.</h2>
+<p>Uvolněné termíny, akce a&nbsp;novinky ze salonu. Pár e-mailů za měsíc, žádný spam. Odhlásíš se jedním klikem.</p>
+</div>
+<form class="nl-form" id="nl-form" action="api/newsletter.php" method="post" novalidate>
+<input type="hidden" name="a" value="prihlasit">
+<div class="nl-row">
+<label class="nl-field"><span class="sr-only">E-mail</span><input name="email" type="email" autocomplete="email" inputmode="email" placeholder="tvuj@email.cz" required aria-describedby="nl-msg"></label>
+<button type="submit" class="button button--yellow nl-submit">Odebírat<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+</div>
+<label class="bd-hp" aria-hidden="true">Nevyplňuj<input name="web" tabindex="-1" autocomplete="off"></label>
+<label class="nl-consent"><input type="checkbox" name="souhlas" value="1" required><span>Souhlasím se zasíláním novinek e-mailem a&nbsp;se <a href="https://www.marcuskoky.cz/gdpr/" target="_blank" rel="noopener">zpracováním e-mailu</a> pro tento účel. Souhlas můžu kdykoli odvolat.</span></label>
+<p class="nl-msg" id="nl-msg" role="status" aria-live="polite"></p>
+</form>
+</div>
+</section>
 </main>
 <footer class="site-footer">
 <div class="container">
@@ -732,6 +751,7 @@
 <label class="bd-hp" aria-hidden="true">Nevyplňuj<input name="web" tabindex="-1" autocomplete="off"></label>
 <label class="bd-consent bd-wide"><input type="checkbox" name="souhlas" required><span>Souhlasím se <a href="https://www.marcuskoky.cz/gdpr/" target="_blank" rel="noopener">zpracováním osobních údajů</a> kvůli rezervaci.</span></label>
 <small class="bd-error-msg bd-wide" data-for="souhlas" hidden>Bez souhlasu nemůžu rezervaci přijmout.</small>
+<label class="bd-consent bd-consent--news bd-wide"><input type="checkbox" name="novinky" value="1"><span>Chci dostávat novinky: volné termíny a&nbsp;akce e-mailem (nepovinné, potvrdíš odkazem v&nbsp;e-mailu, odhlásíš se jedním klikem).</span></label>
 </div>
 <p class="bd-alt">Raději vybrat konkrétní volný čas? <a href="https://local.termino.eu/embed/marcus-koky-barber" target="_blank" rel="noopener">Online kalendář Termino</a></p>
 </section>

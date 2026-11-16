@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="cs" xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="x-apple-disable-message-reformatting">
+<meta name="color-scheme" content="dark">
+<meta name="supported-color-schemes" content="dark">
+<title>{{predmet}}</title>
+<!--[if mso]><style>table,td,p,a,h1{font-family:Arial,Helvetica,sans-serif!important;}</style><![endif]-->
+<style>
+  @media (max-width: 620px) {
+    .mkb-pad { padding-left: 24px !important; padding-right: 24px !important; }
+    .mkb-h1 { font-size: 30px !important; line-height: 36px !important; }
+  }
+</style>
+</head>
+<!-- Šablona e-mailu Marcus Koky Barber. Používá ji PHP (api/lib/newsletter.php) i náhled ve správci (spravce.html).
+     Jen tabulky a inline styly kvůli Gmailu a Outlooku. Zástupné znaky {{...}} se nahrazují escapovanými hodnotami. -->
+<body style="margin:0;padding:0;background-color:#0a0a0a;-webkit-text-size-adjust:100%;">
+<div style="display:none;max-height:0;overflow:hidden;mso-hide:all;font-size:1px;line-height:1px;color:#0a0a0a;">{{preheader}}&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;</div>
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#0a0a0a" style="background-color:#0a0a0a;">
+<tr><td align="center" style="padding:32px 12px;">
+  <!--[if mso]><table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0"><tr><td><![endif]-->
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="max-width:600px;">
+    <tr><td align="center" style="padding:8px 0 28px;">
+      <a href="{{web_url}}" style="text-decoration:none;"><img src="{{logo_url}}" width="150" alt="MARCUS KOKY BARBER" style="display:block;width:150px;height:auto;border:0;color:#e8c466;font-family:Georgia,'Times New Roman',serif;font-size:20px;letter-spacing:2px;"></a>
+    </td></tr>
+    <tr><td bgcolor="#121212" style="background-color:#121212;border-top:3px solid #e8c466;">
+      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr><td class="mkb-pad" style="padding:40px 48px 8px;">
+          <p style="margin:0 0 14px;font-family:Arial,Helvetica,sans-serif;font-size:12px;line-height:18px;font-weight:bold;letter-spacing:3px;text-transform:uppercase;color:#e8c466;">Novinky ze salonu</p>
+          <h1 class="mkb-h1" style="margin:0 0 26px;font-family:'Playfair Display',Georgia,'Times New Roman',serif;font-size:36px;line-height:42px;font-weight:bold;color:#f4efe6;">{{predmet}}</h1>
+          {{obsah}}
+        </td></tr>
+        <!--TLACITKO-->
+        <tr><td class="mkb-pad" style="padding:8px 48px 12px;">
+          <table role="presentation" cellpadding="0" cellspacing="0" border="0"><tr>
+            <td bgcolor="#ffd400" style="background-color:#ffd400;border-radius:2px;">
+              <a href="{{tlacitko_url}}" style="display:inline-block;padding:16px 30px;font-family:Arial,Helvetica,sans-serif;font-size:15px;line-height:20px;font-weight:bold;color:#0a0a0a;text-decoration:none;">{{tlacitko_text}} &rarr;</a>
+            </td>
+          </tr></table>
+        </td></tr>
+        <!--/TLACITKO-->
+        <tr><td class="mkb-pad" style="padding:28px 48px 40px;">
+          <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="border-top:1px solid #3a3222;padding-top:22px;font-family:Arial,Helvetica,sans-serif;font-size:14px;line-height:22px;color:#b9b2a6;">
+            <strong style="color:#f4efe6;">Marcus Koky Barber</strong><br>
+            Bratislavská 201/14 (Ponávka Tower), 602&nbsp;00 Brno<br>
+            <a href="tel:+420732165547" style="color:#e8c466;text-decoration:none;">+420&nbsp;732&nbsp;165&nbsp;547</a> &middot; <a href="{{web_url}}" style="color:#e8c466;text-decoration:none;">marcuskoky.cz</a>
+          </td></tr></table>
+        </td></tr>
+      </table>
+    </td></tr>
+    <tr><td align="center" style="padding:24px 24px 8px;font-family:Arial,Helvetica,sans-serif;font-size:12px;line-height:19px;color:#8a8478;">
+      {{poznamka}}<br>
+      <a href="{{odhlasit_url}}" style="color:#e8c466;text-decoration:underline;">Odhlásit odběr jedním klikem</a><br>
+      Provozovatel: Marek Wawrzyniak &middot; IČO 19191634
+    </td></tr>
+  </table>
+  <!--[if mso]></td></tr></table><![endif]-->
+</td></tr>
+</table>
+</body>
+</html>

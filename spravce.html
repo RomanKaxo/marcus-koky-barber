@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Správa rezervací · Marcus Koky Barber</title>
+<title>Správa salonu · Marcus Koky Barber</title>
 <meta name="robots" content="noindex, nofollow">
 <meta name="theme-color" content="#0A0A0A">
 <link rel="icon" href="assets/img/icon-32.png" sizes="32x32">
@@ -11,19 +11,26 @@
 <link rel="stylesheet" href="assets/css/style.css">
 <link rel="stylesheet" href="assets/css/spravce.css">
 <script src="assets/js/spravce.js" defer></script>
+<script src="assets/js/spravce-newsletter.js" defer></script>
 </head>
 <body class="admin-page">
 <header class="site-header is-scrolled">
 <div class="header-inner">
 <a class="brand" href="./" aria-label="Marcus Koky Barber – web">
 <img class="brand-emblem" src="assets/img/emblem-gold.png" width="331" height="362" alt="">
-<span class="admin-brand">Správa <em>rezervací</em></span>
+<span class="admin-brand">Správa <em>salonu</em></span>
 </a>
 <a class="text-link admin-link" href="rezervace.html">Rezervace pro klienty<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg></a>
 </div>
 </header>
 
 <main class="admin container" id="obsah">
+<div class="admin-tabs" role="tablist" aria-label="Sekce správy">
+<button type="button" role="tab" id="t-rezervace" aria-controls="tab-rezervace" aria-selected="true">Rezervace</button>
+<button type="button" role="tab" id="t-newsletter" aria-controls="tab-newsletter" aria-selected="false" tabindex="-1">Newsletter</button>
+</div>
+
+<div id="tab-rezervace" role="tabpanel" aria-labelledby="t-rezervace">
 <p class="demo-note" role="note"><strong>Návrh</strong> Pohled majitele. Klienti v&nbsp;ukázce jsou smyšlení, změny se ukládají jen v&nbsp;tomto prohlížeči.</p>
 
 <div class="admin-top">
@@ -53,6 +60,89 @@
 <button type="button" class="detail-close icon-button" id="detail-close" aria-label="Zavřít detail"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
 <div id="detail-body"></div>
 </aside>
+</div>
+</div>
+
+<div id="tab-newsletter" role="tabpanel" aria-labelledby="t-newsletter" hidden>
+<p class="demo-note" role="note" id="nl-demo-note" hidden><strong>Návrh</strong> <span>Ukázkový režim: na tomhle náhledu neběží PHP, odběratelé jsou smyšlení a&nbsp;nic se neodesílá. Změny zůstávají jen v&nbsp;tomto prohlížeči.</span></p>
+
+<section class="nl-login" id="nl-login" aria-labelledby="nl-login-title" hidden>
+<p class="eyebrow">Newsletter</p>
+<h1 id="nl-login-title">Přihlášení <em>majitele</em></h1>
+<form id="nl-login-form" novalidate>
+<label class="nl-afield"><span>Heslo</span><input type="password" name="heslo" autocomplete="current-password" required></label>
+<button type="submit" class="button button--yellow">Přihlásit</button>
+<p class="nl-amsg" role="alert"></p>
+</form>
+</section>
+
+<div id="nl-app" hidden>
+<div class="admin-top">
+<div>
+<p class="eyebrow">Newsletter</p>
+<h1>Novinky pro <em>klienty</em></h1>
+</div>
+<button type="button" class="button button--outline" id="nl-logout" hidden>Odhlásit se</button>
+</div>
+
+<dl class="stats" id="nl-stats"></dl>
+
+<div class="nl-admin-grid">
+<section class="nl-panel" aria-labelledby="nl-ed-title">
+<h2 class="nl-h2" id="nl-ed-title">Nový e-mail</h2>
+<form id="nl-editor" novalidate>
+<label class="nl-afield"><span>Předmět</span><input name="predmet" maxlength="150" required placeholder="Např. Volné termíny tento týden"></label>
+<label class="nl-afield"><span>Text</span><textarea name="text" rows="11" maxlength="10000" required placeholder="Ahoj,&#10;&#10;ve čtvrtek se mi uvolnily dva termíny…&#10;&#10;Marcus"></textarea><small>Prázdný řádek = nový odstavec. Odkaz na odhlášení a&nbsp;patička se přidají samy.</small></label>
+<label class="nl-check"><input type="checkbox" name="tlacitko" value="1" checked><span>Přidat tlačítko „Rezervovat termín“</span></label>
+<div class="nl-actions">
+<button type="button" class="button button--outline" id="nl-test">Poslat test na můj e-mail</button>
+<button type="button" class="button button--yellow" id="nl-send">Odeslat všem</button>
+</div>
+<div class="nl-confirm" id="nl-confirm" hidden>
+<p></p>
+<div class="nl-actions">
+<button type="button" class="button button--yellow" id="nl-confirm-yes">Ano, odeslat</button>
+<button type="button" class="button button--outline" id="nl-confirm-no">Zpět</button>
+</div>
+</div>
+<div class="nl-progress" id="nl-progress" hidden><div class="nl-bar"><span></span></div><p></p></div>
+<p class="nl-amsg" id="nl-msg" role="status" aria-live="polite"></p>
+</form>
+</section>
+
+<section class="nl-panel nl-preview" aria-labelledby="nl-pv-title">
+<div class="nl-panel-head">
+<h2 class="nl-h2" id="nl-pv-title">Náhled e-mailu</h2>
+<div class="seg" role="group" aria-label="Šířka náhledu">
+<button type="button" aria-pressed="true" data-w="600">Počítač</button>
+<button type="button" aria-pressed="false" data-w="375">Mobil</button>
+</div>
+</div>
+<div class="nl-frame-wrap"><iframe id="nl-frame" title="Náhled e-mailu" sandbox="allow-popups"></iframe></div>
+</section>
+</div>
+
+<section class="nl-panel nl-subs" aria-labelledby="nl-subs-title">
+<div class="nl-panel-head">
+<h2 class="nl-h2" id="nl-subs-title">Odběratelé</h2>
+<div class="seg" role="group" aria-label="Filtr odběratelů" id="nl-filter">
+<button type="button" aria-pressed="true" data-f="">Vše</button>
+<button type="button" aria-pressed="false" data-f="confirmed">Potvrzení</button>
+<button type="button" aria-pressed="false" data-f="pending">Čekají</button>
+<button type="button" aria-pressed="false" data-f="unsubscribed">Odhlášení</button>
+</div>
+</div>
+<div class="nl-table-wrap"><table class="nl-table">
+<thead><tr><th scope="col">E-mail</th><th scope="col">Stav</th><th scope="col">Přihlášen</th><th scope="col">Odkud</th><th scope="col"><span class="sr-only">Akce</span></th></tr></thead>
+<tbody id="nl-subs"></tbody>
+</table></div>
+</section>
+
+<section class="nl-panel" aria-labelledby="nl-hist-title">
+<h2 class="nl-h2" id="nl-hist-title">Historie odeslaných</h2>
+<ol class="nl-history" id="nl-history"></ol>
+</section>
+</div>
 </div>
 </main>
 </body>

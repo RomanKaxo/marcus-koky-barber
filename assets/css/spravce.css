@@ -126,3 +126,86 @@
 @media (prefers-reduced-motion: reduce) {
   .detail { animation: none; }
 }
+
+/* ---------- záložky správy ---------- */
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+.admin-tabs { display: flex; gap: 32px; margin-bottom: 32px; border-bottom: 1px solid var(--line); }
+.admin-tabs button { position: relative; min-height: 52px; padding: 0 2px; border: 0; background: none; color: var(--muted); font-size: 15px; font-weight: 800; letter-spacing: .04em; cursor: pointer; transition: color .2s; }
+.admin-tabs button::after { content: ''; position: absolute; left: 0; right: 0; bottom: -1px; height: 2px; background: var(--yellow); transform: scaleX(0); transition: transform .3s var(--ease); }
+.admin-tabs button:hover { color: var(--text); }
+.admin-tabs button[aria-selected="true"] { color: var(--text); }
+.admin-tabs button[aria-selected="true"]::after { transform: scaleX(1); }
+
+/* ---------- newsletter ---------- */
+.nl-login { max-width: 440px; padding-block: 24px 64px; }
+.nl-login h1 { font-size: clamp(36px, 3.6vw, 56px); margin-bottom: 32px; }
+.nl-login form { display: grid; gap: 16px; }
+.nl-afield { display: flex; flex-direction: column; gap: 6px; }
+.nl-afield > span { font-size: 13px; font-weight: 700; }
+.nl-afield small { color: var(--muted); font-size: 13px; }
+.nl-afield input, .nl-afield textarea { width: 100%; min-height: 52px; padding: 12px 14px; border: 1px solid rgba(244,239,230,.2); border-radius: 2px; background: var(--black); color: var(--text); font: inherit; font-size: 16px; transition: border-color .2s; }
+.nl-afield textarea { resize: vertical; line-height: 1.6; }
+.nl-afield input:focus, .nl-afield textarea:focus { outline: none; border-color: var(--yellow); }
+.nl-afield ::placeholder { color: rgba(244,239,230,.3); }
+.nl-check { display: flex; gap: 12px; align-items: center; font-size: 15px; cursor: pointer; }
+.nl-check input { width: 20px; height: 20px; margin: 0; accent-color: var(--yellow); }
+.nl-amsg { min-height: 1.5em; font-size: 14px; font-weight: 600; color: #f08a75; }
+.nl-amsg.is-ok { color: #8fd6a2; }
+
+.nl-admin-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 32px; align-items: start; margin-bottom: 32px; }
+.nl-panel { padding: 28px; border: 1px solid var(--line); background: var(--layer); }
+.nl-panel + .nl-panel { margin-top: 32px; }
+.nl-admin-grid .nl-panel + .nl-panel { margin-top: 0; }
+.nl-panel-head { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; margin-bottom: 20px; }
+.nl-panel-head .nl-h2 { margin: 0; }
+.nl-h2 { margin: 0 0 20px; font-family: var(--display); font-size: 28px; font-weight: 600; line-height: 1.2; }
+#nl-editor { display: grid; gap: 18px; }
+.nl-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+.nl-actions .button { gap: 12px; }
+.nl-actions .button:disabled { opacity: .45; cursor: default; }
+.nl-confirm { padding: 18px; border: 1px solid var(--yellow); background: rgba(255,212,0,.06); }
+.nl-confirm p { margin-bottom: 14px; font-weight: 600; }
+.nl-progress p { margin-top: 8px; color: var(--muted); font-size: 14px; }
+.nl-bar { height: 6px; background: rgba(244,239,230,.1); overflow: hidden; }
+.nl-bar span { display: block; width: 0; height: 100%; background: var(--yellow); transition: width .4s var(--ease); }
+.nl-preview .seg button { min-height: 40px; padding: 0 16px; }
+.nl-preview .seg button[aria-pressed="true"], #nl-filter button[aria-pressed="true"] { background: var(--gold); color: var(--black); }
+.nl-frame-wrap { display: flex; justify-content: center; padding: 16px 0; background: #050505; border: 1px solid rgba(244,239,230,.08); overflow-x: auto; }
+#nl-frame { display: block; width: 600px; max-width: 100%; height: 760px; border: 0; background: #0a0a0a; transition: width .3s var(--ease); }
+
+#nl-filter button { min-height: 40px; padding: 0 14px; }
+.nl-table-wrap { overflow-x: auto; }
+.nl-table { width: 100%; border-collapse: collapse; font-size: 15px; }
+.nl-table th { padding: 10px 12px; color: var(--gold); font-size: 11px; font-weight: 700; letter-spacing: .16em; text-align: left; text-transform: uppercase; border-bottom: 1px solid var(--line); }
+.nl-table td { padding: 12px; border-bottom: 1px solid rgba(232,196,102,.1); white-space: nowrap; }
+.nl-table td.nl-email { font-weight: 700; white-space: normal; word-break: break-all; }
+.nl-row-act { text-align: right; }
+.nl-del { padding: 6px 0; border: 0; border-bottom: 1px solid currentColor; background: none; color: var(--muted); font-size: 13px; font-weight: 700; cursor: pointer; }
+.nl-del:hover { color: var(--gold); }
+.nl-del.is-armed { color: #f08a75; }
+.nl-empty { color: var(--muted); padding: 20px 12px !important; }
+.nl-badge { display: inline-block; padding: 2px 8px; border-radius: 2px; font-size: 11px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
+.nl-badge--confirmed { background: rgba(120,200,140,.15); color: #8fd6a2; }
+.nl-badge--pending { background: rgba(255,212,0,.14); color: var(--yellow); }
+.nl-badge--unsubscribed { background: rgba(240,138,117,.15); color: #f08a75; }
+.nl-history { margin: 0; padding: 0; list-style: none; }
+.nl-history li { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; padding: 14px 0; border-bottom: 1px solid rgba(232,196,102,.1); }
+.nl-history li > div:first-child { display: flex; flex-direction: column; }
+.nl-history li span:not(.nl-badge) { color: var(--muted); font-size: 13px; }
+.nl-hist-side { display: flex; gap: 10px; align-items: center; }
+
+@media (max-width: 1099px) {
+  .nl-admin-grid { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 759px) {
+  .admin-tabs { gap: 24px; }
+  .nl-panel { padding: 20px 16px; }
+  .nl-actions .button { width: 100%; }
+  #nl-frame { height: 640px; }
+  .nl-table thead { display: none; }
+  .nl-table, .nl-table tbody, .nl-table tr, .nl-table td { display: block; }
+  .nl-table tr { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px 12px; padding: 12px 0; border-bottom: 1px solid rgba(232,196,102,.1); }
+  .nl-table td { padding: 0; border: 0; font-size: 13px; color: var(--muted); }
+  .nl-table td.nl-email { grid-column: 1 / -1; color: var(--text); font-size: 15px; }
+  .nl-table td.nl-row-act { grid-column: 2; grid-row: 2 / span 3; align-self: center; }
+}
