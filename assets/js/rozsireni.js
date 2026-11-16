@@ -24,37 +24,25 @@
     const done = dialog.querySelector('.bd-done');
     const errorBox = dialog.querySelector('.bd-error');
     const submit = dialog.querySelector('.bd-submit');
-    const tabs = dialog.querySelector('#bd-tabs');
-    const list = dialog.querySelector('#bd-services');
     const daysBox = dialog.querySelector('#bd-days');
-    const timesBox = dialog.querySelector('#bd-times');
     const pad = (n) => String(n).padStart(2, '0');
     const iso = (d) => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
     const fmtWd = new Intl.DateTimeFormat('cs-CZ', { weekday: 'short' });
     const fmtLong = new Intl.DateTimeFormat('cs-CZ', { weekday: 'long', day: 'numeric', month: 'numeric' });
     const esc = (t) => String(t).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
     let opener = null;
-    let activeTab = 0;
 
-    // 1 — služby
-    tabs.innerHTML = SERVICES.map((g, i) => `<button type="button" role="tab" aria-selected="${i === 0}" data-tab="${i}">${g.tab}</button>`).join('');
-    const renderServices = () => {
-      const chosen = form.querySelector('input[name="sluzba"]:checked')?.value;
-      list.innerHTML = SERVICES[activeTab].items.map(([name, price, sub]) => {
-        const value = `${SERVICES[activeTab].tab === 'Střih' || SERVICES[activeTab].tab === 'Vousy' || SERVICES[activeTab].tab === 'Kombinace' ? '' : SERVICES[activeTab].tab + ': '}${name} · ${price} Kč`;
-        return `<label class="bd-service"><input type="radio" name="sluzba" value="${esc(value)}" data-name="${esc(name)}" data-price="${price}" ${value === chosen ? 'checked' : ''}>
-          <span class="bd-service-name">${esc(name)}${sub ? `<small>${esc(sub)}</small>` : ''}</span><span class="bd-service-price">${price}<small> Kč</small></span></label>`;
-      }).join('');
-      tabs.querySelectorAll('button').forEach((b) => b.setAttribute('aria-selected', String(Number(b.dataset.tab) === activeTab)));
+    // 1 — služby (jeden výběr se skupinami)
+    const serviceSelect = dialog.querySelector('#bd-service');
+    serviceSelect.insertAdjacentHTML('beforeend', SERVICES.map((g) => `<optgroup label="${esc(g.tab)}">${g.items.map(([name, price, sub]) => {
+      const value = `${['Střih', 'Vousy', 'Kombinace'].includes(g.tab) ? '' : g.tab + ': '}${name} · ${price} Kč`;
+      return `<option value="${esc(value)}" data-name="${esc(name)}" data-price="${price}">${esc(name)}${sub && g.tab === 'Střih' ? ` (${esc(sub)})` : ''} · ${price} Kč</option>`;
+    }).join('')}</optgroup>`).join(''));
+    let selected = null; // {value, name, price}
+    const syncService = () => {
+      const o = serviceSelect.selectedOptions[0];
+      selected = o && o.value ? { value: o.value, name: o.dataset.name, price: o.dataset.price } : null;
     };
-    // vybraná služba z jiné záložky zůstává zaškrtnutá ve skrytém inputu
-      let selected = null; // {value, name, price}
-    tabs.addEventListener('click', (e) => {
-      const b = e.target.closest('[data-tab]'); if (!b) return;
-      activeTab = Number(b.dataset.tab);
-      renderServices();
-      if (selected) { const r = [...list.querySelectorAll('input')].find((i) => i.value === selected.value); if (r) r.checked = true; }
-    });
 
     // 2 — dny a časy
     const renderDays = () => {
@@ -72,21 +60,22 @@
       }
       daysBox.innerHTML = out.join('');
     };
+    const timeSelect = dialog.querySelector('#bd-time');
     const renderTimes = () => {
       const val = form.querySelector('input[name="den"]:checked')?.value;
-      if (!val) { timesBox.innerHTML = '<p class="bd-times-hint">Nejdřív vyber den, pak čas.</p>'; return; }
-      const prev = form.querySelector('input[name="cas"]:checked')?.value;
+      const prev = timeSelect.value;
+      if (!val) { timeSelect.innerHTML = '<option value="">Nejdřív vyber den</option>'; timeSelect.disabled = true; return; }
       const [y, m, d] = val.split('-').map(Number);
       const r = OPEN[new Date(y, m - 1, d).getDay()];
       const now = new Date();
-      const out = [];
+      const opts = ['<option value="">Vyber čas…</option>'];
       for (let t = r[0] * 60; t < r[1] * 60; t += 30) {
         const label = `${Math.floor(t / 60)}:${pad(t % 60)}`;
-        const start = new Date(y, m - 1, d, Math.floor(t / 60), t % 60);
-        const off = start - now < 60 * 60 * 1000; // nejdřív za hodinu
-        out.push(`<label class="bd-time${off ? ' is-off' : ''}"><input type="radio" name="cas" value="${label}" ${off ? 'disabled' : ''} ${!off && label === prev ? 'checked' : ''}><span>${label}</span></label>`);
+        if (new Date(y, m - 1, d, Math.floor(t / 60), t % 60) - now < 60 * 60 * 1000) continue; // nejdřív za hodinu
+        opts.push(`<option ${label === prev ? 'selected' : ''}>${label}</option>`);
       }
-      timesBox.innerHTML = out.join('');
+      timeSelect.innerHTML = opts.join('');
+      timeSelect.disabled = false;
     };
 
     // souhrn dole
@@ -95,7 +84,7 @@
     const sumPrice = dialog.querySelector('#bd-sum-price');
     const summary = () => {
       const den = form.querySelector('input[name="den"]:checked')?.value;
-      const cas = form.querySelector('input[name="cas"]:checked')?.value;
+      const cas = timeSelect.value;
       sumService.textContent = selected ? selected.name : 'Vyber službu';
       sumPrice.textContent = selected ? `${selected.price} Kč` : '';
       if (den) { const [y, m, d] = den.split('-').map(Number); sumWhen.textContent = `${fmtLong.format(new Date(y, m - 1, d))}${cas ? ` v ${cas}` : ', vyber čas'}`; }
@@ -107,10 +96,10 @@
       opener = trigger || null;
       renderDays(); renderTimes();
       if (service) {
-        activeTab = SERVICES.findIndex((g) => g.tab === 'První návštěva');
-        renderServices();
-        const r = list.querySelector('input'); if (r) { r.checked = true; r.dispatchEvent(new Event('change', { bubbles: true })); }
-      } else renderServices();
+        const o = [...serviceSelect.options].find((x) => x.value.startsWith('První návštěva: Klasický střih'));
+        if (o) serviceSelect.value = o.value;
+      }
+      syncService();
       form.hidden = false; done.hidden = true;
       summary();
       dialog.showModal();
@@ -152,7 +141,7 @@
     form.addEventListener('input', (e) => { if (rules[e.target.name]) checkField(e.target.name, false); });
     form.addEventListener('change', (e) => {
       const t = e.target;
-      if (t.name === 'sluzba') { selected = { value: t.value, name: t.dataset.name, price: t.dataset.price }; flag('sluzba', true); }
+      if (t.name === 'sluzba') { syncService(); flag('sluzba', !!selected); }
       if (t.name === 'den') renderTimes();
       if (t.name === 'cas') flag('den', true);
       if (t.name === 'souhlas') flag('souhlas', t.checked);
@@ -163,7 +152,7 @@
       e.preventDefault();
       errorBox.hidden = true;
       const okService = flag('sluzba', !!selected);
-      const okDay = flag('den', !!form.querySelector('input[name="den"]:checked') && !!form.querySelector('input[name="cas"]:checked'));
+      const okDay = flag('den', !!form.querySelector('input[name="den"]:checked') && !!timeSelect.value);
       const okFields = Object.keys(rules).map((n) => checkField(n, true)).every(Boolean);
       const okConsent = flag('souhlas', form.elements.souhlas.checked);
       if (!(okService && okDay && okFields && okConsent)) {
@@ -186,7 +175,7 @@
         dialog.querySelector('.bd-done-recap').textContent = `${sumService.textContent} · ${sumWhen.textContent}`;
         if (DEMO) dialog.querySelector('.bd-done-text').textContent = 'Ukázka: na tomhle náhledu se rezervace neodesílá. Na ostrém webu dorazí Marcusovi e-mailem a tobě potvrzení.';
         form.hidden = true; done.hidden = false;
-        form.reset(); selected = null;
+        form.reset(); selected = null; renderTimes();
         done.querySelector('button').focus();
       } catch (err) {
         errorBox.textContent = `${err.message} Zavolej prosím na +420 732 165 547.`;

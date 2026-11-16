@@ -710,8 +710,7 @@
 <div class="bd-body">
 <section class="bd-step" aria-labelledby="bd-s1">
 <h3 class="bd-step-title" id="bd-s1"><span>1</span>Co si dáme?</h3>
-<div class="bd-tabs" role="tablist" aria-label="Druh služby" id="bd-tabs"></div>
-<div class="bd-services" id="bd-services" role="radiogroup" aria-labelledby="bd-s1"></div>
+<label class="bd-select"><span class="sr-only">Služba</span><select name="sluzba" id="bd-service" required><option value="">Vyber službu…</option></select></label>
 <small class="bd-error-msg" data-for="sluzba" hidden>Vyber službu.</small>
 </section>
 
@@ -719,7 +718,7 @@
 <h3 class="bd-step-title" id="bd-s2"><span>2</span>Kdy se ti to hodí?</h3>
 <div class="bd-days" id="bd-days" role="radiogroup" aria-label="Den"></div>
 <p class="bd-weekend">Sobota a neděle jen po domluvě: <a href="tel:+420732165547">zavolej</a>.</p>
-<div class="bd-times" id="bd-times" role="radiogroup" aria-label="Čas"></div>
+<label class="bd-select bd-select--time"><span>Čas</span><select name="cas" id="bd-time" required disabled><option value="">Nejdřív vyber den</option></select></label>
 <small class="bd-error-msg" data-for="den" hidden>Vyber den a čas.</small>
 </section>
 
