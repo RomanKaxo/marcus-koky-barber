@@ -44,3 +44,16 @@ Běží jen v prohlížeči, nic neodesílá, obsazenost je smyšlená. Hlavní 
 časů. Ukázkoví klienti jsou smyšlení; rezervace z `rezervace.html` a změny se drží v localStorage prohlížeče.
 Pro ostrý provoz chybí server (ukládání, e-maily, správa termínů pro Marcuse) a token Slevomat Partner API
 (`voucherCheck` při zadání kódu, `voucherApply` po potvrzení).
+
+## Rezervační okno a formulář (listopad 2026)
+
+- Každé tlačítko „Rezervovat“ otevře okno s formulářem (jméno, telefon a e-mail povinné, služba, den, čas, poznámka,
+  souhlas). Na mobilu okno samo vyskočí 1,6 s po příchodu, jednou za návštěvu (ne při odkazu s #kotvou).
+- Odeslání: `api/rezervace.php` (PHP `mail()`): e-mail Marcusovi na info@marcuskoky.cz s Reply-To klienta a potvrzení
+  klientovi. Honeypot pole `web`, limit 5 odeslání za hodinu z jedné IP. Odesílatel `rezervace@marcuskoky.cz` musí
+  hosting povolit (SPF). Na GitHub Pages PHP neběží, formulář tam jen předvede úspěch.
+- Odkaz na Termino zůstává v okně jako alternativa a jako záloha bez JavaScriptu.
+- Sekce Holiči: Marcus + dvě místa pro další holiče (fotka a text doplníme).
+- Animace: nástup úvodu, ceny se načítají od nuly, ikony služeb se vykreslí, pás s ikonami, barberský pruh.
+  Vše respektuje `prefers-reduced-motion`.
+- Vlastní ikony v `assets/icons/` (nakreslil Codex, náhled `assets/icons/nahled.html`).

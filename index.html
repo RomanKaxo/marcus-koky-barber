@@ -23,8 +23,10 @@
 <link rel="manifest" href="site.webmanifest">
 <link rel="stylesheet" href="assets/fonts/fonts.css">
 <link rel="stylesheet" href="assets/css/style.css">
+<link rel="stylesheet" href="assets/css/rozsireni.css">
 <script src="assets/js/main.js" defer>
 </script>
+<script src="assets/js/rozsireni.js" defer></script>
 <link rel="preload" as="image" href="assets/img/marcus-studio.webp" type="image/webp" fetchpriority="high">
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BarberShop", "name": "Marcus Koky Barber", "description": "Pánský barbershop v Brně v Ponávka Tower. Pánské střihy nůžkami i strojkem, fade, úprava vousů a holení s horkým ručníkem.", "image": "https://romankaxo.github.io/marcus-koky-barber/assets/img/og.jpg", "url": "https://romankaxo.github.io/marcus-koky-barber/", "telephone": "+420732165547", "email": "info@marcuskoky.cz", "address": {"@type": "PostalAddress", "streetAddress": "Bratislavská 201/14", "addressLocality": "Brno-střed-Zábrdovice", "postalCode": "602 00", "addressCountry": "CZ"}, "priceRange": "390–1120 Kč", "openingHoursSpecification": [{"@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday"], "opens": "14:00", "closes": "20:00"}, {"@type": "OpeningHoursSpecification", "dayOfWeek": ["Tuesday", "Wednesday", "Thursday", "Friday"], "opens": "09:00", "closes": "20:00"}], "sameAs": ["https://www.instagram.com/marcus_koky_barber/", "https://www.facebook.com/profile.php?id=61557123255250"], "@id": "https://romankaxo.github.io/marcus-koky-barber/#barbershop", "areaServed": {"@type": "City", "name": "Brno"}, "hasOfferCatalog": {"@type": "OfferCatalog", "name": "Ceník", "itemListElement": [{"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Klasický střih (služba od 12 let)"}, "price": "640", "priceCurrency": "CZK"}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Střih strojkem"}, "price": "540", "priceCurrency": "CZK"}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Střih dlouhých vlasů"}, "price": "860", "priceCurrency": "CZK"}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Úprava vousů HOT TOWEL"}, "price": "560", "priceCurrency": "CZK"}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Úprava vousů strojkem"}, "price": "430", "priceCurrency": "CZK"}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Holení celé tváře HOT TOWEL"}, "price": "590", "priceCurrency": "CZK"}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Klasický střih a úprava vousů HOT TOWEL"}, "price": "1120", "priceCurrency": "CZK"}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Klasický střih a úprava vousů strojkem"}, "price": "1050", "priceCurrency": "CZK"}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Střih strojkem a úprava vousů HOT TOWEL"}, "price": "1020", "priceCurrency": "CZK"}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Střih strojkem a úprava vousů strojkem"}, "price": "950", "priceCurrency": "CZK"}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Klasický střih a holení celé tváře"}, "price": "1090", "priceCurrency": "CZK"}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Střih strojkem a holení celé tváře"}, "price": "990", "priceCurrency": "CZK"}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Barvení vousů"}, "price": "220", "priceCurrency": "CZK"}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Dětský střih"}, "price": "390", "priceCurrency": "CZK"}]}, "potentialAction": {"@type": "ReserveAction", "target": "https://local.termino.eu/embed/marcus-koky-barber", "name": "Rezervovat termín online"}}</script>
 </head>
@@ -40,10 +42,11 @@
 <a href="#sluzby">Služby</a>
 <a href="#cenik">Ceník</a>
 <a href="#o-mne">O&nbsp;mně</a>
+<a href="#holici">Holiči</a>
 <a href="#prace">Práce</a>
 <a href="#reference">Reference</a>
 <a href="#kontakt">Kontakt</a>
-<a class="button button--yellow menu-booking" href="https://local.termino.eu/embed/marcus-koky-barber" target="_blank" rel="noopener">Rezervovat<svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+<a class="button button--yellow menu-booking" href="https://local.termino.eu/embed/marcus-koky-barber" target="_blank" rel="noopener" data-booking>Rezervovat<svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
 <path d="M6 18 18 6M6 6h12v12"/>
 </svg>
 </a>
@@ -67,7 +70,7 @@
 <h1 id="hero-title">Království<br>s&nbsp;černou duší<br>a&nbsp;<em>zlatým srdcem</em>.</h1>
 <p class="hero-intro">Jsem Marcus, barber z&nbsp;Brna, a&nbsp;pánskému stříhání se věnuji už nějaký ten pátek. Nůžky, strojek, břitva a&nbsp;horký ručník – přijď, pokud chceš vypadat jako opravdový král.</p>
 <div class="button-row">
-<a class="button button--yellow" href="https://local.termino.eu/embed/marcus-koky-barber" target="_blank" rel="noopener">Rezervovat online<svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+<a class="button button--yellow" href="https://local.termino.eu/embed/marcus-koky-barber" target="_blank" rel="noopener" data-booking>Rezervovat online<svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
 <path d="M6 18 18 6M6 6h12v12"/>
 </svg>
 </a>
@@ -112,7 +115,7 @@
 </p>
 </div>
 </div>
-<a class="button button--black" href="https://local.termino.eu/embed/marcus-koky-barber" target="_blank" rel="noopener">Rezervovat první návštěvu<svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+<a class="button button--black" href="https://local.termino.eu/embed/marcus-koky-barber" target="_blank" rel="noopener" data-booking data-service="Klasický střih (první návštěva)">Rezervovat první návštěvu<svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
 <path d="M6 18 18 6M6 6h12v12"/>
 </svg>
 </a>
@@ -134,11 +137,7 @@
 <div class="services-grid" data-reveal>
 <article class="service-card">
 <div class="service-top">
-<svg viewBox="0 0 50 50" fill="none" aria-hidden="true">
-<circle cx="12" cy="39" r="7"/>
-<circle cx="36" cy="39" r="7"/>
-<path d="m16 33 23-27M32 33 9 6m15 18-4 5m4-5 4 5"/>
-</svg>
+<svg viewBox="0 0 48 48" fill="none" aria-hidden="true"><path pathLength="1" d="M17 33c0 3.6-2.7 6.5-6 6.5S5 36.6 5 33s2.7-6.5 6-6.5 6 2.9 6 6.5Z"/><path pathLength="1" d="M31 33c0 3.6 2.7 6.5 6 6.5s6-2.9 6-6.5-2.7-6.5-6-6.5-6 2.9-6 6.5Z"/><path pathLength="1" d="M15 28 37 5c1.1 6.5-2.4 12.2-8 17l-4 3"/><path pathLength="1" d="M33 28 11 5c-1.1 6.5 2.4 12.2 8 17l4 3"/><path pathLength="1" d="M25.5 23a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z"/><path pathLength="1" d="M39 39c0 2.2 1.2 3.5 3.5 3.5"/></svg>
 <span>01</span>
 </div>
 <h3>Pánský střih nůžkami / strojkem</h3>
@@ -146,9 +145,7 @@
 </article>
 <article class="service-card">
 <div class="service-top">
-<svg viewBox="0 0 50 50" fill="none" aria-hidden="true">
-<path d="m6 12 33-6 3 12-25 7-4-6-7 1Zm12 13 23 18c4 3 8-2 5-5L30 23M34 10l2 7M11 14l2 5"/>
-</svg>
+<svg viewBox="0 0 48 48" fill="none" aria-hidden="true"><path pathLength="1" d="M9 24 34 7l6 9-20 14-7-2-4-4Z"/><path pathLength="1" d="M18 25 36 13"/><path pathLength="1" d="M10 26 6 34a5 5 0 0 0 3 7l27 2a3.5 3.5 0 0 0 1-7l-21-4"/><path pathLength="1" d="M14 37 31 38.5"/><path pathLength="1" d="M11.5 24.5 7 21"/></svg>
 <span>02</span>
 </div>
 <h3>Úprava vousů a&nbsp;holení</h3>
@@ -156,12 +153,7 @@
 </article>
 <article class="service-card">
 <div class="service-top">
-<svg viewBox="0 0 50 50" fill="none" aria-hidden="true">
-<path d="m5 17 10 9 9-18 9 18 10-9-5 23H10ZM10 34h28"/>
-<circle cx="5" cy="14" r="2"/>
-<circle cx="24" cy="5" r="2"/>
-<circle cx="43" cy="14" r="2"/>
-</svg>
+<svg viewBox="0 0 48 48" fill="none" aria-hidden="true"><path pathLength="1" d="M14 10V6h14v5H14Z"/><path pathLength="1" d="M19 11v4M25 11v4"/><path pathLength="1" d="M13 28V18a3 3 0 0 1 3-3h11a3 3 0 0 1 3 3v10"/><path pathLength="1" d="M13 28h20v6H13a3 3 0 0 1 0-6Z"/><path pathLength="1" d="M8 22h8M8 22v8M29 22h8v8"/><path pathLength="1" d="M33 34 36 38h6M22 34v8M17 34v4h10"/><path pathLength="1" d="M13 44c1-3 5-4 9-4s8 1 9 4H13Z"/></svg>
 <span>03</span>
 </div>
 <h3>Full-service</h3>
@@ -407,6 +399,11 @@
 <p class="price-note">Ceny jsou v&nbsp;Kč, termín si rezervuješ online v&nbsp;systému Termino.</p>
 </div>
 </section>
+<div class="marquee" aria-hidden="true">
+<div class="marquee-track">
+<span data-icon="nuzky">Střih nůžkami</span><span data-icon="strojek">Fade strojkem</span><span data-icon="britva">Břitva</span><span data-icon="rucnik">Horký ručník</span><span data-icon="vousy">Úprava vousů</span><span data-icon="kava">Káva a pokec</span>
+</div>
+</div>
 <section class="about-section section" id="o-mne" tabindex="-1" aria-labelledby="about-title">
 <div class="container about-layout">
 <div class="about-quote" data-reveal>
@@ -428,6 +425,58 @@
 <div class="barber-detail" aria-hidden="true">
 </div>
 <p class="muted">Mimo křeslo mě najdeš na volejbalovém hřišti, v&nbsp;nahrávacím studiu nebo na cestách po světě. Mám hodně příběhů ke sdílení a&nbsp;vždy si rád poslechnu i&nbsp;ten tvůj.</p>
+</div>
+</div>
+</section>
+<section class="team-section section" id="holici" tabindex="-1" aria-labelledby="team-title">
+<div class="container">
+<div class="section-heading" data-reveal>
+<div>
+<p class="eyebrow">Holiči</p>
+<h2 id="team-title">Kdo tě <em>korunuje</em>.</h2>
+</div>
+<p>Každý barber má svůj styl. Vyber si, ke komu půjdeš.</p>
+</div>
+<div class="team-list">
+<article class="barber" data-reveal>
+<div class="barber-photo">
+<picture>
+<source srcset="assets/img/marcus-studio.webp" type="image/webp">
+<img src="assets/img/marcus-studio.jpg" width="1920" height="839" alt="Marcus v křesle ve svém barbershopu v Brně" loading="lazy">
+</picture>
+</div>
+<div class="barber-text">
+<p class="barber-role">Barber · Brno</p>
+<h3>Marcus</h3>
+<p>Nůžky, strojek, břitva i&nbsp;horký ručník. Klasika i&nbsp;fade, ke každému individuálně a&nbsp;vždycky se šálkem dobré kávy.</p>
+<ul class="barber-tags"><li>Klasický střih</li><li>Fade</li><li>Vousy HOT TOWEL</li></ul>
+<a class="button button--yellow" href="https://local.termino.eu/embed/marcus-koky-barber" target="_blank" rel="noopener" data-booking data-barber="Marcus">Rezervovat k&nbsp;Marcusovi<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg></a>
+</div>
+</article>
+<article class="barber barber--placeholder" data-reveal>
+<div class="barber-photo">
+<div class="photo-placeholder"><img src="assets/img/emblem-gold.png" width="331" height="362" alt="" loading="lazy"><span>Fotka holiče</span></div>
+</div>
+<div class="barber-text">
+<p class="barber-role">Barber · doplníme</p>
+<h3>Jméno holiče</h3>
+<p>Sem přijde pár vět o&nbsp;holiči: v&nbsp;čem je nejlepší, jak dlouho stříhá a&nbsp;co ho baví. Text doplníme podle podkladů.</p>
+<ul class="barber-tags"><li>Specializace</li><li>Specializace</li></ul>
+<a class="button button--outline" href="https://local.termino.eu/embed/marcus-koky-barber" target="_blank" rel="noopener" data-booking>Rezervovat<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg></a>
+</div>
+</article>
+<article class="barber barber--placeholder" data-reveal>
+<div class="barber-photo">
+<div class="photo-placeholder"><img src="assets/img/emblem-gold.png" width="331" height="362" alt="" loading="lazy"><span>Fotka holiče</span></div>
+</div>
+<div class="barber-text">
+<p class="barber-role">Barber · doplníme</p>
+<h3>Jméno holiče</h3>
+<p>Sem přijde pár vět o&nbsp;holiči: v&nbsp;čem je nejlepší, jak dlouho stříhá a&nbsp;co ho baví. Text doplníme podle podkladů.</p>
+<ul class="barber-tags"><li>Specializace</li><li>Specializace</li></ul>
+<a class="button button--outline" href="https://local.termino.eu/embed/marcus-koky-barber" target="_blank" rel="noopener" data-booking>Rezervovat<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg></a>
+</div>
+</article>
 </div>
 </div>
 </section>
@@ -610,7 +659,7 @@
 </tr>
 </tbody>
 </table>
-<a class="button button--yellow" href="https://local.termino.eu/embed/marcus-koky-barber" target="_blank" rel="noopener">Rezervovat termín online<svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+<a class="button button--yellow" href="https://local.termino.eu/embed/marcus-koky-barber" target="_blank" rel="noopener" data-booking>Rezervovat termín online<svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
 <path d="M6 18 18 6M6 6h12v12"/>
 </svg>
 </a>
@@ -639,7 +688,7 @@
 </div>
 </footer>
 <div class="mobile-bar" aria-label="Rychlý kontakt">
-<a class="button button--yellow" href="https://local.termino.eu/embed/marcus-koky-barber" target="_blank" rel="noopener">Rezervovat<svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+<a class="button button--yellow" href="https://local.termino.eu/embed/marcus-koky-barber" target="_blank" rel="noopener" data-booking>Rezervovat<svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
 <path d="M6 18 18 6M6 6h12v12"/>
 </svg>
 </a>
@@ -648,5 +697,66 @@
 <path d="m6 3 4 5-2 3c1 3 2 4 5 5l3-2 5 4c-1 4-4 4-7 3C8 19 4 15 3 9 2 6 3 4 6 3Z"/>
 </svg>Zavolat</a>
 </div>
+<dialog class="booking-dialog" id="booking-dialog" aria-labelledby="bd-title">
+<div class="bd-inner">
+<button type="button" class="bd-close" data-close aria-label="Zavřít"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+<div class="bd-form-view">
+<p class="eyebrow">Rezervace</p>
+<h2 id="bd-title">Rezervuj si <em>trůn</em>.</h2>
+<p class="bd-lead">Napiš, kdy ti to vyhovuje. Ozvu se a&nbsp;termín potvrdím.</p>
+<form class="bd-form" id="bd-form" novalidate>
+<label class="bd-field"><span>Jméno</span><input name="jmeno" autocomplete="name" required><small hidden>Napiš jméno.</small></label>
+<label class="bd-field"><span>Telefon</span><input name="telefon" type="tel" inputmode="tel" autocomplete="tel" placeholder="+420" required><small hidden>Telefon je povinný.</small></label>
+<label class="bd-field bd-wide"><span>E-mail</span><input name="email" type="email" autocomplete="email" required><small hidden>Zadej platný e-mail.</small></label>
+<label class="bd-field bd-wide"><span>Služba</span>
+<select name="sluzba" required>
+<option value="">Vyber službu</option>
+<optgroup label="První návštěva">
+<option>Klasický střih (první návštěva) · 499 Kč</option>
+<option>Klasický střih a úprava vousů HOT TOWEL (první návštěva) · 799 Kč</option>
+</optgroup>
+<optgroup label="Klasický ceník">
+<option>Klasický střih · 640 Kč</option>
+<option>Střih strojkem · 540 Kč</option>
+<option>Střih dlouhých vlasů · 860 Kč</option>
+<option>Úprava vousů HOT TOWEL · 560 Kč</option>
+<option>Úprava vousů strojkem · 430 Kč</option>
+<option>Holení celé tváře HOT TOWEL · 590 Kč</option>
+<option>Klasický střih a úprava vousů HOT TOWEL · 1120 Kč</option>
+<option>Klasický střih a úprava vousů strojkem · 1050 Kč</option>
+<option>Střih strojkem a úprava vousů HOT TOWEL · 1020 Kč</option>
+<option>Střih strojkem a úprava vousů strojkem · 950 Kč</option>
+<option>Klasický střih a holení celé tváře · 1090 Kč</option>
+<option>Střih strojkem a holení celé tváře · 990 Kč</option>
+</optgroup>
+<optgroup label="Ostatní">
+<option>14denní restart: klasický střih · 499 Kč</option>
+<option>14denní restart: klasický střih a úprava vousů HOT TOWEL · 849 Kč</option>
+<option>Dětský střih · 390 Kč</option>
+<option>Barvení vousů · 220 Kč</option>
+</optgroup>
+</select><small hidden>Vyber službu.</small></label>
+<label class="bd-field"><span>Den</span><input name="den" type="date" required><small hidden>Vyber den.</small></label>
+<label class="bd-field"><span>Čas</span>
+<select name="cas">
+<option>Kdykoli</option><option>Dopoledne (9–12)</option><option>Odpoledne (12–16)</option><option>Večer (16–20)</option>
+</select></label>
+<label class="bd-field bd-wide"><span>Poznámka <i>(nepovinné)</i></span><textarea name="poznamka" rows="2"></textarea></label>
+<label class="bd-hp" aria-hidden="true">Nevyplňuj<input name="web" tabindex="-1" autocomplete="off"></label>
+<label class="bd-consent bd-wide"><input type="checkbox" name="souhlas" required><span>Souhlasím se <a href="https://www.marcuskoky.cz/gdpr/" target="_blank" rel="noopener">zpracováním osobních údajů</a> kvůli rezervaci.</span></label>
+<small class="bd-consent-error bd-wide" hidden>Bez souhlasu nemůžu rezervaci přijmout.</small>
+<button type="submit" class="button button--yellow bd-submit bd-wide">Odeslat rezervaci<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+<p class="bd-error bd-wide" role="alert" hidden></p>
+</form>
+<p class="bd-alt">Chceš si rovnou vybrat volný čas? <a href="https://local.termino.eu/embed/marcus-koky-barber" target="_blank" rel="noopener">Online kalendář Termino</a> · <a href="tel:+420732165547">+420&nbsp;732&nbsp;165&nbsp;547</a></p>
+</div>
+<div class="bd-done" hidden>
+<img src="assets/img/emblem-gold.png" width="331" height="362" alt="">
+<h2>Díky, <em class="bd-done-name">králi</em>.</h2>
+<p class="bd-done-text">Rezervace dorazila. Ozvu se a&nbsp;termín potvrdím telefonem nebo e-mailem.</p>
+<button type="button" class="button button--outline" data-close>Zavřít</button>
+</div>
+</div>
+</dialog>
 </body>
 </html>
