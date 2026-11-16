@@ -31,7 +31,6 @@ $sluzba  = field('sluzba', 120);
 $den     = field('den', 10);
 $cas     = field('cas', 40);
 $pozn    = mb_substr(trim((string)($_POST['poznamka'] ?? '')), 0, 1000);
-$souhlas = !empty($_POST['souhlas']);
 
 $chyby = [];
 if (mb_strlen($jmeno) < 2) $chyby[] = 'jméno';
@@ -40,7 +39,6 @@ if (!filter_var($email, FILTER_VALIDATE_EMAIL)) $chyby[] = 'e-mail';
 if ($sluzba === '') $chyby[] = 'služba';
 $d = DateTimeImmutable::createFromFormat('!Y-m-d', $den, new DateTimeZone('Europe/Prague'));
 if (!$d || $d < new DateTimeImmutable('today', new DateTimeZone('Europe/Prague'))) $chyby[] = 'den';
-if (!$souhlas) $chyby[] = 'souhlas';
 if ($chyby) reply(422, ['ok' => false, 'error' => 'Zkontroluj: ' . implode(', ', $chyby) . '.']);
 
 // jednoduchý limit podle IP

@@ -252,3 +252,18 @@
   .nl-row { flex-direction: column; }
   .nl-submit { width: 100%; }
 }
+
+/* výzva k rezervaci před kontaktem */
+.cta-band { position: relative; overflow: hidden; background: var(--yellow); color: var(--black); }
+.cta-band::before { content: ''; position: absolute; right: -60px; top: 50%; width: 420px; height: 420px; transform: translateY(-50%); background: url('../img/emblem-black.png') center / contain no-repeat; opacity: .08; pointer-events: none; }
+.cta-band-inner { display: flex; align-items: center; justify-content: space-between; gap: 32px 48px; flex-wrap: wrap; padding-block: clamp(56px, 7vw, 96px); }
+.cta-band .eyebrow { color: var(--black); }
+.cta-band h2 { margin-bottom: 14px; }
+.cta-band h2 em { color: var(--black); }
+.cta-band p:not(.eyebrow) { color: rgba(10,10,10,.75); font-weight: 600; }
+.cta-band .button--yellow { background: var(--black); color: var(--text); }
+.cta-band .button--yellow:hover { background: #292929; }
+.cta-band .button--outline { border-color: rgba(10,10,10,.4); color: var(--black); }
+.cta-band .button--outline:hover { border-color: var(--black); color: var(--black); }
+.bd-legal { color: var(--muted); font-size: 13px; max-width: none; }
+.bd-legal a { color: var(--text); border-bottom: 1px solid var(--gold-dark); }

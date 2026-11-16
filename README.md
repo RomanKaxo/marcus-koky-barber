@@ -96,3 +96,35 @@ přihlášení → potvrzovací e-mail → potvrzení → test → rozeslání p
 one-click → smazání ve správci; chybné heslo, chybějící CSRF, honeypot, duplicitní přihlášení a neplatné tokeny.
 UI prohlédnuté v headless Chromiu na 1440 a 390 px. Neověřeno: skutečné doručení, vykreslení v Gmailu/Outlooku,
 ochrana `.htaccess` (vestavěný server PHP ji ignoruje).
+
+## Právní stránky (listopad 2026)
+
+`gdpr.html` (Zásady ochrany osobních údajů) a `podminky.html` (Podmínky rezervace a služeb) sdílejí vzhled
+z `assets/css/pravni.css`: obsah vlevo (na mobilu nahoře), číslované oddíly, tisk černě na bílém. Obě stránky jsou
+koncept, ne právní posudek, a účinné mají být od 1. 12. 2026. Všechno, co musí provozovatel doplnit nebo potvrdit,
+je na stránkách vyznačené žlutě (`.doplnit` v textu, `.pozn` jako poznámka). Poznámky `.pozn` po vyřešení smaž.
+
+Zásady ochrany osobních údajů (`gdpr.html`):
+
+- potvrdit navržené doby uložení: rezervace 12 měsíců od termínu, komunikace 12 měsíců, nepotvrzené přihlášky
+  k newsletteru 30 dnů, záznam o souhlasu po odhlášení 3 roky; podle nich nastavit mazání (schránka, databáze
+  newsletteru se dnes sama nečistí),
+- ověřit roli služby Termino (samostatný správce, nebo zpracovatel se zpracovatelskou smlouvou),
+- doplnit název poskytovatele hostingu a e-mailu a ověřit zpracovatelskou smlouvu a umístění dat v EU,
+- doplnit, jak dlouho hosting uchovává záznamy o přístupech (logy serveru),
+- pokud si klienty ukládá jinam (kontakty v telefonu, historie střihů), doplnit účel a dobu.
+
+Podmínky rezervace a služeb (`podminky.html`):
+
+- kdy je závazná rezervace přes Termino,
+- plátce DPH ano/ne (věta o cenách), způsoby platby na místě,
+- pravidla 14denního restartu (od kdy se počítá, po jakých službách, kombinace s voucherem),
+- dětský střih: věkové rozmezí, doprovod dospělého,
+- vouchery Slevomat a dárkové poukazy (nebo celou část smazat),
+- pozdní příchod, zrušení/přesun zdarma, nedostavení se (poplatek ano/ne),
+- lhůta pro ohlášení vady při reklamaci.
+
+`404.html` má inline skript, který nastaví `<base>` na `/marcus-koky-barber/` (GitHub Pages) nebo na `/`,
+takže styly, obrázky a odkazy fungují i z hluboké chybějící adresy. Na vlastní doméně musí server vracet
+`404.html` z kořene webu (např. `ErrorDocument 404 /404.html` v `.htaccess`); pokud by web běžel v jiné podsložce,
+je potřeba upravit proměnnou `sub` ve skriptu. Obě právní stránky jsou v `sitemap.xml`.

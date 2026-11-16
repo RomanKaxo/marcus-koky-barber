@@ -148,7 +148,6 @@
       if (t.name === 'sluzba') { syncService(); flag('sluzba', !!selected); }
       if (t.name === 'den') renderTimes();
       if (t.name === 'cas') flag('den', true);
-      if (t.name === 'souhlas') flag('souhlas', t.checked);
       summary();
     });
 
@@ -158,9 +157,8 @@
       const okService = flag('sluzba', !!selected);
       const okDay = flag('den', !!form.querySelector('input[name="den"]:checked') && !!timeSelect.value);
       const okFields = Object.keys(rules).map((n) => checkField(n, true)).every(Boolean);
-      const okConsent = flag('souhlas', form.elements.souhlas.checked);
-      if (!(okService && okDay && okFields && okConsent)) {
-        const first = !okService ? dialog.querySelector('#bd-s1') : !okDay ? dialog.querySelector('#bd-s2') : form.querySelector('[aria-invalid="true"]') || form.elements.souhlas;
+      if (!(okService && okDay && okFields )) {
+        const first = !okService ? dialog.querySelector('#bd-s1') : !okDay ? dialog.querySelector('#bd-s2') : form.querySelector('[aria-invalid="true"]');
         first.scrollIntoView({ behavior: reduced.matches ? 'auto' : 'smooth', block: 'center' });
         if (first.focus && first.tagName !== 'H3') first.focus({ preventScroll: true });
         return;

@@ -3,43 +3,50 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<script>
+// GitHub Pages vrací tuto stránku pro jakoukoli chybějící adresu (i /marcus-koky-barber/a/b/c).
+// Relativní cesty by se pak počítaly od špatné složky, proto nastavíme <base> na kořen webu.
+// Na vlastní doméně musí 404 obsluhovat kořen (/), viz README.
+(function () {
+  if (location.protocol === 'file:') return;
+  var sub = '/marcus-koky-barber/';
+  var base = document.createElement('base');
+  base.href = location.pathname.indexOf(sub) === 0 ? sub : '/';
+  document.head.appendChild(base);
+})();
+</script>
 <title>Stránka nenalezena · Marcus Koky Barber</title>
-<meta name="description" content="Barbershop v Brně v Ponávka Tower. Střih nůžkami i strojkem, úprava vousů s horkým ručníkem. Rezervuj online a odejdi jako král.">
+<meta name="description" content="Tahle stránka tu není. Zpět na úvod Marcus Koky Barber, barbershopu v Brně v Ponávka Tower.">
 <meta name="robots" content="noindex">
 <meta name="theme-color" content="#0A0A0A">
-<meta property="og:type" content="website">
-<meta property="og:locale" content="cs_CZ">
-<meta property="og:site_name" content="Marcus Koky Barber">
-<meta property="og:title" content="Marcus Koky Barber · Království s černou duší a zlatým srdcem">
-<meta property="og:description" content="Prémiový barbershop v Brně. Stříhání nůžkami i strojkem, vousy s horkým ručníkem a full-service. Rezervuj online.">
-<meta property="og:image" content="assets/img/marcus-studio.jpg">
-<meta property="og:image:width" content="1920">
-<meta property="og:image:height" content="839">
-<meta property="og:image:alt" content="Marcus v barbershopu">
 <link rel="icon" href="assets/img/icon-32.png" sizes="32x32">
 <link rel="apple-touch-icon" href="assets/img/icon-180.png">
-<link rel="manifest" href="site.webmanifest">
 <link rel="stylesheet" href="assets/fonts/fonts.css">
 <link rel="stylesheet" href="assets/css/style.css">
-<script src="assets/js/main.js" defer>
-</script>
+<link rel="stylesheet" href="assets/css/pravni.css">
 </head>
-<body class="error-page">
-<a class="skip-link" href="#obsah">Přeskočit na obsah</a>
-<header class="error-header container">
-<a href="index.html" aria-label="Marcus Koky Barber – úvod">
-<img class="" src="assets/img/wordmark-gold.png" width="636" height="130" alt="Marcus Koky Barber">
+<body class="nf-page">
+<header class="legal-header">
+<div class="header-inner">
+<a class="brand" href="./" aria-label="Marcus Koky Barber – úvod">
+<img class="brand-emblem" src="assets/img/emblem-gold.png" width="331" height="362" alt="">
+<img class="brand-wordmark" src="assets/img/wordmark-gold.png" width="636" height="130" alt="Marcus Koky Barber">
 </a>
+</div>
 </header>
-<main id="obsah" class="error-content container" tabindex="-1">
-<img class="" src="assets/img/emblem-gold.png" width="331" height="362" alt="">
-<p class="eyebrow">404</p>
-<h1>Tahle cesta k&nbsp;<em>trůnu</em> nevede.</h1>
-<p>Stránka, kterou hledáš, tu není – král ale nikdy nebloudí dlouho.</p>
-<a class="button button--yellow" href="index.html">Zpět na úvod<svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-<path d="M5 12h14M13 6l6 6-6 6"/>
-</svg>
-</a>
+
+<main class="container nf">
+<div class="nf-copy">
+<p class="eyebrow">Stránka nenalezena</p>
+<h1>Tahle stránka si zašla <em>na holení</em>.</h1>
+<p>A&nbsp;zjevně se jí tam zalíbilo. Adresa, kterou hledáš, tu není nebo se přestěhovala. Trůn ale pořád stojí na svém místě.</p>
+<div class="nf-actions">
+<a class="button button--yellow" href="./">Zpět na úvod<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+<a class="button button--outline" href="./#kontakt">Rezervovat termín<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg></a>
+</div>
+<p class="nf-phone">Radši zavoláš? <a href="tel:+420732165547">+420&nbsp;732&nbsp;165&nbsp;547</a></p>
+</div>
+<div class="nf-code" aria-hidden="true">404</div>
 </main>
 </body>
 </html>

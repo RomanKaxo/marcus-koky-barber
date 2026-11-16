@@ -1,0 +1,147 @@
+/* Právní stránky (gdpr.html, podminky.html) a stránka 404.
+   Navazuje na style.css (barvy, písma, tlačítka, patička) a mění jen to, co dlouhý text potřebuje. */
+
+/* ---------- hlavička ---------- */
+.legal-header { position: sticky; top: 0; z-index: 20; background: rgba(10,10,10,.94); backdrop-filter: blur(14px); border-bottom: 1px solid var(--line); }
+.legal-header .header-inner { min-height: 76px; }
+.legal-header .brand-wordmark { width: 160px; }
+.legal-header nav { display: flex; align-items: center; gap: 28px; font-size: 14px; font-weight: 600; }
+.legal-header nav a:not(.button):hover { color: var(--gold); }
+.legal-header .button { min-height: 44px; padding: 10px 18px; gap: 18px; }
+.legal-back svg { width: 18px; height: 18px; }
+.legal-back { display: inline-flex; align-items: center; gap: 10px; }
+
+/* ---------- úvod stránky ---------- */
+.legal-hero { padding-block: clamp(56px, 7vw, 104px) clamp(40px, 5vw, 64px); border-bottom: 1px solid var(--line); }
+.legal-hero h1 { max-width: 15ch; font-size: clamp(44px, 5.2vw, 84px); }
+.legal-lead { max-width: 60ch; margin-top: 26px; color: var(--muted); font-size: 17px; }
+.legal-meta { display: flex; flex-wrap: wrap; gap: 10px 28px; margin-top: 30px; font-size: 13px; color: var(--muted); }
+.legal-meta strong { color: var(--text); font-weight: 700; }
+.legal-meta span { display: inline-flex; align-items: center; gap: 10px; }
+.legal-meta span::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: var(--gold); }
+
+/* ---------- rozložení: obsah + text ---------- */
+.legal-layout { display: grid; grid-template-columns: 250px minmax(0, 760px); justify-content: space-between; gap: 64px; padding-block: clamp(48px, 6vw, 88px) clamp(88px, 9vw, 140px); }
+.toc { align-self: start; position: sticky; top: 108px; max-height: calc(100vh - 140px); overflow: auto; font-size: 14px; line-height: 1.5; }
+.toc-title { margin-bottom: 18px; color: var(--gold); font-size: 12px; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; }
+.toc ol { list-style: none; margin: 0; padding: 0; border-left: 1px solid var(--line); }
+.toc li { counter-increment: toc; }
+.toc ol { counter-reset: toc; }
+.toc a { display: flex; gap: 12px; padding: 8px 0 8px 18px; margin-left: -1px; border-left: 1px solid transparent; color: var(--muted); transition: color .2s, border-color .2s; }
+.toc a::before { content: counter(toc, decimal-leading-zero); color: var(--gold-dark); font-variant-numeric: tabular-nums; font-size: 12px; padding-top: 1px; }
+.toc a:hover { color: var(--text); border-left-color: var(--gold); }
+
+/* ---------- dlouhý text ---------- */
+.legal { counter-reset: sec; font-size: 16.5px; line-height: 1.8; }
+.legal p, .legal li { max-width: none; }
+.legal > section { padding-top: 8px; scroll-margin-top: 100px; }
+.legal > section + section { margin-top: 56px; padding-top: 48px; border-top: 1px solid rgba(232,196,102,.12); }
+.legal h2 { counter-increment: sec; display: flex; align-items: baseline; gap: 18px; margin-bottom: 22px; font-size: clamp(27px, 2.4vw, 36px); line-height: 1.2; }
+.legal h2::before { content: counter(sec, decimal-leading-zero); flex-shrink: 0; color: var(--gold); font-family: var(--body); font-size: 13px; font-weight: 700; letter-spacing: .14em; transform: translateY(-4px); }
+.legal h3 { margin: 32px 0 10px; font-family: var(--body); font-size: 17px; font-weight: 700; color: var(--text); letter-spacing: .01em; }
+.legal p + p, .legal p + ul, .legal ul + p, .legal p + ol, .legal ol + p, .legal dl + p, .legal p + dl { margin-top: 16px; }
+.legal ul, .legal ol { margin: 0; padding-left: 22px; }
+.legal li + li { margin-top: 8px; }
+.legal ul li::marker { color: var(--gold); }
+.legal ol li::marker { color: var(--gold); font-weight: 700; }
+.legal a:not(.button) { color: var(--gold); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+.legal a:not(.button):hover { color: var(--yellow); }
+.legal strong { color: var(--text); font-weight: 700; }
+.legal-small { color: var(--muted); font-size: 14px; }
+
+/* přehled "ve zkratce" */
+.legal-summary { margin-bottom: 64px; padding: 30px 32px; background: var(--layer); border: 1px solid var(--line); border-radius: 2px; }
+.legal-summary .eyebrow { margin-bottom: 16px; }
+.legal-summary ul { list-style: none; padding: 0; display: grid; gap: 12px; }
+.legal-summary li { position: relative; padding-left: 26px; }
+.legal-summary li::before { content: ''; position: absolute; left: 0; top: .78em; width: 12px; height: 1px; background: var(--gold); }
+
+/* údaje v tabulce (účel → údaje → důvod → doba) */
+.legal-card { margin-top: 18px; border: 1px solid var(--line); border-radius: 2px; background: rgba(18,18,18,.7); }
+.legal-card dl { margin: 0; display: grid; grid-template-columns: 170px 1fr; }
+.legal-card dt, .legal-card dd { margin: 0; padding: 14px 20px; border-top: 1px solid rgba(232,196,102,.1); }
+.legal-card dt:first-of-type, .legal-card dt:first-of-type + dd { border-top: 0; }
+.legal-card dt { color: var(--gold); font-size: 12px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; padding-top: 18px; }
+.legal-contact { display: grid; gap: 4px; margin-top: 16px; padding: 22px 24px; border-left: 2px solid var(--gold); background: var(--layer); font-style: normal; }
+
+/* ---------- místa, která musí doplnit nebo potvrdit provozovatel ---------- */
+.doplnit { display: inline; padding: 1px 6px; border: 1px dashed rgba(255,212,0,.7); border-radius: 2px; background: rgba(255,212,0,.12); color: var(--yellow); font-weight: 600; font-size: .94em; -webkit-box-decoration-break: clone; box-decoration-break: clone; }
+.pozn { display: flex; gap: 14px; margin-top: 18px; padding: 16px 18px; border: 1px dashed rgba(255,212,0,.7); border-radius: 2px; background: rgba(255,212,0,.08); color: var(--text); font-size: 14.5px; line-height: 1.65; }
+.pozn::before { content: 'Doplní / potvrdí provozovatel'; flex-shrink: 0; align-self: flex-start; padding: 3px 8px; background: var(--yellow); color: var(--black); font-size: 10.5px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; line-height: 1.5; border-radius: 2px; max-width: 120px; }
+
+/* ---------- patička ---------- */
+.legal-footer .footer-links { display: flex; flex-wrap: wrap; gap: 8px 28px; }
+.legal-footer .footer-links a[aria-current] { color: var(--gold); }
+
+/* ---------- stránka 404 ---------- */
+.nf-page { display: flex; flex-direction: column; min-height: 100vh; min-height: 100svh; }
+.nf-page .legal-header { position: static; background: transparent; backdrop-filter: none; border-bottom-color: transparent; }
+.nf { flex: 1; display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: clamp(32px, 6vw, 120px); padding-block: clamp(40px, 6vw, 80px) clamp(72px, 8vw, 120px); }
+.nf-code { font-family: var(--display); font-weight: 600; font-size: clamp(150px, 22vw, 360px); line-height: .82; letter-spacing: -.04em; color: transparent; -webkit-text-stroke: 1.5px var(--gold); background: linear-gradient(180deg, rgba(232,196,102,.22), rgba(232,196,102,0) 85%); -webkit-background-clip: text; background-clip: text; user-select: none; text-align: right; }
+.nf-copy h1 { max-width: 12ch; font-size: clamp(44px, 5.2vw, 88px); }
+.nf-copy > h1 + p { max-width: 46ch; margin-block: 26px 36px; color: var(--muted); font-size: 17px; }
+.nf-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+.nf-phone { display: inline-flex; align-items: center; gap: 12px; margin-top: 30px; color: var(--muted); font-size: 14px; }
+.nf-phone a { color: var(--text); font-weight: 700; border-bottom: 1px solid var(--gold-dark); padding-block: 4px; }
+.nf-phone a:hover { color: var(--gold); }
+
+/* ---------- menší obrazovky ---------- */
+@media (max-width: 1099px) {
+  .legal-layout { grid-template-columns: minmax(0, 1fr); gap: 40px; max-width: 760px; }
+  .toc { position: static; max-height: none; padding: 24px; background: var(--layer); border: 1px solid var(--line); }
+  .toc ol { columns: 2; column-gap: 24px; border-left: 0; }
+  .toc li { break-inside: avoid; }
+  .toc a { padding-left: 0; border-left: 0; }
+  .nf { grid-template-columns: minmax(0, 1fr); align-content: start; gap: 24px; }
+  .nf-code { text-align: left; }
+  .nf-code { order: -1; margin-bottom: 12px; }
+}
+@media (max-width: 759px) {
+  .legal-header .header-inner { min-height: 64px; }
+  .legal-header .brand-emblem { width: 30px; }
+  .legal-header .brand-wordmark { width: 128px; }
+  .legal-header nav { gap: 16px; }
+  .legal-header .hide-sm { display: none; }
+  .legal-hero h1 { font-size: clamp(38px, 11vw, 52px); }
+  .legal-lead { font-size: 16px; }
+  .legal { font-size: 16px; }
+  .legal > section + section { margin-top: 44px; padding-top: 38px; }
+  .legal h2 { gap: 12px; }
+  .toc ol { columns: 1; }
+  .legal-summary { padding: 22px 20px; margin-bottom: 48px; }
+  .legal-card dl { grid-template-columns: 1fr; }
+  .legal-card dt { padding: 14px 18px 0; }
+  .legal-card dd { padding: 4px 18px 14px; border-top: 0; }
+  .legal-card dt:first-of-type { border-top: 0; }
+  .legal-card dt { border-top: 1px solid rgba(232,196,102,.1); }
+  .pozn { flex-direction: column; gap: 10px; }
+  .nf-code { font-size: clamp(120px, 42vw, 180px); }
+  .nf-copy h1 { font-size: clamp(38px, 11vw, 52px); }
+  .nf-actions .button { flex: 1 1 100%; justify-content: space-between; }
+}
+
+/* ---------- tisk ---------- */
+@media print {
+  @page { margin: 18mm 16mm; }
+  body { background: #fff !important; color: #000; font-size: 11pt; }
+  .legal-header nav, .toc, .skip-link, .legal-footer .footer-top, .legal-footer .footer-links { display: none !important; }
+  .legal-header { position: static; background: none; border-bottom: 1px solid #000; backdrop-filter: none; }
+  .legal-header .brand-emblem, .legal-header .brand-wordmark { filter: brightness(0); }
+  .legal-hero { padding: 20px 0; border-bottom: 1px solid #000; }
+  .legal-hero h1, .legal h2, .legal h3, .legal strong, .legal-meta strong { color: #000; }
+  em, .eyebrow, .legal h2::before, .legal-card dt { color: #000 !important; }
+  .legal-lead, .legal-meta, .legal-small { color: #222; }
+  .legal-layout { display: block; padding: 20px 0 0; }
+  .container { width: 100%; }
+  .legal { font-size: 11pt; line-height: 1.55; }
+  .legal > section { break-inside: auto; }
+  .legal h2 { break-after: avoid; font-size: 16pt; }
+  .legal > section + section { margin-top: 18pt; padding-top: 12pt; border-top: 1px solid #999; }
+  .legal a:not(.button) { color: #000; }
+  .legal a[href^="http"]::after { content: ' (' attr(href) ')'; font-size: 9pt; color: #444; }
+  .legal-summary, .legal-card, .legal-contact { background: none; border-color: #999; }
+  .doplnit, .pozn { background: #fff3a8 !important; color: #000; border-color: #000; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .pozn::before { background: #000; color: #fff; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .site-footer { background: none; border-top: 1px solid #000; padding: 12pt 0 0; }
+  .footer-bottom { color: #000; border: 0; padding: 0; }
+}
