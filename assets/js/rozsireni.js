@@ -17,7 +17,6 @@
   ];
   // otevírací doba: Po 14–20, Út–Pá 9–20, víkend dle domluvy
   const OPEN = { 1: [14, 20], 2: [9, 20], 3: [9, 20], 4: [9, 20], 5: [9, 20] };
-  const TIMES = [['Dopoledne', 9, 12], ['Odpoledne', 12, 16], ['Večer', 16, 20], ['Kdykoli', 0, 24]];
 
   const dialog = document.getElementById('booking-dialog');
   if (dialog && typeof dialog.showModal === 'function') {
@@ -75,16 +74,19 @@
     };
     const renderTimes = () => {
       const val = form.querySelector('input[name="den"]:checked')?.value;
-      const prev = form.querySelector('input[name="cas"]:checked')?.value || 'Kdykoli';
-      let r = null; let isToday = false;
-      if (val) { const [y, m, d] = val.split('-').map(Number); const day = new Date(y, m - 1, d); r = OPEN[day.getDay()]; isToday = val === iso(new Date()); }
-      const nowH = new Date().getHours();
-      timesBox.innerHTML = TIMES.map(([name, from, to]) => {
-        const off = r && name !== 'Kdykoli' && (to <= r[0] || from >= r[1] || (isToday && to <= nowH + 1));
-        const checked = !off && name === prev;
-        return `<label class="bd-time${off ? ' is-off' : ''}"><input type="radio" name="cas" value="${name}${name === 'Kdykoli' ? '' : ` (${from}–${to})`}" ${off ? 'disabled' : ''} ${checked ? 'checked' : ''}><span>${name}</span>${name === 'Kdykoli' ? '' : `<small>${from}–${to}</small>`}</label>`;
-      }).join('');
-      if (!form.querySelector('input[name="cas"]:checked')) form.querySelector('input[name="cas"]:not(:disabled)')?.click();
+      if (!val) { timesBox.innerHTML = '<p class="bd-times-hint">Nejdřív vyber den, pak čas.</p>'; return; }
+      const prev = form.querySelector('input[name="cas"]:checked')?.value;
+      const [y, m, d] = val.split('-').map(Number);
+      const r = OPEN[new Date(y, m - 1, d).getDay()];
+      const now = new Date();
+      const out = [];
+      for (let t = r[0] * 60; t < r[1] * 60; t += 30) {
+        const label = `${Math.floor(t / 60)}:${pad(t % 60)}`;
+        const start = new Date(y, m - 1, d, Math.floor(t / 60), t % 60);
+        const off = start - now < 60 * 60 * 1000; // nejdřív za hodinu
+        out.push(`<label class="bd-time${off ? ' is-off' : ''}"><input type="radio" name="cas" value="${label}" ${off ? 'disabled' : ''} ${!off && label === prev ? 'checked' : ''}><span>${label}</span></label>`);
+      }
+      timesBox.innerHTML = out.join('');
     };
 
     // souhrn dole
@@ -93,10 +95,10 @@
     const sumPrice = dialog.querySelector('#bd-sum-price');
     const summary = () => {
       const den = form.querySelector('input[name="den"]:checked')?.value;
-      const cas = form.querySelector('input[name="cas"]:checked')?.value?.replace(/ \(.*\)/, '');
+      const cas = form.querySelector('input[name="cas"]:checked')?.value;
       sumService.textContent = selected ? selected.name : 'Vyber službu';
       sumPrice.textContent = selected ? `${selected.price} Kč` : '';
-      if (den) { const [y, m, d] = den.split('-').map(Number); sumWhen.textContent = `${fmtLong.format(new Date(y, m - 1, d))}${cas && cas !== 'Kdykoli' ? `, ${cas.toLowerCase()}` : ''}`; }
+      if (den) { const [y, m, d] = den.split('-').map(Number); sumWhen.textContent = `${fmtLong.format(new Date(y, m - 1, d))}${cas ? ` v ${cas}` : ', vyber čas'}`; }
       else sumWhen.textContent = 'a den';
     };
 
@@ -151,7 +153,8 @@
     form.addEventListener('change', (e) => {
       const t = e.target;
       if (t.name === 'sluzba') { selected = { value: t.value, name: t.dataset.name, price: t.dataset.price }; flag('sluzba', true); }
-      if (t.name === 'den') { renderTimes(); flag('den', true); }
+      if (t.name === 'den') renderTimes();
+      if (t.name === 'cas') flag('den', true);
       if (t.name === 'souhlas') flag('souhlas', t.checked);
       summary();
     });
@@ -160,7 +163,7 @@
       e.preventDefault();
       errorBox.hidden = true;
       const okService = flag('sluzba', !!selected);
-      const okDay = flag('den', !!form.querySelector('input[name="den"]:checked'));
+      const okDay = flag('den', !!form.querySelector('input[name="den"]:checked') && !!form.querySelector('input[name="cas"]:checked'));
       const okFields = Object.keys(rules).map((n) => checkField(n, true)).every(Boolean);
       const okConsent = flag('souhlas', form.elements.souhlas.checked);
       if (!(okService && okDay && okFields && okConsent)) {
