@@ -7,6 +7,10 @@
   const NL_ENDPOINT = 'api/newsletter.php';
   // Na náhledu (GitHub Pages, lokální soubor) není PHP: formulář jen předvede úspěch, nic neodešle.
   const DEMO = /github\.io$/.test(location.hostname) || location.protocol === 'file:';
+  // Sleva z newsletteru: procento určuje server (config sleva_procent) při ověření odkazu.
+  // Tahle hodnota je jen pro ukázku na GitHub Pages, kde PHP neběží.
+  const DEMO_DISCOUNT = 5;
+  const NL_TOKEN = new URLSearchParams(location.search).get('nl') || '';
 
   /* ---------- rezervační okno ---------- */
   const SERVICES = [
@@ -87,9 +91,28 @@
       const den = form.querySelector('input[name="den"]:checked')?.value;
       const cas = timeSelect.value;
       sumService.textContent = selected ? selected.name : 'Vyber službu';
-      sumPrice.textContent = selected ? `${selected.price} Kč` : '';
+      const disc = discount && selected && discountApplies(selected.value);
+      sumPrice.innerHTML = !selected ? '' : disc
+        ? `<s>${esc(selected.price)} Kč</s> ${discountPrice(Number(selected.price))} Kč`
+        : `${esc(selected.price)} Kč`;
+      if (discountNote) discountNote.hidden = !(discount && selected && !disc);
       if (den) { const [y, m, d] = den.split('-').map(Number); sumWhen.textContent = `${fmtLong.format(new Date(y, m - 1, d))}${cas ? ` v ${cas}` : ', vyber čas'}`; }
       else sumWhen.textContent = 'a den';
+    };
+
+    // sleva z newsletteru (?nl=<podepsaný token kampaně>), ověřuje ji server
+    let discount = null; // {token, pct}
+    const discountApplies = (value) => !/^(První návštěva|14denní restart):/.test(value);
+    const discountPrice = (price) => Math.round((price * (100 - discount.pct)) / 100);
+    const badge = dialog.querySelector('#bd-discount');
+    const discountNote = dialog.querySelector('#bd-discount-note');
+    const setDiscount = (d) => {
+      discount = d;
+      form.elements.nl.value = d ? d.token : '';
+      badge.hidden = !d;
+      if (d) badge.querySelector('b').textContent = `Sleva ${d.pct} % z newsletteru`;
+      dialog.classList.toggle('has-discount', !!d);
+      summary();
     };
 
     const open = (trigger, service) => {
@@ -117,9 +140,22 @@
     });
     let seen = false;
     try { seen = sessionStorage.getItem('mkb-popup') === '1'; } catch { /* bez úložiště */ }
-    // odkaz „Rezervovat termín“ z newsletteru (…/#rezervovat)
-    window.addEventListener('hashchange', () => { if (location.hash === '#rezervovat') open(null); });
-    if (location.hash === '#rezervovat') open(null);
+    // odkaz z newsletteru (…/#rezervace, …/?nl=TOKEN#rezervace) otevře okno rovnou
+    const bookingHash = () => location.hash === '#rezervace' || location.hash === '#rezervovat';
+    window.addEventListener('hashchange', () => { if (bookingHash()) open(null); });
+    if (NL_TOKEN) {
+      (async () => {
+        if (DEMO) setDiscount({ token: NL_TOKEN, pct: DEMO_DISCOUNT });
+        else {
+          try {
+            const res = await fetch(`${NL_ENDPOINT}?a=sleva&nl=${encodeURIComponent(NL_TOKEN)}`, { headers: { Accept: 'application/json' } });
+            const json = await res.json().catch(() => ({}));
+            if (res.ok && json.ok) setDiscount({ token: NL_TOKEN, pct: Number(json.procento) });
+          } catch { /* bez slevy */ }
+        }
+        open(null);
+      })();
+    } else if (bookingHash()) open(null);
     else if (mobile.matches && !seen && !location.hash) {
       window.setTimeout(() => { if (!document.documentElement.classList.contains('menu-open')) open(null); }, 1600);
     }
@@ -167,19 +203,25 @@
       data.set('sluzba', selected.value);
       submit.disabled = true; submit.classList.add('is-loading');
       try {
+        let json = null;
         if (DEMO) await new Promise((r) => setTimeout(r, 700));
         else {
           const res = await fetch(ENDPOINT, { method: 'POST', body: data, headers: { Accept: 'application/json' } });
-          const json = await res.json().catch(() => ({}));
+          json = await res.json().catch(() => ({}));
           if (!res.ok || !json.ok) throw new Error(json.error || 'Odeslání se nepovedlo.');
           if (data.get('novinky')) subscribe(data.get('email'), 'rezervace').catch(() => { /* rezervace je hlavní, odběr jen navíc */ });
         }
         dialog.querySelector('.bd-done-name').textContent = form.elements.jmeno.value.trim().split(/\s+/)[0] || 'králi';
         dialog.querySelector('.bd-done-recap').textContent = `${sumService.textContent} · ${sumWhen.textContent}`;
+        const discLine = discount && selected && discountApplies(selected.value)
+          ? ` Sleva ${discount.pct} % z newsletteru: ${discountPrice(Number(selected.price))} Kč místo ${selected.price} Kč.` : '';
+        dialog.querySelector('.bd-done-recap').textContent += discLine && (DEMO || json?.sleva) ? ` ·${discLine}` : '';
         if (DEMO) dialog.querySelector('.bd-done-text').textContent = 'Ukázka: na tomhle náhledu se rezervace neodesílá. Na ostrém webu dorazí Marcusovi e-mailem a tobě potvrzení.';
+        else if (discount && json?.sleva === false && selected && discountApplies(selected.value)) dialog.querySelector('.bd-done-text').textContent = 'Rezervace dorazila, ale slevový odkaz už neplatí, takže sleva se neuplatní. Termín ti potvrdím telefonem nebo e-mailem.';
         else if (data.get('novinky')) dialog.querySelector('.bd-done-text').textContent = 'Rezervace dorazila. Ozvu se a termín potvrdím. K novinkám se přihlásíš odkazem, který ti právě přišel e-mailem.';
         form.hidden = true; done.hidden = false;
         form.reset(); selected = null; renderTimes();
+        if (discount) form.elements.nl.value = discount.token;   // reset smaže skryté pole, sleva platí dál
         done.querySelector('button').focus();
       } catch (err) {
         errorBox.textContent = `${err.message} Zavolej prosím na +420 732 165 547.`;

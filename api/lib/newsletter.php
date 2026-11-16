@@ -27,9 +27,14 @@ function nl_config(): array {
         'site_url' => 'https://www.marcuskoky.cz/',
         'data_dir' => dirname(__DIR__) . '/data',
         'batch_size' => 25,
+        'secret' => '',              // tajemství pro podpis slevových odkazů (HMAC); prázdné = sleva vypnutá
+        'sleva_procent' => 5,        // JEDINÉ místo, kde se nastavuje sleva z newsletteru (v %)
+        'sleva_dni' => 30,           // jak dlouho od rozeslání platí slevový odkaz
     ], is_array($loaded) ? $loaded : []);
     $cfg['site_url'] = rtrim((string)$cfg['site_url'], '/') . '/';
     $cfg['batch_size'] = max(1, min(200, (int)$cfg['batch_size']));
+    $cfg['sleva_procent'] = max(0, min(50, (int)$cfg['sleva_procent']));
+    $cfg['sleva_dni'] = max(1, (int)$cfg['sleva_dni']);
     return $cfg;
 }
 
@@ -68,6 +73,8 @@ function nl_db(): PDO {
         failed INTEGER NOT NULL DEFAULT 0,
         last_id INTEGER NOT NULL DEFAULT 0
     )');
+    $cols = array_column($db->query('PRAGMA table_info(campaigns)')->fetchAll(), 'name');
+    if (!in_array('preheader', $cols, true)) $db->exec('ALTER TABLE campaigns ADD COLUMN preheader TEXT NOT NULL DEFAULT \'\'');
     return $db;
 }
 
@@ -100,6 +107,40 @@ function nl_url(string $action, string $token): string {
     return nl_config()['site_url'] . 'api/newsletter.php?a=' . $action . '&t=' . $token;
 }
 
+/* ---------- sleva z newsletteru ---------- */
+
+/** Je sleva zapnutá? Potřebuje tajemství (min. 32 znaků) a nenulové procento. */
+function nl_discount_on(): bool {
+    $c = nl_config();
+    return strlen((string)$c['secret']) >= 32 && $c['sleva_procent'] > 0;
+}
+
+/** Podepsaný token kampaně pro slevový odkaz: "<id>-<hmac>". Bez tajemství ho nikdo nevyrobí. */
+function nl_discount_token(int $campaignId): string {
+    return $campaignId . '-' . substr(hash_hmac('sha256', 'mkb-sleva|' . $campaignId, (string)nl_config()['secret']), 0, 32);
+}
+
+/** Ověří token: podpis, existující rozeslaná kampaň a platnost. Vrací ID kampaně, nebo null. */
+function nl_discount_verify(string $token): ?int {
+    if (!nl_discount_on() || !preg_match('/^(\d{1,9})-([a-f0-9]{32})$/', $token, $m)) return null;
+    if (!hash_equals(nl_discount_token((int)$m[1]), $token)) return null;
+    $st = nl_db()->prepare('SELECT created_at FROM campaigns WHERE id = ?');
+    $st->execute([(int)$m[1]]);
+    $created = $st->fetchColumn();
+    if ($created === false || (int)$created < time() - nl_config()['sleva_dni'] * 86400) return null;
+    return (int)$m[1];
+}
+
+/** Cena po slevě, zaokrouhlená na celé Kč (polovina nahoru). Stejný výpočet je v assets/js/rozsireni.js. */
+function nl_discount_price(int $price): int {
+    return (int)round($price * (100 - nl_config()['sleva_procent']) / 100, 0, PHP_ROUND_HALF_UP);
+}
+
+/** Na zvýhodněné ceny (první návštěva, 14denní restart) se sleva nevztahuje. */
+function nl_discount_applies(string $service): bool {
+    return !preg_match('/^(První návštěva|14denní restart):/u', $service);
+}
+
 function nl_h(string $s): string { return htmlspecialchars($s, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8'); }
 
 /** Text od majitele → odstavce HTML (vše escapované, prázdný řádek = nový odstavec). */
@@ -120,11 +161,12 @@ function nl_body_html(string $text): string {
  */
 function nl_render_html(string $subject, string $preheader, string $bodyHtml, ?array $button, string $unsubUrl, string $footerNote): string {
     $tpl = (string)file_get_contents(dirname(__DIR__, 2) . '/assets/email/newsletter.html');
-    if ($button) {
-        $tpl = str_replace(['<!--TLACITKO-->', '<!--/TLACITKO-->'], '', $tpl);
-    } else {
-        $tpl = preg_replace('/<!--TLACITKO-->.*?<!--\/TLACITKO-->/s', '', $tpl) ?? $tpl;
-    }
+    $block = function (string $tpl, string $name, bool $keep): string {
+        return $keep ? str_replace(["<!--$name-->", "<!--/$name-->"], '', $tpl)
+            : (preg_replace('/<!--' . $name . '-->.*?<!--\/' . $name . '-->/s', '', $tpl) ?? $tpl);
+    };
+    $tpl = $block($tpl, 'POZN', !empty($button['note']));
+    $tpl = $block($tpl, 'TLACITKO', (bool)$button);
     $site = nl_config()['site_url'];
     return strtr($tpl, [
         '{{predmet}}' => nl_h($subject),
@@ -132,9 +174,11 @@ function nl_render_html(string $subject, string $preheader, string $bodyHtml, ?a
         '{{obsah}}' => $bodyHtml,
         '{{tlacitko_text}}' => nl_h($button['text'] ?? ''),
         '{{tlacitko_url}}' => nl_h($button['url'] ?? ''),
+        '{{tlacitko_pozn}}' => nl_h($button['note'] ?? ''),
+        '{{hero_url}}' => nl_h($site . 'assets/img/email-hero.jpg'),
+        '{{wordmark_url}}' => nl_h($site . 'assets/img/wordmark-gold.png'),
         '{{odhlasit_url}}' => nl_h($unsubUrl),
         '{{web_url}}' => nl_h($site),
-        '{{logo_url}}' => nl_h($site . 'assets/img/logo-gold.png'),
         '{{poznamka}}' => nl_h($footerNote),
     ]);
 }
@@ -193,15 +237,28 @@ function nl_send_confirmation(string $email, string $token): bool {
 }
 
 /** Jedna zpráva newsletteru pro konkrétního odběratele (nebo test). */
-function nl_campaign_message(string $subject, string $body, bool $button, string $token): array {
+/** Tlačítko kampaně: se slevou (podepsaný odkaz), nebo obyčejná rezervace, když je sleva vypnutá. */
+function nl_campaign_button(int $campaignId): array {
+    $site = nl_config()['site_url'];
+    if (nl_discount_on()) {
+        $p = nl_config()['sleva_procent'];
+        // test (ID 0) vypadá stejně, ale odkaz slevu nenese: kampaň ještě neexistuje
+        $url = $campaignId > 0 ? $site . '?nl=' . nl_discount_token($campaignId) . '#rezervace' : $site . '#rezervace';
+        return ['text' => "Rezervovat se slevou $p %", 'url' => $url,
+            'note' => 'Sleva platí pro rezervaci přes tento e-mail.'];
+    }
+    return ['text' => 'Rezervovat termín', 'url' => $site . '#rezervace', 'note' => ''];
+}
+
+/** Jedna zpráva newsletteru pro konkrétního odběratele (nebo test). */
+function nl_campaign_message(string $subject, string $preheader, string $body, bool $button, int $campaignId, string $token): array {
     $unsub = nl_url('odhlasit', $token);
     $note = 'Dostáváš tento e-mail, protože ses přihlásil(a) k odběru novinek na webu Marcus Koky Barber.';
-    $book = nl_config()['site_url'] . '#rezervovat';
+    $btn = $button ? nl_campaign_button($campaignId) : null;
     $text = trim(str_replace("\r", '', $body))
-        . ($button ? "\n\nRezervovat termín: $book" : '')
+        . ($btn ? "\n\n{$btn['text']}: {$btn['url']}" . ($btn['note'] ? "\n({$btn['note']})" : '') : '')
         . nl_text_footer($unsub, $note);
-    $first = trim(strtok(trim($body), "\n") ?: '');
-    $html = nl_render_html($subject, mb_substr($first, 0, 120), nl_body_html($body),
-        $button ? ['text' => 'Rezervovat termín', 'url' => $book] : null, $unsub, $note);
+    if ($preheader === '') $preheader = trim(strtok(trim($body), "\n") ?: '');
+    $html = nl_render_html($subject, mb_substr($preheader, 0, 150), nl_body_html($body), $btn, $unsub, $note);
     return [$text, $html, $unsub];
 }

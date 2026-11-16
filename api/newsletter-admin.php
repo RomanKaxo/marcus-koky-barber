@@ -2,7 +2,7 @@
 // Správa newsletteru pro majitele (spravce.html → Newsletter). Vše jen POST + JSON.
 // Přihlášení heslem z config.php (hash), PHP session s cookie HttpOnly + SameSite=Strict, CSRF token v hlavičce.
 //   a=stav | prihlasit (heslo) | odhlasit | prehled | smazat (id) | test (predmet, text, tlacitko)
-//   a=kampan (predmet, text, tlacitko) | davka (id)
+//   a=kampan (predmet, preheader, text, tlacitko) | davka (id)
 declare(strict_types=1);
 require __DIR__ . '/lib/newsletter.php';
 
@@ -36,10 +36,11 @@ function require_login(bool $logged): void {
 }
 function message_input(): array {
     $subject = preg_replace('/[\r\n]+/', ' ', post_text('predmet', SUBJECT_MAX)) ?? '';
+    $preheader = preg_replace('/\s+/u', ' ', post_text('preheader', 150)) ?? '';
     $body = post_text('text', BODY_MAX);
     if (mb_strlen($subject) < 3) nl_json(422, ['ok' => false, 'error' => 'Doplň předmět.']);
     if (mb_strlen($body) < 10) nl_json(422, ['ok' => false, 'error' => 'Text je moc krátký.']);
-    return [$subject, $body, !empty($_POST['tlacitko'])];
+    return [$subject, $preheader, $body, !empty($_POST['tlacitko'])];
 }
 
 try {
@@ -73,7 +74,8 @@ try {
     if ($action === 'prehled') {
         $subs = $db->query('SELECT id, email, status, source, created_at, confirmed_at, unsubscribed_at FROM subscribers ORDER BY created_at DESC')->fetchAll();
         $camps = $db->query('SELECT id, subject, status, created_at, finished_at, total, sent, failed FROM campaigns ORDER BY created_at DESC LIMIT 50')->fetchAll();
-        nl_json(200, ['ok' => true, 'odberatele' => $subs, 'kampane' => $camps, 'test_email' => $cfg['test_email'], 'davka' => $cfg['batch_size']]);
+        nl_json(200, ['ok' => true, 'odberatele' => $subs, 'kampane' => $camps, 'test_email' => $cfg['test_email'], 'davka' => $cfg['batch_size'],
+            'sleva_procent' => nl_discount_on() ? $cfg['sleva_procent'] : 0]);
     }
 
     if ($action === 'smazat') {
@@ -82,22 +84,22 @@ try {
     }
 
     if ($action === 'test') {
-        [$subject, $body, $button] = message_input();
-        [$text, $html, $unsub] = nl_campaign_message('[TEST] ' . $subject, $body, $button, str_repeat('0', 48));
+        [$subject, $preheader, $body, $button] = message_input();
+        [$text, $html, $unsub] = nl_campaign_message('[TEST] ' . $subject, $preheader, $body, $button, 0, str_repeat('0', 48));
         if (!nl_send($cfg['test_email'], '[TEST] ' . $subject, $text, $html, $unsub)) nl_json(500, ['ok' => false, 'error' => 'Test se nepodařilo odeslat.']);
         nl_json(200, ['ok' => true, 'komu' => $cfg['test_email']]);
     }
 
     if ($action === 'kampan') {
-        [$subject, $body, $button] = message_input();
+        [$subject, $preheader, $body, $button] = message_input();
         if ($db->query('SELECT COUNT(*) FROM campaigns WHERE status = \'sending\'')->fetchColumn() > 0) {
             nl_json(409, ['ok' => false, 'error' => 'Jedno rozesílání ještě běží, dokonči ho v historii.']);
         }
         $now = time();
         $total = (int)$db->query('SELECT COUNT(*) FROM subscribers WHERE status = \'confirmed\'')->fetchColumn();
         if ($total === 0) nl_json(422, ['ok' => false, 'error' => 'Zatím nemáš žádné potvrzené odběratele.']);
-        $db->prepare('INSERT INTO campaigns (subject, body, button, status, created_at, total) VALUES (?, ?, ?, \'sending\', ?, ?)')
-            ->execute([$subject, $body, $button ? 1 : 0, $now, $total]);
+        $db->prepare('INSERT INTO campaigns (subject, preheader, body, button, status, created_at, total) VALUES (?, ?, ?, ?, \'sending\', ?, ?)')
+            ->execute([$subject, $preheader, $body, $button ? 1 : 0, $now, $total]);
         nl_json(200, ['ok' => true, 'id' => (int)$db->lastInsertId(), 'total' => $total]);
     }
 
@@ -123,7 +125,7 @@ try {
         $db->exec('COMMIT');
         $sent = $failed = 0;
         foreach ($batch as $s) {
-            [$text, $html, $unsub] = nl_campaign_message($c['subject'], $c['body'], (bool)$c['button'], $s['token']);
+            [$text, $html, $unsub] = nl_campaign_message($c['subject'], (string)$c['preheader'], $c['body'], (bool)$c['button'], $id, $s['token']);
             nl_send($s['email'], $c['subject'], $text, $html, $unsub) ? $sent++ : $failed++;
         }
         if ($batch) $db->prepare('UPDATE campaigns SET sent = sent + ?, failed = failed + ? WHERE id = ?')->execute([$sent, $failed, $id]);

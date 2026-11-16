@@ -1,0 +1,29 @@
+{
+  "_info": "Hotové šablony pro správce newsletteru (spravce.html → Newsletter). Novou šablonu přidáš jako další položku v poli sablony. {sleva} se nahradí procentem slevy z nastavení (config sleva_procent), [DOPLŇ …] musí Marcus před odesláním přepsat. První předmět je výchozí, ostatní jdou přepnout.",
+  "sablony": [
+    {
+      "id": "dlouho",
+      "nazev": "Dlouho jsi tu nebyl",
+      "predmety": ["Dlouho jsi u mě nebyl, králi", "Trůn už je chladnej. Kdy dorazíš?", "Tvoje koruna potřebuje servis"],
+      "preheader": "Mám pro tebe {sleva} % slevu na příští návštěvu.",
+      "text": "Čau,\n\nvšiml jsem si, že jsi u mě dlouho nebyl. Vlasy rostou dál, vousy taky, a z krále se pomalu stává poddaný.\n\nTak to pojďme napravit. Když si teď rezervuješ termín přes tlačítko níž, máš {sleva} % slevu na cokoli z ceníku. Střih, vousy s horkým ručníkem, nebo rovnou full-service.\n\nKáva je připravená, křeslo taky.\n\nMarcus",
+      "tlacitko": true
+    },
+    {
+      "id": "terminy",
+      "nazev": "Uvolnily se termíny",
+      "predmety": ["Uvolnil se trůn. Kdo dřív přijde…", "Volná křesla tento týden"],
+      "preheader": "Pár volných termínů tento týden, a k tomu {sleva} % sleva.",
+      "text": "Čau,\n\ntenhle týden se mi uvolnilo pár termínů: [DOPLŇ DNY A ČASY, např. čtvrtek 14:00 a 16:30].\n\nKdo si je zabere přes tlačítko níž, má {sleva} % slevu. Kdo dřív přijde, ten dřív sedí na trůnu.\n\nMarcus",
+      "tlacitko": true
+    },
+    {
+      "id": "novinka",
+      "nazev": "Novinka v salonu",
+      "predmety": ["V salonu je něco nového", "Novinka pro krále"],
+      "preheader": "Přijď to vyzkoušet, se slevou {sleva} %.",
+      "text": "Čau,\n\nv salonu mám novinku: [DOPLŇ, CO JE NOVÉHO, např. nová služba, pomáda nebo další holič].\n\n[DOPLŇ JEDNU AŽ DVĚ VĚTY, PROČ TO STOJÍ ZA TO.]\n\nPřijď to vyzkoušet. Přes tlačítko níž máš na rezervaci {sleva} % slevu.\n\nMarcus",
+      "tlacitko": true
+    }
+  ]
+}

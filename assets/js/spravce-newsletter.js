@@ -5,6 +5,8 @@
   'use strict';
   const API = 'api/newsletter-admin.php';
   const TEMPLATE = 'assets/email/newsletter.html';
+  const SABLONY = 'assets/email/sablony.json';
+  const DEMO_DISCOUNT = 5;   // jen pro ukázku bez PHP; ostrá hodnota přijde ze serveru (config sleva_procent)
   const DEMO_KEY = 'mkb-nl-ukazka';
   const $ = (s) => document.querySelector(s);
   const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
@@ -38,7 +40,7 @@
   /* ---------- stav ---------- */
   let demo = /github\.io$/.test(location.hostname) || location.protocol === 'file:';
   let csrf = '';
-  let data = { odberatele: [], kampane: [], test_email: '', davka: 25 };
+  let data = { odberatele: [], kampane: [], test_email: '', davka: 25, sleva_procent: 0 };
   let filter = '';
   let template = '';
 
@@ -58,14 +60,14 @@
   const day = 86400;
   const now = () => Math.floor(Date.now() / 1000);
   function demoData() {
-    try { const saved = JSON.parse(localStorage.getItem(DEMO_KEY)); if (saved?.odberatele) return saved; } catch { /* bez úložiště */ }
+    try { const saved = JSON.parse(localStorage.getItem(DEMO_KEY)); if (saved?.odberatele) return { ...saved, sleva_procent: DEMO_DISCOUNT }; } catch { /* bez úložiště */ }
     const t = now();
     const names = ['adam.novotny', 'petr.vesely', 'lukas.horak', 'jakub.dvorak', 'filip.cerny', 'david.prochazka', 'matej.kucera', 'ondrej.marek', 'vojta.pokorny', 'daniel.kral', 'simon.benes', 'michal.fiala'];
     const st = ['confirmed', 'confirmed', 'confirmed', 'pending', 'confirmed', 'confirmed', 'unsubscribed', 'confirmed', 'confirmed', 'pending', 'confirmed', 'confirmed'];
     return {
       odberatele: names.map((n, i) => ({ id: i + 1, email: `${n}@example.cz`, status: st[i], source: i % 3 ? 'web' : 'rezervace', created_at: t - (i * 4 + 1) * day })),
       kampane: [{ id: 1, subject: 'Listopad: volné termíny ve čtvrtek', status: 'done', created_at: t - 9 * day, finished_at: t - 9 * day + 60, total: 7, sent: 7, failed: 0 }],
-      test_email: 'info@marcuskoky.cz', davka: 3,
+      test_email: 'info@marcuskoky.cz', davka: 3, sleva_procent: DEMO_DISCOUNT,
     };
   }
   const saveDemo = () => { try { localStorage.setItem(DEMO_KEY, JSON.stringify(data)); } catch { /* bez úložiště */ } };
@@ -73,6 +75,7 @@
   /* ---------- start a přihlášení ---------- */
   async function start() {
     loadTemplate();
+    loadSablony();
     if (!demo) {
       try {
         const s = await api('stav');
@@ -119,6 +122,7 @@
     $('#nl-app').hidden = false;
     $('#nl-logout').hidden = demo;
     $('#nl-test').textContent = `Poslat test na ${data.test_email || 'můj e-mail'}`;
+    syncDiscountUi();
     render();
     preview();
   }
@@ -182,9 +186,66 @@
     if (b) sendAll(Number(b.dataset.resume));
   });
 
-  /* ---------- náhled (stejná šablona jako PHP) ---------- */
+  /* ---------- editor: šablony, varianty předmětu a preheader ----------
+     Pole se vkládají odsud, aby se nemuselo sahat do spravce.html. */
   const editor = $('#nl-editor');
   const frame = $('#nl-frame');
+  const style = document.createElement('style');
+  style.textContent = `
+    .nl-tpl-row { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 4px; }
+    .nl-tpl-row button, .nl-alt button { min-height: 40px; padding: 0 14px; border: 1px solid rgba(244,239,230,.2); border-radius: 2px; background: none; color: var(--muted); font: inherit; font-size: 14px; font-weight: 700; cursor: pointer; transition: border-color .2s, color .2s, background .2s; }
+    .nl-tpl-row button:hover, .nl-alt button:hover { border-color: var(--gold); color: var(--text); }
+    .nl-tpl-row button[aria-pressed="true"] { border-color: var(--gold); background: var(--gold); color: var(--black); }
+    .nl-alt { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin-top: -8px; color: var(--muted); font-size: 13px; }
+    .nl-alt button { min-height: 32px; padding: 0 10px; font-size: 13px; font-weight: 600; }
+    .nl-alt button[aria-pressed="true"] { border-color: var(--gold); color: var(--gold); }
+    .nl-warn { padding: 10px 14px; border: 1px dashed rgba(255,212,0,.7); background: rgba(255,212,0,.08); color: var(--yellow); font-size: 14px; }
+  `;
+  document.head.append(style);
+  editor.insertAdjacentHTML('afterbegin', `<div class="nl-afield"><span id="nl-tpl-label">Hotová šablona</span>
+    <div class="nl-tpl-row" role="group" aria-labelledby="nl-tpl-label" id="nl-tpl"><button type="button" aria-pressed="true" data-tpl="">Prázdný e-mail</button></div></div>`);
+  // varianty předmětu stojí mimo <label>, aby klik na ně neaktivoval pole předmětu
+  editor.elements.predmet.closest('label').insertAdjacentHTML('afterend', `<div class="nl-alt" id="nl-alt" role="group" aria-label="Jiný předmět" hidden></div>
+    <label class="nl-afield"><span>Náhledový text (preheader)</span>
+    <input name="preheader" maxlength="150" placeholder="Krátká věta, kterou schránka ukáže vedle předmětu"><small>Ve schránce se zobrazí šedě za předmětem. Prázdné = první řádek textu.</small></label>`);
+  editor.elements.tlacitko.closest('label').insertAdjacentHTML('afterend', '<p class="nl-warn" id="nl-disc-warn" hidden></p>');
+  let sablony = [];
+  const pct = () => Number(data.sleva_procent) || 0;
+  const fill = (t) => t.replace(/\{sleva\}/g, String(pct() || DEMO_DISCOUNT));
+  async function loadSablony() {
+    try { const r = await fetch(SABLONY); if (r.ok) sablony = (await r.json()).sablony || []; } catch { /* bez šablon */ }
+    $('#nl-tpl').insertAdjacentHTML('beforeend', sablony.map((t) => `<button type="button" aria-pressed="false" data-tpl="${esc(t.id)}">${esc(t.nazev)}</button>`).join(''));
+  }
+  function syncDiscountUi() {
+    const label = editor.elements.tlacitko.nextElementSibling;
+    label.textContent = pct() ? `Přidat velké tlačítko „Rezervovat se slevou ${pct()} %“` : 'Přidat velké tlačítko „Rezervovat termín“';
+    const warn = $('#nl-disc-warn');
+    warn.hidden = !!pct();
+    warn.textContent = 'Sleva z newsletteru je vypnutá: v api/config.php chybí secret (min. 32 znaků). Tlačítko povede na obyčejnou rezervaci, uprav proto text šablony.';
+  }
+  $('#nl-tpl').addEventListener('click', (e) => {
+    const b = e.target.closest('button'); if (!b) return;
+    $('#nl-tpl').querySelectorAll('button').forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+    const t = sablony.find((x) => x.id === b.dataset.tpl);
+    const alt = $('#nl-alt');
+    if (!t) { editor.reset(); alt.hidden = true; preview(); return; }
+    editor.elements.predmet.value = fill(t.predmety[0]);
+    editor.elements.preheader.value = fill(t.preheader || '');
+    editor.elements.text.value = fill(t.text);
+    editor.elements.tlacitko.checked = t.tlacitko !== false;
+    alt.hidden = t.predmety.length < 2;
+    alt.innerHTML = 'Jiný předmět: ' + t.predmety.map((p, i) => `<button type="button" aria-pressed="${i === 0}" data-alt="${esc(fill(p))}">${esc(fill(p))}</button>`).join('');
+    say(/\[DOPLŇ/.test(t.text) ? 'Šablona má místa [DOPLŇ …], přepiš je před odesláním.' : '', true);
+    preview();
+  });
+  $('#nl-alt').addEventListener('click', (e) => {
+    const b = e.target.closest('button'); if (!b) return;
+    $('#nl-alt').querySelectorAll('button').forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+    editor.elements.predmet.value = b.dataset.alt;
+    preview();
+  });
+
+  /* ---------- náhled (stejná šablona jako PHP) ---------- */
   async function loadTemplate() {
     try { const r = await fetch(TEMPLATE); if (r.ok) template = await r.text(); } catch { /* bez šablony */ }
     preview();
@@ -197,11 +258,17 @@
     const subject = editor.elements.predmet.value.trim() || 'Předmět e-mailu';
     const text = editor.elements.text.value || 'Sem napiš text pro klienty.';
     const button = editor.elements.tlacitko.checked;
-    let html = button ? template.replace(/<!--\/?TLACITKO-->/g, '') : template.replace(/<!--TLACITKO-->[\s\S]*?<!--\/TLACITKO-->/g, '');
+    const block = (html, name, keep) => (keep ? html.replace(new RegExp(`<!--/?${name}-->`, 'g'), '')
+      : html.replace(new RegExp(`<!--${name}-->[\\s\\S]*?<!--/${name}-->`, 'g'), ''));
+    let html = block(block(template, 'POZN', button && pct() > 0), 'TLACITKO', button);
+    const pre = editor.elements.preheader.value.trim() || text.trim().split('\n')[0];
     const map = {
-      predmet: esc(subject), preheader: esc(text.trim().split('\n')[0].slice(0, 120)), obsah: bodyHtml(text),
-      tlacitko_text: 'Rezervovat termín', tlacitko_url: esc(`${site}#rezervovat`), odhlasit_url: '#', web_url: esc(site),
-      logo_url: esc(`${site}assets/img/logo-gold.png`),
+      predmet: esc(subject), preheader: esc(pre.slice(0, 150)), obsah: bodyHtml(text),
+      tlacitko_text: pct() ? `Rezervovat se slevou ${pct()} %` : 'Rezervovat termín',
+      tlacitko_url: esc(`${site}${pct() ? '?nl=ukazka' : ''}#rezervace`),
+      tlacitko_pozn: 'Sleva platí pro rezervaci přes tento e-mail.',
+      odhlasit_url: '#', web_url: esc(site),
+      hero_url: esc(`${site}assets/img/email-hero.jpg`), wordmark_url: esc(`${site}assets/img/wordmark-gold.png`),
       poznamka: 'Dostáváš tento e-mail, protože ses přihlásil(a) k odběru novinek na webu Marcus Koky Barber.',
     };
     html = html.replace(/\{\{(\w+)\}\}/g, (m, k) => (k in map ? map[k] : m));
@@ -219,13 +286,14 @@
   const msg = $('#nl-msg');
   const say = (t, ok) => { msg.textContent = t; msg.className = `nl-amsg ${ok ? 'is-ok' : 'is-err'}`; };
   const fields = () => ({
-    predmet: editor.elements.predmet.value.trim(), text: editor.elements.text.value.trim(),
+    predmet: editor.elements.predmet.value.trim(), preheader: editor.elements.preheader.value.trim(), text: editor.elements.text.value.trim(),
     tlacitko: editor.elements.tlacitko.checked ? '1' : '',
   });
   const validate = () => {
     const f = fields();
     if (f.predmet.length < 3) { editor.elements.predmet.focus(); say('Doplň předmět.', false); return null; }
     if (f.text.length < 10) { editor.elements.text.focus(); say('Text je moc krátký.', false); return null; }
+    if (/\[DOPLŇ/.test(`${f.predmet} ${f.preheader} ${f.text}`)) { editor.elements.text.focus(); say('V textu zůstalo [DOPLŇ …]. Přepiš ho, ať klienti nedostanou nedodělaný e-mail.', false); return null; }
     return f;
   };
 

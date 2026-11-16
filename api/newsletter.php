@@ -4,6 +4,7 @@
 //   GET  a=potvrdit&t=TOKEN                                        → stránka
 //   GET  a=odhlasit&t=TOKEN                                        → stránka (odhlásí hned, jedním klikem)
 //   POST a=odhlasit&t=TOKEN  List-Unsubscribe=One-Click (RFC 8058) → 200
+//   GET  a=sleva&nl=TOKEN                                          → JSON {ok, procento} pro slevový odkaz z e-mailu
 // Na GitHub Pages PHP neběží, formuláře tam jen předvádějí (režim Návrh).
 declare(strict_types=1);
 require __DIR__ . '/lib/newsletter.php';
@@ -86,6 +87,12 @@ try {
         if ((int)$row['created_at'] < time() - NL_PENDING_DAYS * 86400) page(410, 'Odkaz <em>vypršel</em>', 'Potvrzovací odkaz platí ' . NL_PENDING_DAYS . ' dní. Přihlas se prosím znovu.');
         nl_db()->prepare('UPDATE subscribers SET status = \'confirmed\', confirmed_at = ? WHERE id = ? AND status = \'pending\'')->execute([time(), $row['id']]);
         page(200, 'Hotovo, <em>vítej</em>', 'Odběr je potvrzený. Volné termíny, akce a novinky ze salonu ti budou chodit e-mailem. Odhlásit se můžeš kdykoli jedním klikem.');
+    }
+
+    /* ---------- ověření slevového odkazu (web podle něj ukáže slevu) ---------- */
+    if ($action === 'sleva') {
+        $ok = nl_discount_verify((string)($_GET['nl'] ?? '')) !== null;
+        nl_json($ok ? 200 : 404, $ok ? ['ok' => true, 'procento' => nl_config()['sleva_procent']] : ['ok' => false, 'error' => 'Slevový odkaz neplatí.']);
     }
 
     /* ---------- odhlášení jedním klikem ---------- */

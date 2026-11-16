@@ -74,8 +74,8 @@ režimu se štítkem „Návrh“: web nic neodesílá a správce ukazuje smyšl
 - **Odhlášení jedním klikem:** odkaz v každém e-mailu odhlásí hned (GET), hlavičky `List-Unsubscribe`
   a `List-Unsubscribe-Post` (RFC 8058) umí odhlásit i tlačítkem v Gmailu/Outlooku (POST).
 - **Správce:** `spravce.html` → záložka Newsletter (`spravce.html#newsletter`). Přihlášení heslem, počty
-  a seznam odběratelů s filtrem a mazáním, editor (předmět, text, tlačítko „Rezervovat termín“ vedoucí na
-  `/#rezervovat`, které otevře rezervační okno), živý náhled, test na pevnou adresu z nastavení, „Odeslat všem“
+  a seznam odběratelů s filtrem a mazáním, editor (šablony, předmět, preheader, text, velké tlačítko na
+  rezervaci se slevou), živý náhled, test na pevnou adresu z nastavení, „Odeslat všem“
   po dávkách s průběhem a historie. Přerušené rozesílání jde dokončit tlačítkem Pokračovat; nikomu nepřijde dvakrát.
 - **E-mail:** šablona `assets/email/newsletter.html` (tabulky, inline styly, černá/zlatá) + textová alternativa.
   Stejnou šablonu používá PHP i náhled ve správci. Odesílatel je konstanta `NL_FROM` v `api/lib/newsletter.php`
@@ -83,12 +83,33 @@ režimu se štítkem „Návrh“: web nic neodesílá a správce ukazuje smyšl
 - **Soubory:** `api/newsletter.php` (veřejné), `api/newsletter-admin.php` (správa, session + CSRF),
   `api/lib/newsletter.php` (sdílené), `api/config.example.php`, `assets/js/spravce-newsletter.js`.
 
+### Sleva 5 % z newsletteru a šablony (listopad 2026)
+
+- **E-mail:** fotka nahoře (`assets/img/email-hero.jpg`, výřez z `marcus-studio.jpg`, tmavé pozadí a alt jako záloha),
+  velký nadpis, text, jedno velké tlačítko přes celou šířku „Rezervovat se slevou 5 %“ (bulletproof, ve Outlooku VML)
+  a pod ním „Sleva platí pro rezervaci přes tento e-mail.“ Odkazy jsou jen dva: tlačítko a odhlášení. Šablona umí
+  preheader (náhledový text ve schránce).
+- **Sleva:** tlačítko vede na `./?nl=<id>-<HMAC>#rezervace`. Token je podepsaný tajemstvím `secret` z configu,
+  takže si ho nikdo nevyrobí ručně. Web ho ověří přes `api/newsletter.php?a=sleva`, otevře rezervační okno se štítkem
+  „Sleva 5 % z newsletteru“ a v souhrnu ukáže přeškrtnutou a novou cenu (zaokrouhleno na celé Kč, polovina nahoru).
+  `api/rezervace.php` token ověří znovu (podpis, existující kampaň, platnost `sleva_dni`, výchozí 30 dní) a do e-mailu
+  Marcusovi i klientovi napíše „Sleva 5 % z newsletteru: X Kč místo Y Kč“. Neplatný odkaz rezervaci neblokuje,
+  jen se sleva neuplatní (Marcus to vidí v e-mailu). Na první návštěvu a 14denní restart se sleva nevztahuje.
+- **Procento:** jediné nastavení je `sleva_procent` v configu (výchozí 5). Bez `secret` (min. 32 znaků) je sleva
+  vypnutá a tlačítko vede na obyčejnou rezervaci. Pevně napsané „5 %“ zůstává jen v textech webu (blok Novinky
+  v `index.html`, oddíl v `podminky.html`) a v ukázkovém režimu (`DEMO_DISCOUNT` v JS); při změně je uprav také.
+- **Šablony ve správci:** `assets/email/sablony.json` (Dlouho jsi tu nebyl, Uvolnily se termíny, Novinka v salonu).
+  Výběr nad editorem vyplní předmět (s přepínáním alternativ), preheader a text; `{sleva}` se nahradí procentem.
+  Místa `[DOPLŇ …]` musí Marcus přepsat, jinak správce e-mail neodešle. Novou šablonu stačí přidat do JSON.
+- Test e-mail má stejné tlačítko, ale jeho odkaz slevu nenese (kampaň ještě neexistuje).
+
 ### Zprovoznění na hostingu
 
 1. Hosting s PHP 8.2+, `pdo_sqlite` a funkcí `mail()`.
 2. `api/config.example.php` zkopíruj jako `mkb-config.php` o složku výš než kořen webu (nejbezpečnější),
    nebo jako `api/config.php` (je v `.gitignore`). Vyplň hash hesla
-   (`php -r 'echo password_hash("dlouhe-heslo", PASSWORD_DEFAULT), PHP_EOL;'`), `test_email` a `site_url`.
+   (`php -r 'echo password_hash("dlouhe-heslo", PASSWORD_DEFAULT), PHP_EOL;'`), `test_email`, `site_url`
+   a `secret` pro slevové odkazy (`php -r 'echo bin2hex(random_bytes(32)), PHP_EOL;'`).
 3. Databáze vznikne sama v `data_dir`. Nejlépe mimo kořen webu; výchozí `api/data/` chrání `.htaccess`
    (Apache). Na Nginx je potřeba zakázat `/api/data/`, `/api/lib/` a `/api/config.php` v konfiguraci serveru.
 4. Pro doručitelnost nastav u domény SPF, DKIM a DMARC pro `info@marcuskoky.cz` a zjisti limit odeslaných

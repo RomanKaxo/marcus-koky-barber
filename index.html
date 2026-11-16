@@ -683,9 +683,11 @@
 <section class="newsletter section container" id="novinky" tabindex="-1" aria-labelledby="nl-title">
 <div class="nl-box" data-reveal>
 <div class="nl-copy">
+<span class="nl-crown" aria-hidden="true"></span>
 <p class="eyebrow">Novinky ze salonu <span class="nl-demo" hidden>Návrh</span></p>
 <h2 id="nl-title">Volný trůn <em>dřív</em> než ostatní.</h2>
 <p>Uvolněné termíny, akce a&nbsp;novinky ze salonu. Pár e-mailů za měsíc, žádný spam. Odhlásíš se jedním klikem.</p>
+<p class="nl-perk"><strong>5&nbsp;%</strong><span>Odběratelé mají <b>5&nbsp;% slevu</b> na rezervaci přes odkaz z&nbsp;newsletteru. <a href="podminky.html#sleva-newsletter">Podmínky</a></span></p>
 </div>
 <form class="nl-form" id="nl-form" action="api/newsletter.php" method="post" novalidate>
 <input type="hidden" name="a" value="prihlasit">
@@ -736,6 +738,7 @@
 <div>
 <p class="eyebrow">Rezervace</p>
 <h2 id="bd-title">Rezervuj si <em>trůn</em>.</h2>
+<p class="bd-discount" id="bd-discount" hidden><svg viewBox="0 0 48 48" fill="none" aria-hidden="true"><path d="M7 17 15 25 24 10 33 25 41 17 37 38H11L7 17Z"/><path d="M11 33h26"/></svg><b>Sleva z newsletteru</b></p>
 </div>
 <button type="button" class="bd-close" data-close aria-label="Zavřít"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
 </header>
@@ -763,6 +766,7 @@
 <label class="bd-field"><span>E-mail</span><input name="email" type="email" autocomplete="email" inputmode="email" required><small hidden>Zadej platný e-mail.</small></label>
 <details class="bd-note bd-wide"><summary>Přidat poznámku</summary><textarea name="poznamka" rows="2" placeholder="Např. jaký střih chceš"></textarea></details>
 <label class="bd-hp" aria-hidden="true">Nevyplňuj<input name="web" tabindex="-1" autocomplete="off"></label>
+<input type="hidden" name="nl" value="">
 <p class="bd-legal bd-wide">Odesláním rezervace beru na vědomí <a href="gdpr.html" target="_blank" rel="noopener">zásady ochrany osobních údajů</a> a&nbsp;<a href="podminky.html" target="_blank" rel="noopener">podmínky rezervace</a>.</p>
 <label class="bd-consent bd-consent--news bd-wide"><input type="checkbox" name="novinky" value="1"><span>Chci dostávat novinky: volné termíny a&nbsp;akce e-mailem (nepovinné, potvrdíš odkazem v&nbsp;e-mailu, odhlásíš se jedním klikem).</span></label>
 </div>
@@ -776,6 +780,7 @@
 <span id="bd-sum-when">a den</span>
 </div>
 <span class="bd-sum-price" id="bd-sum-price"></span>
+<p class="bd-discount-note" id="bd-discount-note" hidden>Na zvýhodněné ceny první návštěvy a&nbsp;14denního restartu se sleva z&nbsp;newsletteru nevztahuje.</p>
 <button type="submit" class="button button--yellow bd-submit">Odeslat<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
 <p class="bd-error" role="alert" hidden></p>
 </footer>

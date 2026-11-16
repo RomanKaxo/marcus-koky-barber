@@ -19,4 +19,14 @@ return [
 
     // Kolik e-mailů se pošle v jedné dávce (jeden požadavek ze správce). Hlídej limity hostingu.
     'batch_size' => 25,
+
+    // Tajemství pro podpis slevových odkazů v newsletteru (min. 32 znaků). Bez něj se sleva nenabízí.
+    // Vytvoř: php -r 'echo bin2hex(random_bytes(32)), PHP_EOL;'
+    'secret' => '',
+
+    // Sleva pro rezervaci přes odkaz z newsletteru v procentech. Jediné místo, kde se mění.
+    'sleva_procent' => 5,
+
+    // Kolik dní od rozeslání slevový odkaz platí.
+    'sleva_dni' => 30,
 ];

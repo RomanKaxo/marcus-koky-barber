@@ -6,6 +6,7 @@ declare(strict_types=1);
 const TO = 'info@marcuskoky.cz';           // kam chodí rezervace
 const FROM = 'rezervace@marcuskoky.cz';    // odesílatel; musí existovat nebo být povolený na hostingu (SPF)
 const LIMIT_PER_HOUR = 5;                  // ochrana proti zahlcení z jedné IP
+require __DIR__ . '/lib/newsletter.php';   // sleva z newsletteru (procento v configu: sleva_procent)
 
 header('Content-Type: application/json; charset=utf-8');
 header('X-Content-Type-Options: nosniff');
@@ -49,6 +50,22 @@ if (count($times) >= LIMIT_PER_HOUR) reply(429, ['ok' => false, 'error' => 'Moc 
 $times[] = time();
 @file_put_contents($file, implode("\n", $times), LOCK_EX);
 
+// Sleva z newsletteru: jen s platným podepsaným tokenem kampaně, ne podle příznaku od klienta.
+$sleva = '';
+$kampan = null;
+$slevaStav = null;                         // null = nežádána, true = uplatněna, false = neplatný odkaz / neplatí na službu
+$nlToken = trim((string)($_POST['nl'] ?? ''));
+if ($nlToken !== '') {
+    try { $kampan = nl_discount_verify($nlToken); } catch (Throwable $e) { error_log('rezervace sleva: ' . $e->getMessage()); }
+    $slevaStav = false;
+    if ($kampan !== null && nl_discount_applies($sluzba) && preg_match('/(\d[\d ]*)\s*Kč\s*$/u', $sluzba, $m)) {
+        $puvodni = (int)str_replace(' ', '', $m[1]);
+        $nova = nl_discount_price($puvodni);
+        $sleva = 'Sleva ' . nl_config()['sleva_procent'] . " % z newsletteru: $nova Kč místo $puvodni Kč";
+        $slevaStav = true;
+    }
+}
+
 $dny = ['neděle', 'pondělí', 'úterý', 'středa', 'čtvrtek', 'pátek', 'sobota'];
 $kdy = $dny[(int)$d->format('w')] . ' ' . $d->format('j. n. Y') . ', ' . $cas;
 
@@ -63,15 +80,19 @@ $headers = fn(string $replyTo) => implode("\r\n", [
 
 $proMarcuse = "Nová rezervace z webu\n\n"
     . "Jméno:    $jmeno\nTelefon:  $telefon\nE-mail:   $email\nSlužba:   $sluzba\nKdy:      $kdy\n"
+    . ($sleva !== '' ? "$sleva (kampaň č. $kampan)\n" : '')
+    . ($slevaStav === false ? "Sleva:    klient přišel přes slevový odkaz, ale sleva neplatí (neplatný/prošlý odkaz nebo zvýhodněná služba)\n" : '')
     . ($pozn !== '' ? "Poznámka: $pozn\n" : '')
     . "\nOdpověz na tento e-mail a klientovi termín potvrď.\n";
 $ok = mail(TO, $enc("Rezervace: $jmeno, $kdy"), $proMarcuse, $headers($email));
 if (!$ok) reply(500, ['ok' => false, 'error' => 'E-mail se nepodařilo odeslat.']);
 
 $proKlienta = "Ahoj $jmeno,\n\ndíky za rezervaci v Marcus Koky Barber. Přišlo mi:\n\n"
-    . "Služba: $sluzba\nKdy:    $kdy\n\n"
+    . "Služba: $sluzba\nKdy:    $kdy\n"
+    . ($sleva !== '' ? "$sleva\n" : '')
+    . "\n"
     . "Termín ti potvrdím telefonem nebo e-mailem. Kdyby se něco změnilo, zavolej na +420 732 165 547.\n\n"
     . "Bratislavská 201/14 (Ponávka Tower), Brno\nMarcus\n";
 @mail($email, $enc('Rezervace přijata · Marcus Koky Barber'), $proKlienta, $headers(TO));
 
-reply(200, ['ok' => true]);
+reply(200, ['ok' => true, 'sleva' => $slevaStav]);
