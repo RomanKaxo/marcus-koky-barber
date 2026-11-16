@@ -40,8 +40,11 @@ Ostatní šířky, ovládání klávesnicí a výkon zatím ověřené nejsou.
 `rezervace.html` (+ `assets/css/rezervace.css`, `assets/js/rezervace.js`) je klikací návrh vlastního rezervačního
 systému ve stylu webu: služba → termín → údaje (včetně kódu ze Slevomatu) → potvrzení s .ics do kalendáře.
 Běží jen v prohlížeči, nic neodesílá, obsazenost je smyšlená. Hlavní web dál odkazuje na Termino.
-`spravce.html` je pohled majitele: den (časová osa) a týden, detail klienta, přišel / nepřišel / zrušit, blokování
-časů. Ukázkoví klienti jsou smyšlení; rezervace z `rezervace.html` a změny se drží v localStorage prohlížeče.
+`spravce.html` je pohled majitele, navržený hlavně pro mobil: karta „Další klient“ s odpočtem a Zavolat, rozpis dne
+s akcemi přímo na kartě (Zavolat, Přišel, Nepřišel, Zrušit s vrácením), volné časy s „+ Přidat“ pro telefon a walk-in
+(ukládá do `mkb-rezervace`, takže je termín obsazený i na `rezervace.html`), filtr holičů (zatím zástupní Holič 2 a 3),
+týden s vytížením dnů, hledání klienta na 14 dní a detail s počtem návštěv. Blokování časů je na přání majitele pryč.
+Ukázkoví klienti jsou smyšlení; rezervace z `rezervace.html` a změny se drží v localStorage prohlížeče.
 Pro ostrý provoz chybí server (ukládání, e-maily, správa termínů pro Marcuse) a token Slevomat Partner API
 (`voucherCheck` při zadání kódu, `voucherApply` po potvrzení).
 

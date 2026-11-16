@@ -33,34 +33,77 @@
 <div id="tab-rezervace" role="tabpanel" aria-labelledby="t-rezervace">
 <p class="demo-note" role="note"><strong>Návrh</strong> Pohled majitele. Klienti v&nbsp;ukázce jsou smyšlení, změny se ukládají jen v&nbsp;tomto prohlížeči.</p>
 
-<div class="admin-top">
-<div>
+<div class="rz-head">
+<div class="rz-title">
 <p class="eyebrow" id="today-eyebrow">Dnes</p>
 <h1 id="day-title">Pondělí 16. listopadu</h1>
 </div>
-<div class="toolbar">
-<div class="seg" role="tablist" aria-label="Zobrazení">
-<button type="button" role="tab" aria-selected="true" data-view="day">Den</button>
-<button type="button" role="tab" aria-selected="false" data-view="week">Týden</button>
+<div class="rz-search" role="search">
+<label class="sr-only" for="rz-q">Hledat klienta podle jména nebo telefonu</label>
+<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5"/></svg>
+<input id="rz-q" type="search" placeholder="Hledat klienta nebo telefon" autocomplete="off" spellcheck="false" aria-describedby="rz-q-hint" aria-controls="rz-results" aria-expanded="false">
+<p class="sr-only" id="rz-q-hint">Hledá v rezervacích na příštích 14 dní.</p>
+<div class="rz-results" id="rz-results" hidden></div>
+<p class="sr-only" id="rz-q-count" aria-live="polite"></p>
+</div>
+</div>
+
+<div class="rz-overview" id="rz-overview">
+<section class="rz-next" id="rz-next" aria-labelledby="rz-next-label"></section>
+<dl class="stats rz-stats" id="stats"></dl>
+</div>
+
+<div class="rz-controls">
+<div class="rz-controls-main">
+<div class="seg rz-seg" role="group" aria-label="Zobrazení" id="rz-view">
+<button type="button" aria-pressed="true" data-view="day">Den</button>
+<button type="button" aria-pressed="false" data-view="week">Týden</button>
 </div>
 <div class="date-nav">
-<button type="button" class="icon-button" id="prev" aria-label="Předchozí"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></button>
+<button type="button" class="icon-button" id="prev" aria-label="Předchozí den"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></button>
 <button type="button" class="button button--outline today-btn" id="today">Dnes</button>
-<button type="button" class="icon-button" id="next" aria-label="Další"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button>
+<button type="button" class="icon-button" id="next" aria-label="Další den"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button>
 </div>
+<button type="button" class="button button--yellow rz-add-btn" id="rz-add-open"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>Přidat</button>
 </div>
+<div class="seg rz-seg rz-barbers" role="group" aria-label="Holič" id="rz-barber"></div>
 </div>
-
-<dl class="stats" id="stats"></dl>
 
 <div class="admin-layout">
-<section class="schedule" id="schedule" aria-live="polite"></section>
-
-<aside class="detail" id="detail" aria-label="Detail rezervace" hidden>
+<section class="schedule" id="schedule" aria-labelledby="day-title"></section>
+<div class="rz-backdrop" id="rz-backdrop" hidden></div>
+<aside class="detail is-empty" id="detail" aria-label="Detail rezervace">
 <button type="button" class="detail-close icon-button" id="detail-close" aria-label="Zavřít detail"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
 <div id="detail-body"></div>
 </aside>
 </div>
+
+<dialog class="rz-sheet" id="rz-add" aria-labelledby="rz-add-title">
+<form id="rz-add-form" novalidate>
+<div class="rz-sheet-head">
+<div>
+<p class="eyebrow">Telefon nebo walk-in</p>
+<h2 id="rz-add-title">Přidat rezervaci</h2>
+<p class="rz-sheet-date" id="rz-add-date"></p>
+</div>
+<button type="button" class="icon-button" id="rz-add-close" aria-label="Zavřít"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+</div>
+<div class="rz-form-grid">
+<label class="rz-field rz-field--wide"><span>Jméno</span><input name="name" autocomplete="off" required minlength="3" aria-describedby="rz-err-name"><small class="rz-err" id="rz-err-name" hidden>Napiš jméno klienta (aspoň 3 znaky).</small></label>
+<label class="rz-field rz-field--wide"><span>Telefon</span><input name="phone" type="tel" inputmode="tel" autocomplete="off" required placeholder="+420 …" aria-describedby="rz-err-phone"><small class="rz-err" id="rz-err-phone" hidden>Telefon potřebuje aspoň 9 číslic.</small></label>
+<label class="rz-field rz-field--wide"><span>Služba</span><select name="service" id="rz-service"></select></label>
+<label class="rz-field"><span>Čas</span><select name="hour" id="rz-hour" aria-describedby="rz-err-hour"></select><small class="rz-err" id="rz-err-hour" hidden>Tenhle den už není volný čas.</small></label>
+<label class="rz-field"><span>Holič</span><select name="barber" id="rz-barber-select"></select></label>
+<label class="rz-field rz-field--wide"><span>Poznámka <small>nepovinné</small></span><textarea name="note" rows="2" maxlength="300" placeholder="Např. jako minule, přijde s&nbsp;bráchou"></textarea></label>
+</div>
+<div class="rz-sheet-actions">
+<button type="submit" class="button button--yellow">Uložit rezervaci</button>
+<button type="button" class="button button--outline" id="rz-add-cancel">Zpět</button>
+</div>
+</form>
+</dialog>
+
+<div class="rz-toast" id="rz-toast" role="status" aria-live="polite" aria-atomic="true"></div>
 </div>
 
 <div id="tab-newsletter" role="tabpanel" aria-labelledby="t-newsletter" hidden>
