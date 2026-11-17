@@ -3,221 +3,496 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Marcus Koky Barber — vlastní ikony</title>
+<title>Ikony v2 (Claude)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600&family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
 <style>
-:root { color-scheme: dark; --gold: #e8c466; }
+:root { color-scheme: dark; --bg: #0a0a0a; --gold: #e8c466; --muted: #a59d88; --card: #121110; }
 * { box-sizing: border-box; }
-body { margin: 0; background: #000; color: var(--gold); font-family: system-ui, sans-serif; }
-main { max-width: 1200px; padding: 56px 32px 48px; margin: auto; }
-header { padding-bottom: 28px; border-bottom: 1px solid #40361e; margin-bottom: 28px; }
-.brand { margin: 0 0 14px; font-size: 12px; letter-spacing: .19em; text-transform: uppercase; }
-h1 { margin: 0 0 12px; font: 400 clamp(32px, 5vw, 52px)/1.1 Georgia, serif; }
-.intro { margin: 0; color: #b6ad98; font-size: 14px; line-height: 1.7; }
-.grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
-article { padding: 20px; border: 1px solid #302919; }
-.card-top { display: flex; justify-content: space-between; gap: 8px; color: #b6ad98; font-size: 11px; }
-a { color: inherit; text-underline-offset: 4px; }
-a:hover { color: var(--gold); }
-a:focus-visible { outline: 1px solid var(--gold); outline-offset: 5px; }
-.samples { display: flex; align-items: flex-start; justify-content: space-around; gap: 12px; padding: 30px 0 22px; }
-.sample { width: 80px; display: flex; flex-direction: column; align-items: center; }
-.drawing { height: 64px; display: flex; align-items: center; justify-content: center; }
-.size-64 svg { width: 64px; height: 64px; }
-.size-32 svg { width: 32px; height: 32px; }
-.size { margin-top: 12px; font-size: 10px; color: #b6ad98; font-variant-numeric: tabular-nums; }
-h2 { margin: 0; font: 400 21px/1.3 Georgia, serif; }
-footer { margin-top: 28px; font-size: 12px; line-height: 1.8; color: #b6ad98; }
-@media (max-width: 960px) { .grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
-@media (max-width: 720px) { main { padding: 32px 20px; } .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-@media (max-width: 440px) { .grid { grid-template-columns: 1fr; } }
+body { margin: 0; background: var(--bg); color: var(--gold); font-family: Manrope, system-ui, sans-serif; }
+main { max-width: 1320px; margin: auto; padding: 48px 32px 64px; }
+h1 { margin: 0 0 8px; font: 600 clamp(30px, 4vw, 46px)/1.1 "Playfair Display", Georgia, serif; }
+.intro { margin: 0 0 36px; color: var(--muted); font-size: 15px; line-height: 1.6; max-width: 60ch; }
+.grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+article { background: var(--card); padding: 22px 22px 18px; }
+h2 { margin: 0 0 14px; font: 600 19px/1.3 "Playfair Display", Georgia, serif; }
+h2 small { font: 400 12px Manrope, sans-serif; color: var(--muted); margin-left: 6px; }
+.row { display: flex; align-items: flex-end; gap: 26px; }
+.s { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+.s span { font-size: 11px; color: var(--muted); font-variant-numeric: tabular-nums; }
+@media (prefers-reduced-motion: no-preference) {
+  article:hover .s120 svg * { stroke-dasharray: 1; stroke-dashoffset: 1; animation: draw 1.6s ease forwards; }
+}
+@keyframes draw { to { stroke-dashoffset: 0; } }
+@media (max-width: 1000px) { .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 620px) { main { padding: 32px 16px; } .grid { grid-template-columns: 1fr; } .row { gap: 16px; } }
 </style>
 </head>
 <body>
 <main>
-<header><p class="brand">Marcus Koky Barber</p><h1>Řemeslo v každém tahu.</h1><p class="intro">12 původních ikon · jednotná linka 1,5 · plátno 48 × 48<br>Každý motiv v 64 a 32 px. Název souboru slouží ke stažení SVG.</p></header>
-<section class="grid" aria-label="Sada ikon">
-<article><div class="card-top"><span>01</span><a href="nuzky.svg" download>nuzky.svg</a></div><div class="samples"><div class="sample size-64"><span class="drawing" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-  <path pathLength="1" d="M17 33c0 3.6-2.7 6.5-6 6.5S5 36.6 5 33s2.7-6.5 6-6.5 6 2.9 6 6.5Z"/>
-  <path pathLength="1" d="M31 33c0 3.6 2.7 6.5 6 6.5s6-2.9 6-6.5-2.7-6.5-6-6.5-6 2.9-6 6.5Z"/>
-  <path pathLength="1" d="M15 28 37 5c1.1 6.5-2.4 12.2-8 17l-4 3"/>
-  <path pathLength="1" d="M33 28 11 5c-1.1 6.5 2.4 12.2 8 17l4 3"/>
-  <path pathLength="1" d="M25.5 23a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z"/>
-  <path pathLength="1" d="M39 39c0 2.2 1.2 3.5 3.5 3.5"/>
-</svg>
-</span><span class="size">64 px</span></div><div class="sample size-32"><span class="drawing" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-  <path pathLength="1" d="M17 33c0 3.6-2.7 6.5-6 6.5S5 36.6 5 33s2.7-6.5 6-6.5 6 2.9 6 6.5Z"/>
-  <path pathLength="1" d="M31 33c0 3.6 2.7 6.5 6 6.5s6-2.9 6-6.5-2.7-6.5-6-6.5-6 2.9-6 6.5Z"/>
-  <path pathLength="1" d="M15 28 37 5c1.1 6.5-2.4 12.2-8 17l-4 3"/>
-  <path pathLength="1" d="M33 28 11 5c-1.1 6.5 2.4 12.2 8 17l4 3"/>
-  <path pathLength="1" d="M25.5 23a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z"/>
-  <path pathLength="1" d="M39 39c0 2.2 1.2 3.5 3.5 3.5"/>
-</svg>
-</span><span class="size">32 px</span></div></div><h2>Nůžky</h2></article>
-<article><div class="card-top"><span>02</span><a href="strojek.svg" download>strojek.svg</a></div><div class="samples"><div class="sample size-64"><span class="drawing" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-  <path pathLength="1" d="M16 15h16l2 7-2.3 16a5 5 0 0 1-5 4h-5.4a5 5 0 0 1-5-4L14 22l2-7Z"/>
-  <path pathLength="1" d="M15 15V6h18v9M19.5 6v5M24 6v5M28.5 6v5"/>
-  <path pathLength="1" d="M15 21h18M18 36h12"/>
-  <path pathLength="1" d="M22 26h4v5h-4Z"/>
-  <path pathLength="1" d="M24 42v2"/>
-</svg>
-</span><span class="size">64 px</span></div><div class="sample size-32"><span class="drawing" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-  <path pathLength="1" d="M16 15h16l2 7-2.3 16a5 5 0 0 1-5 4h-5.4a5 5 0 0 1-5-4L14 22l2-7Z"/>
-  <path pathLength="1" d="M15 15V6h18v9M19.5 6v5M24 6v5M28.5 6v5"/>
-  <path pathLength="1" d="M15 21h18M18 36h12"/>
-  <path pathLength="1" d="M22 26h4v5h-4Z"/>
-  <path pathLength="1" d="M24 42v2"/>
-</svg>
-</span><span class="size">32 px</span></div></div><h2>Strojek</h2></article>
-<article><div class="card-top"><span>03</span><a href="britva.svg" download>britva.svg</a></div><div class="samples"><div class="sample size-64"><span class="drawing" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-  <path pathLength="1" d="M9 24 34 7l6 9-20 14-7-2-4-4Z"/>
-  <path pathLength="1" d="M18 25 36 13"/>
-  <path pathLength="1" d="M10 26 6 34a5 5 0 0 0 3 7l27 2a3.5 3.5 0 0 0 1-7l-21-4"/>
-  <path pathLength="1" d="M14 37 31 38.5"/>
-  <path pathLength="1" d="M11.5 24.5 7 21"/>
-</svg>
-</span><span class="size">64 px</span></div><div class="sample size-32"><span class="drawing" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-  <path pathLength="1" d="M9 24 34 7l6 9-20 14-7-2-4-4Z"/>
-  <path pathLength="1" d="M18 25 36 13"/>
-  <path pathLength="1" d="M10 26 6 34a5 5 0 0 0 3 7l27 2a3.5 3.5 0 0 0 1-7l-21-4"/>
-  <path pathLength="1" d="M14 37 31 38.5"/>
-  <path pathLength="1" d="M11.5 24.5 7 21"/>
-</svg>
-</span><span class="size">32 px</span></div></div><h2>Břitva</h2></article>
-<article><div class="card-top"><span>04</span><a href="kreslo.svg" download>kreslo.svg</a></div><div class="samples"><div class="sample size-64"><span class="drawing" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-  <path pathLength="1" d="M14 10V6h14v5H14Z"/>
-  <path pathLength="1" d="M19 11v4M25 11v4"/>
-  <path pathLength="1" d="M13 28V18a3 3 0 0 1 3-3h11a3 3 0 0 1 3 3v10"/>
-  <path pathLength="1" d="M13 28h20v6H13a3 3 0 0 1 0-6Z"/>
-  <path pathLength="1" d="M8 22h8M8 22v8M29 22h8v8"/>
-  <path pathLength="1" d="M33 34 36 38h6M22 34v8M17 34v4h10"/>
-  <path pathLength="1" d="M13 44c1-3 5-4 9-4s8 1 9 4H13Z"/>
-</svg>
-</span><span class="size">64 px</span></div><div class="sample size-32"><span class="drawing" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-  <path pathLength="1" d="M14 10V6h14v5H14Z"/>
-  <path pathLength="1" d="M19 11v4M25 11v4"/>
-  <path pathLength="1" d="M13 28V18a3 3 0 0 1 3-3h11a3 3 0 0 1 3 3v10"/>
-  <path pathLength="1" d="M13 28h20v6H13a3 3 0 0 1 0-6Z"/>
-  <path pathLength="1" d="M8 22h8M8 22v8M29 22h8v8"/>
-  <path pathLength="1" d="M33 34 36 38h6M22 34v8M17 34v4h10"/>
-  <path pathLength="1" d="M13 44c1-3 5-4 9-4s8 1 9 4H13Z"/>
-</svg>
-</span><span class="size">32 px</span></div></div><h2>Křeslo</h2></article>
-<article><div class="card-top"><span>05</span><a href="hreben.svg" download>hreben.svg</a></div><div class="samples"><div class="sample size-64"><span class="drawing" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-  <path pathLength="1" d="M9 10h30a3 3 0 0 1 3 3v3H6v-3a3 3 0 0 1 3-3Z"/>
-  <path pathLength="1" d="M6 16v22M10 16v22M14 16v22M18 16v22M22 16v22M26 16v22M30 16v22M34 16v22M38 16v22M42 16v22"/>
-</svg>
-</span><span class="size">64 px</span></div><div class="sample size-32"><span class="drawing" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-  <path pathLength="1" d="M9 10h30a3 3 0 0 1 3 3v3H6v-3a3 3 0 0 1 3-3Z"/>
-  <path pathLength="1" d="M6 16v22M10 16v22M14 16v22M18 16v22M22 16v22M26 16v22M30 16v22M34 16v22M38 16v22M42 16v22"/>
-</svg>
-</span><span class="size">32 px</span></div></div><h2>Hřeben</h2></article>
-<article><div class="card-top"><span>06</span><a href="rucnik.svg" download>rucnik.svg</a></div><div class="samples"><div class="sample size-64"><span class="drawing" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-  <path pathLength="1" d="M14 18h20c6 0 10 5 10 12s-4 12-10 12H14C8 42 4 37 4 30s4-12 10-12Z"/>
-  <path pathLength="1" d="M14 18c6 0 10 5 10 12s-4 12-10 12"/>
-  <path pathLength="1" d="M14 24c3 0 5 2.5 5 6s-2 6-5 6-5-2.5-5-6c0-1.7 1-3 2.5-3s2.5 1.3 2.5 3"/>
-  <path pathLength="1" d="M28 25h10M29 35h8"/>
-  <path pathLength="1" d="M15 13c-4-4 4-5 0-9M24 13c-4-4 4-5 0-9M33 13c-4-4 4-5 0-9"/>
-</svg>
-</span><span class="size">64 px</span></div><div class="sample size-32"><span class="drawing" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-  <path pathLength="1" d="M14 18h20c6 0 10 5 10 12s-4 12-10 12H14C8 42 4 37 4 30s4-12 10-12Z"/>
-  <path pathLength="1" d="M14 18c6 0 10 5 10 12s-4 12-10 12"/>
-  <path pathLength="1" d="M14 24c3 0 5 2.5 5 6s-2 6-5 6-5-2.5-5-6c0-1.7 1-3 2.5-3s2.5 1.3 2.5 3"/>
-  <path pathLength="1" d="M28 25h10M29 35h8"/>
-  <path pathLength="1" d="M15 13c-4-4 4-5 0-9M24 13c-4-4 4-5 0-9M33 13c-4-4 4-5 0-9"/>
-</svg>
-</span><span class="size">32 px</span></div></div><h2>Horký ručník</h2></article>
-<article><div class="card-top"><span>07</span><a href="stetka.svg" download>stetka.svg</a></div><div class="samples"><div class="sample size-64"><span class="drawing" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-  <path pathLength="1" d="M15 24C12 19 8 16 10 12c1-2 3-2 5-1 0-4 4-6 7-3 2-5 7-4 9 0 4-1 7 2 6 5 4 3 0 8-4 11"/>
-  <path pathLength="1" d="M15 24h18v5H15Z"/>
-  <path pathLength="1" d="M17 29c2 4 2 6 0 9-2 3 1 5 7 5s9-2 7-5c-2-3-2-5 0-9"/>
-  <path pathLength="1" d="M17 15l3 9M24 13v11M31 15l-3 9"/>
-  <path pathLength="1" d="M20 38h8"/>
-</svg>
-</span><span class="size">64 px</span></div><div class="sample size-32"><span class="drawing" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-  <path pathLength="1" d="M15 24C12 19 8 16 10 12c1-2 3-2 5-1 0-4 4-6 7-3 2-5 7-4 9 0 4-1 7 2 6 5 4 3 0 8-4 11"/>
-  <path pathLength="1" d="M15 24h18v5H15Z"/>
-  <path pathLength="1" d="M17 29c2 4 2 6 0 9-2 3 1 5 7 5s9-2 7-5c-2-3-2-5 0-9"/>
-  <path pathLength="1" d="M17 15l3 9M24 13v11M31 15l-3 9"/>
-  <path pathLength="1" d="M20 38h8"/>
-</svg>
-</span><span class="size">32 px</span></div></div><h2>Holicí štětka</h2></article>
-<article><div class="card-top"><span>08</span><a href="vousy.svg" download>vousy.svg</a></div><div class="samples"><div class="sample size-64"><span class="drawing" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-  <path pathLength="1" d="M7 17c-1 10 2 19 10 23l7 4 7-4c8-4 11-13 10-23"/>
-  <path pathLength="1" d="M7 17l5 6M41 17l-5 6"/>
-  <path pathLength="1" d="M24 21c-3-7-9-6-12-1-2 3-5 4-7 2 1 6 8 8 13 4l6-5Z"/>
-  <path pathLength="1" d="M24 21c3-7 9-6 12-1 2 3 5 4 7 2-1 6-8 8-13 4l-6-5Z"/>
-  <path pathLength="1" d="M17 32l2 4M24 30v9M31 32l-2 4"/>
-</svg>
-</span><span class="size">64 px</span></div><div class="sample size-32"><span class="drawing" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-  <path pathLength="1" d="M7 17c-1 10 2 19 10 23l7 4 7-4c8-4 11-13 10-23"/>
-  <path pathLength="1" d="M7 17l5 6M41 17l-5 6"/>
-  <path pathLength="1" d="M24 21c-3-7-9-6-12-1-2 3-5 4-7 2 1 6 8 8 13 4l6-5Z"/>
-  <path pathLength="1" d="M24 21c3-7 9-6 12-1 2 3 5 4 7 2-1 6-8 8-13 4l-6-5Z"/>
-  <path pathLength="1" d="M17 32l2 4M24 30v9M31 32l-2 4"/>
-</svg>
-</span><span class="size">32 px</span></div></div><h2>Vousy</h2></article>
-<article><div class="card-top"><span>09</span><a href="koruna.svg" download>koruna.svg</a></div><div class="samples"><div class="sample size-64"><span class="drawing" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-  <path pathLength="1" d="M7 17 15 25 24 10 33 25 41 17 37 38H11L7 17Z"/>
-  <path pathLength="1" d="M11 33h26M15 42h18"/>
-  <path pathLength="1" d="M24 24l3 4-3 4-3-4 3-4Z"/>
-  <path pathLength="1" d="M9 14a2 2 0 1 1-4 0 2 2 0 0 1 4 0Z"/>
-  <path pathLength="1" d="M26 6a2 2 0 1 1-4 0 2 2 0 0 1 4 0Z"/>
-  <path pathLength="1" d="M43 14a2 2 0 1 1-4 0 2 2 0 0 1 4 0Z"/>
-</svg>
-</span><span class="size">64 px</span></div><div class="sample size-32"><span class="drawing" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-  <path pathLength="1" d="M7 17 15 25 24 10 33 25 41 17 37 38H11L7 17Z"/>
-  <path pathLength="1" d="M11 33h26M15 42h18"/>
-  <path pathLength="1" d="M24 24l3 4-3 4-3-4 3-4Z"/>
-  <path pathLength="1" d="M9 14a2 2 0 1 1-4 0 2 2 0 0 1 4 0Z"/>
-  <path pathLength="1" d="M26 6a2 2 0 1 1-4 0 2 2 0 0 1 4 0Z"/>
-  <path pathLength="1" d="M43 14a2 2 0 1 1-4 0 2 2 0 0 1 4 0Z"/>
-</svg>
-</span><span class="size">32 px</span></div></div><h2>Koruna</h2></article>
-<article><div class="card-top"><span>10</span><a href="kava.svg" download>kava.svg</a></div><div class="samples"><div class="sample size-64"><span class="drawing" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-  <path pathLength="1" d="M8 20h25v9a11 11 0 0 1-11 11h-3A11 11 0 0 1 8 29v-9Z"/>
-  <path pathLength="1" d="M33 22h4a6 6 0 0 1 0 12h-5"/>
-  <path pathLength="1" d="M5 44h34"/>
-  <path pathLength="1" d="M14 14c-4-4 4-5 0-9M23 14c-4-4 4-5 0-9M31 14c-3-3 3-4 0-7"/>
-  <path pathLength="1" d="M13 25v4a6 6 0 0 0 3 5"/>
-</svg>
-</span><span class="size">64 px</span></div><div class="sample size-32"><span class="drawing" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-  <path pathLength="1" d="M8 20h25v9a11 11 0 0 1-11 11h-3A11 11 0 0 1 8 29v-9Z"/>
-  <path pathLength="1" d="M33 22h4a6 6 0 0 1 0 12h-5"/>
-  <path pathLength="1" d="M5 44h34"/>
-  <path pathLength="1" d="M14 14c-4-4 4-5 0-9M23 14c-4-4 4-5 0-9M31 14c-3-3 3-4 0-7"/>
-  <path pathLength="1" d="M13 25v4a6 6 0 0 0 3 5"/>
-</svg>
-</span><span class="size">32 px</span></div></div><h2>Káva</h2></article>
-<article><div class="card-top"><span>11</span><a href="pomada.svg" download>pomada.svg</a></div><div class="samples"><div class="sample size-64"><span class="drawing" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-  <path pathLength="1" d="M8 23v14c0 4 7 7 16 7s16-3 16-7V23"/>
-  <path pathLength="1" d="M8 23c0-4 7-6 16-6s16 2 16 6-7 6-16 6-16-2-16-6Z"/>
-  <path pathLength="1" d="M14 32c6 2 14 2 20 0M14 38c6 2 14 2 20 0"/>
-  <path pathLength="1" d="M10 10 36 5l2 7-26 5-2-7Z"/>
-  <path pathLength="1" d="M16 12l16-3"/>
-</svg>
-</span><span class="size">64 px</span></div><div class="sample size-32"><span class="drawing" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-  <path pathLength="1" d="M8 23v14c0 4 7 7 16 7s16-3 16-7V23"/>
-  <path pathLength="1" d="M8 23c0-4 7-6 16-6s16 2 16 6-7 6-16 6-16-2-16-6Z"/>
-  <path pathLength="1" d="M14 32c6 2 14 2 20 0M14 38c6 2 14 2 20 0"/>
-  <path pathLength="1" d="M10 10 36 5l2 7-26 5-2-7Z"/>
-  <path pathLength="1" d="M16 12l16-3"/>
-</svg>
-</span><span class="size">32 px</span></div></div><h2>Pomáda</h2></article>
-<article><div class="card-top"><span>12</span><a href="sloup.svg" download>sloup.svg</a></div><div class="samples"><div class="sample size-64"><span class="drawing" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-  <path pathLength="1" d="M15 12h18v24H15Z"/>
-  <path pathLength="1" d="M12 8h24v4H12ZM12 36h24v4H12Z"/>
-  <path pathLength="1" d="M19 8V6a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v2M19 40v4h10v-4"/>
-  <path pathLength="1" d="M15 23 26 12M15 32 33 14M20 36l13-13M29 36l4-4"/>
-</svg>
-</span><span class="size">64 px</span></div><div class="sample size-32"><span class="drawing" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-  <path pathLength="1" d="M15 12h18v24H15Z"/>
-  <path pathLength="1" d="M12 8h24v4H12ZM12 36h24v4H12Z"/>
-  <path pathLength="1" d="M19 8V6a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v2M19 40v4h10v-4"/>
-  <path pathLength="1" d="M15 23 26 12M15 32 33 14M20 36l13-13M29 36l4-4"/>
-</svg>
-</span><span class="size">32 px</span></div></div><h2>Barberský sloup</h2></article>
-</section>
-<footer>Samostatná SVG používají currentColor. Každá cesta má pathLength="1" pro animaci vykreslení.<br>Náhled obsahuje totožné SVG vložené přímo, aby fungoval i bez serveru.</footer>
+<h1>Ikony v2 pro Marcus Koky Barber</h1>
+<p class="intro">Rytý styl: hlavní obrys 1,75, detaily 1 a šrafy 0,75. Každý tah má pathLength="1", takže se ikona dá kreslit animací (najeďte myší na kartu). Varianta od Clauda, velikosti 120, 64 a 40 px.</p>
+<div class="grid">
+<article><h2>Nůžky <small>nuzky.svg</small></h2><div class="row"><div class="s s120"><svg viewBox="0 0 64 64" width="120" height="120" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path pathLength="1" d="M27.5 33.5C35 25 45 15 56 6.5C52 15 43 26 33.5 36.5C31.5 37 28.5 35.5 27.5 33.5Z" stroke-width="1.75"/>
+  <path pathLength="1" d="M29.5 37C39 32.5 49 28 59 25.5C52 31 42.5 36.5 32.5 40.5C30.5 40.5 29 39 29.5 37Z" stroke-width="1.75"/>
+  <path pathLength="1" d="M33 31.5L52 11.5M35.5 37.5L54 28.5" stroke-width="0.75"/>
+  <path pathLength="1" d="M44 22L45.6 23.4 M46.2 19.9L47.8 21.3 M48.4 17.8L50 19.2" stroke-width="0.75"/>
+  <path pathLength="1" d="M28.5 36.5C26 40 23.5 43 21.5 45.5M31 38.5C28.5 41.5 26 44.5 23.8 47.2" stroke-width="1.75"/>
+  <path pathLength="1" d="M29 39C25 39.6 21 40 17.6 40.4M28.5 36C24.5 36.6 20.8 37.2 17.2 37.6" stroke-width="1.75"/>
+  <path pathLength="1" d="M21.5 45.5C24.7 47.3 25.3 51.5 23.3 54.6C21.3 57.7 17 58.6 13.9 56.6C10.8 54.6 10.2 50.4 12.3 47.5C14.4 44.6 18.5 43.8 21.5 45.5Z" stroke-width="1.75"/>
+  <circle pathLength="1" cx="17.8" cy="51.2" r="3.6" stroke-width="1"/>
+  <path pathLength="1" d="M17.4 37.5C17.6 34.5 15.5 31.4 12 31.1C8.5 30.8 5.6 33.3 5.5 36.6C5.4 39.9 8 42.3 11.5 42.4C14.3 42.5 16.6 41.6 17.6 40.4" stroke-width="1.75"/>
+  <circle pathLength="1" cx="11.4" cy="36.8" r="3.2" stroke-width="1"/>
+  <path pathLength="1" d="M7.5 42C6 44.5 5.5 47.5 6.5 50.5" stroke-width="1"/>
+  <circle cx="6.7" cy="51" r="1.1" fill="currentColor" stroke="none"/>
+  <circle pathLength="1" cx="30.2" cy="36.4" r="2.6" stroke-width="1"/>
+  <path pathLength="1" d="M28.6 37.8L31.8 35" stroke-width="0.75"/>
+  <path pathLength="1" d="M55 13v3.2M53.4 14.6h3.2" stroke-width="0.75"/></svg><span>120 px</span></div><div class="s s64"><svg viewBox="0 0 64 64" width="64" height="64" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path pathLength="1" d="M27.5 33.5C35 25 45 15 56 6.5C52 15 43 26 33.5 36.5C31.5 37 28.5 35.5 27.5 33.5Z" stroke-width="1.75"/>
+  <path pathLength="1" d="M29.5 37C39 32.5 49 28 59 25.5C52 31 42.5 36.5 32.5 40.5C30.5 40.5 29 39 29.5 37Z" stroke-width="1.75"/>
+  <path pathLength="1" d="M33 31.5L52 11.5M35.5 37.5L54 28.5" stroke-width="0.75"/>
+  <path pathLength="1" d="M44 22L45.6 23.4 M46.2 19.9L47.8 21.3 M48.4 17.8L50 19.2" stroke-width="0.75"/>
+  <path pathLength="1" d="M28.5 36.5C26 40 23.5 43 21.5 45.5M31 38.5C28.5 41.5 26 44.5 23.8 47.2" stroke-width="1.75"/>
+  <path pathLength="1" d="M29 39C25 39.6 21 40 17.6 40.4M28.5 36C24.5 36.6 20.8 37.2 17.2 37.6" stroke-width="1.75"/>
+  <path pathLength="1" d="M21.5 45.5C24.7 47.3 25.3 51.5 23.3 54.6C21.3 57.7 17 58.6 13.9 56.6C10.8 54.6 10.2 50.4 12.3 47.5C14.4 44.6 18.5 43.8 21.5 45.5Z" stroke-width="1.75"/>
+  <circle pathLength="1" cx="17.8" cy="51.2" r="3.6" stroke-width="1"/>
+  <path pathLength="1" d="M17.4 37.5C17.6 34.5 15.5 31.4 12 31.1C8.5 30.8 5.6 33.3 5.5 36.6C5.4 39.9 8 42.3 11.5 42.4C14.3 42.5 16.6 41.6 17.6 40.4" stroke-width="1.75"/>
+  <circle pathLength="1" cx="11.4" cy="36.8" r="3.2" stroke-width="1"/>
+  <path pathLength="1" d="M7.5 42C6 44.5 5.5 47.5 6.5 50.5" stroke-width="1"/>
+  <circle cx="6.7" cy="51" r="1.1" fill="currentColor" stroke="none"/>
+  <circle pathLength="1" cx="30.2" cy="36.4" r="2.6" stroke-width="1"/>
+  <path pathLength="1" d="M28.6 37.8L31.8 35" stroke-width="0.75"/>
+  <path pathLength="1" d="M55 13v3.2M53.4 14.6h3.2" stroke-width="0.75"/></svg><span>64 px</span></div><div class="s s40"><svg viewBox="0 0 64 64" width="40" height="40" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path pathLength="1" d="M27.5 33.5C35 25 45 15 56 6.5C52 15 43 26 33.5 36.5C31.5 37 28.5 35.5 27.5 33.5Z" stroke-width="1.75"/>
+  <path pathLength="1" d="M29.5 37C39 32.5 49 28 59 25.5C52 31 42.5 36.5 32.5 40.5C30.5 40.5 29 39 29.5 37Z" stroke-width="1.75"/>
+  <path pathLength="1" d="M33 31.5L52 11.5M35.5 37.5L54 28.5" stroke-width="0.75"/>
+  <path pathLength="1" d="M44 22L45.6 23.4 M46.2 19.9L47.8 21.3 M48.4 17.8L50 19.2" stroke-width="0.75"/>
+  <path pathLength="1" d="M28.5 36.5C26 40 23.5 43 21.5 45.5M31 38.5C28.5 41.5 26 44.5 23.8 47.2" stroke-width="1.75"/>
+  <path pathLength="1" d="M29 39C25 39.6 21 40 17.6 40.4M28.5 36C24.5 36.6 20.8 37.2 17.2 37.6" stroke-width="1.75"/>
+  <path pathLength="1" d="M21.5 45.5C24.7 47.3 25.3 51.5 23.3 54.6C21.3 57.7 17 58.6 13.9 56.6C10.8 54.6 10.2 50.4 12.3 47.5C14.4 44.6 18.5 43.8 21.5 45.5Z" stroke-width="1.75"/>
+  <circle pathLength="1" cx="17.8" cy="51.2" r="3.6" stroke-width="1"/>
+  <path pathLength="1" d="M17.4 37.5C17.6 34.5 15.5 31.4 12 31.1C8.5 30.8 5.6 33.3 5.5 36.6C5.4 39.9 8 42.3 11.5 42.4C14.3 42.5 16.6 41.6 17.6 40.4" stroke-width="1.75"/>
+  <circle pathLength="1" cx="11.4" cy="36.8" r="3.2" stroke-width="1"/>
+  <path pathLength="1" d="M7.5 42C6 44.5 5.5 47.5 6.5 50.5" stroke-width="1"/>
+  <circle cx="6.7" cy="51" r="1.1" fill="currentColor" stroke="none"/>
+  <circle pathLength="1" cx="30.2" cy="36.4" r="2.6" stroke-width="1"/>
+  <path pathLength="1" d="M28.6 37.8L31.8 35" stroke-width="0.75"/>
+  <path pathLength="1" d="M55 13v3.2M53.4 14.6h3.2" stroke-width="0.75"/></svg><span>40 px</span></div></div></article>
+<article><h2>Strojek <small>strojek.svg</small></h2><div class="row"><div class="s s120"><svg viewBox="0 0 64 64" width="120" height="120" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path pathLength="1" d="M18.5 19.5C18.5 17.5 19.8 16.5 21.5 16.5H42.5C44.2 16.5 45.5 17.5 45.5 19.5L43 51.5C42.7 55 40.5 57 37 57H27C23.5 57 21.3 55 21 51.5Z" stroke-width="1.75"/>
+  <path pathLength="1" d="M17 16.5H47M19.5 16.5V13.5H44.5V16.5" stroke-width="1"/>
+  <path pathLength="1" d="M21.3 13.5L21.3 11 M23.43 13.5L23.43 11 M25.56 13.5L25.56 11 M27.69 13.5L27.69 11 M29.82 13.5L29.82 11 M31.95 13.5L31.95 11 M34.08 13.5L34.08 11 M36.21 13.5L36.21 11 M38.34 13.5L38.34 11 M40.47 13.5L40.47 11 M42.6 13.5L42.6 11" stroke-width="0.75"/>
+  <path pathLength="1" d="M16.5 16.5C16 11 18 6.5 22 5H42C46 6.5 48 11 47.5 16.5" stroke-width="1.75"/>
+  <path pathLength="1" d="M22 5.5L22 13.5 M26 5.5L26 13.5 M30 5.5L30 13.5 M34 5.5L34 13.5 M38 5.5L38 13.5 M42 5.5L42 13.5" stroke-width="1"/>
+  <circle pathLength="1" cx="25" cy="20.5" r="1.6" stroke-width="1"/>
+  <path pathLength="1" d="M24 21.5L26 19.5" stroke-width="0.75"/>
+  <circle pathLength="1" cx="39" cy="20.5" r="1.6" stroke-width="1"/>
+  <path pathLength="1" d="M38 21.5L40 19.5" stroke-width="0.75"/>
+  <path pathLength="1" d="M27 26.5H37C38 26.5 38.5 27 38.5 28V33C38.5 34 38 34.5 37 34.5H27C26 34.5 25.5 34 25.5 33V28C25.5 27 26 26.5 27 26.5Z" stroke-width="1"/>
+  <path pathLength="1" d="M29 30.5L32 28.5L35 30.5L32 32.5Z" stroke-width="0.75"/>
+  <path pathLength="1" d="M45 27.5H47.5V35H44.4" stroke-width="1"/>
+  <circle cx="46.4" cy="29.5" r="0.7" fill="currentColor" stroke="none"/>
+  <path pathLength="1" d="M22.5 40L41.5 40 M22.62 42L41.38 42 M22.74 44L41.26 44 M22.86 46L41.14 46 M22.98 48L41.02 48 M23.1 50L40.9 50" stroke-width="0.75"/>
+  <path pathLength="1" d="M22.3 21.5L23.6 37" stroke-width="1"/>
+  <path pathLength="1" d="M29.5 57V58.5H34.5V57" stroke-width="1"/>
+  <path pathLength="1" d="M32 58.5C32 61 34.5 61.5 37 61.5S41 62 42 60.5" stroke-width="1"/></svg><span>120 px</span></div><div class="s s64"><svg viewBox="0 0 64 64" width="64" height="64" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path pathLength="1" d="M18.5 19.5C18.5 17.5 19.8 16.5 21.5 16.5H42.5C44.2 16.5 45.5 17.5 45.5 19.5L43 51.5C42.7 55 40.5 57 37 57H27C23.5 57 21.3 55 21 51.5Z" stroke-width="1.75"/>
+  <path pathLength="1" d="M17 16.5H47M19.5 16.5V13.5H44.5V16.5" stroke-width="1"/>
+  <path pathLength="1" d="M21.3 13.5L21.3 11 M23.43 13.5L23.43 11 M25.56 13.5L25.56 11 M27.69 13.5L27.69 11 M29.82 13.5L29.82 11 M31.95 13.5L31.95 11 M34.08 13.5L34.08 11 M36.21 13.5L36.21 11 M38.34 13.5L38.34 11 M40.47 13.5L40.47 11 M42.6 13.5L42.6 11" stroke-width="0.75"/>
+  <path pathLength="1" d="M16.5 16.5C16 11 18 6.5 22 5H42C46 6.5 48 11 47.5 16.5" stroke-width="1.75"/>
+  <path pathLength="1" d="M22 5.5L22 13.5 M26 5.5L26 13.5 M30 5.5L30 13.5 M34 5.5L34 13.5 M38 5.5L38 13.5 M42 5.5L42 13.5" stroke-width="1"/>
+  <circle pathLength="1" cx="25" cy="20.5" r="1.6" stroke-width="1"/>
+  <path pathLength="1" d="M24 21.5L26 19.5" stroke-width="0.75"/>
+  <circle pathLength="1" cx="39" cy="20.5" r="1.6" stroke-width="1"/>
+  <path pathLength="1" d="M38 21.5L40 19.5" stroke-width="0.75"/>
+  <path pathLength="1" d="M27 26.5H37C38 26.5 38.5 27 38.5 28V33C38.5 34 38 34.5 37 34.5H27C26 34.5 25.5 34 25.5 33V28C25.5 27 26 26.5 27 26.5Z" stroke-width="1"/>
+  <path pathLength="1" d="M29 30.5L32 28.5L35 30.5L32 32.5Z" stroke-width="0.75"/>
+  <path pathLength="1" d="M45 27.5H47.5V35H44.4" stroke-width="1"/>
+  <circle cx="46.4" cy="29.5" r="0.7" fill="currentColor" stroke="none"/>
+  <path pathLength="1" d="M22.5 40L41.5 40 M22.62 42L41.38 42 M22.74 44L41.26 44 M22.86 46L41.14 46 M22.98 48L41.02 48 M23.1 50L40.9 50" stroke-width="0.75"/>
+  <path pathLength="1" d="M22.3 21.5L23.6 37" stroke-width="1"/>
+  <path pathLength="1" d="M29.5 57V58.5H34.5V57" stroke-width="1"/>
+  <path pathLength="1" d="M32 58.5C32 61 34.5 61.5 37 61.5S41 62 42 60.5" stroke-width="1"/></svg><span>64 px</span></div><div class="s s40"><svg viewBox="0 0 64 64" width="40" height="40" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path pathLength="1" d="M18.5 19.5C18.5 17.5 19.8 16.5 21.5 16.5H42.5C44.2 16.5 45.5 17.5 45.5 19.5L43 51.5C42.7 55 40.5 57 37 57H27C23.5 57 21.3 55 21 51.5Z" stroke-width="1.75"/>
+  <path pathLength="1" d="M17 16.5H47M19.5 16.5V13.5H44.5V16.5" stroke-width="1"/>
+  <path pathLength="1" d="M21.3 13.5L21.3 11 M23.43 13.5L23.43 11 M25.56 13.5L25.56 11 M27.69 13.5L27.69 11 M29.82 13.5L29.82 11 M31.95 13.5L31.95 11 M34.08 13.5L34.08 11 M36.21 13.5L36.21 11 M38.34 13.5L38.34 11 M40.47 13.5L40.47 11 M42.6 13.5L42.6 11" stroke-width="0.75"/>
+  <path pathLength="1" d="M16.5 16.5C16 11 18 6.5 22 5H42C46 6.5 48 11 47.5 16.5" stroke-width="1.75"/>
+  <path pathLength="1" d="M22 5.5L22 13.5 M26 5.5L26 13.5 M30 5.5L30 13.5 M34 5.5L34 13.5 M38 5.5L38 13.5 M42 5.5L42 13.5" stroke-width="1"/>
+  <circle pathLength="1" cx="25" cy="20.5" r="1.6" stroke-width="1"/>
+  <path pathLength="1" d="M24 21.5L26 19.5" stroke-width="0.75"/>
+  <circle pathLength="1" cx="39" cy="20.5" r="1.6" stroke-width="1"/>
+  <path pathLength="1" d="M38 21.5L40 19.5" stroke-width="0.75"/>
+  <path pathLength="1" d="M27 26.5H37C38 26.5 38.5 27 38.5 28V33C38.5 34 38 34.5 37 34.5H27C26 34.5 25.5 34 25.5 33V28C25.5 27 26 26.5 27 26.5Z" stroke-width="1"/>
+  <path pathLength="1" d="M29 30.5L32 28.5L35 30.5L32 32.5Z" stroke-width="0.75"/>
+  <path pathLength="1" d="M45 27.5H47.5V35H44.4" stroke-width="1"/>
+  <circle cx="46.4" cy="29.5" r="0.7" fill="currentColor" stroke="none"/>
+  <path pathLength="1" d="M22.5 40L41.5 40 M22.62 42L41.38 42 M22.74 44L41.26 44 M22.86 46L41.14 46 M22.98 48L41.02 48 M23.1 50L40.9 50" stroke-width="0.75"/>
+  <path pathLength="1" d="M22.3 21.5L23.6 37" stroke-width="1"/>
+  <path pathLength="1" d="M29.5 57V58.5H34.5V57" stroke-width="1"/>
+  <path pathLength="1" d="M32 58.5C32 61 34.5 61.5 37 61.5S41 62 42 60.5" stroke-width="1"/></svg><span>40 px</span></div></div></article>
+<article><h2>Břitva <small>britva.svg</small></h2><div class="row"><div class="s s120"><svg viewBox="0 0 64 64" width="120" height="120" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path pathLength="1" d="M15.5 22.5H55C57.5 22.5 59 24 59 26.5V32C59 34 57.5 35.5 55.5 35.4L28 34.4C25.5 34.3 24.4 32.6 23.4 30.8C22.6 29.6 21.6 29.3 20.3 29.3H16.4" stroke-width="1.75"/>
+  <path pathLength="1" d="M23 25.4H56" stroke-width="1"/>
+  <path pathLength="1" d="M27.5 32.3L56.6 33.3" stroke-width="0.75"/>
+  <path pathLength="1" d="M30 29C31.5 27 34 27 35 28.7C36 30.4 38.5 30.4 39.8 28.7C41 27 43.6 27 44.8 28.7C45.8 30.2 48 30.2 49.2 28.9" stroke-width="0.75"/>
+  <circle cx="28.4" cy="29" r="0.6" fill="currentColor" stroke="none"/>
+  <circle cx="51" cy="28.6" r="0.6" fill="currentColor" stroke="none"/>
+  <path pathLength="1" d="M15.5 22.5C11.5 21.6 8 22.6 5.8 25.1C5.2 25.8 5.8 26.8 6.7 26.3C8.4 25.4 10.3 25 12 25" stroke-width="1"/>
+  <path pathLength="1" d="M8.2 22.9L8.6 24.4 M9.7 22.6L10.1 24.1 M11.2 22.3L11.6 23.8" stroke-width="0.75"/>
+  <path pathLength="1" d="M16.7 26.5C16.4 32 15.4 37 14.5 42.2C13.6 47 12 52 10.6 57.5C10 59.8 6 60 5.5 57.3C5.8 52 6.6 46.5 7.5 40.8C8.4 35.5 9.8 30 11.3 25.5C12.3 23.5 15.7 23.8 16.7 26.5Z" stroke-width="1.75"/>
+  <path pathLength="1" d="M13.2 31.5C12.2 38 10.8 45 8.8 52.5" stroke-width="0.75"/>
+  <circle pathLength="1" cx="14" cy="27" r="1.7" stroke-width="1"/>
+  <circle cx="14" cy="27" r="0.7" fill="currentColor" stroke="none"/>
+  <circle pathLength="1" cx="8.1" cy="56.2" r="1.3" stroke-width="1"/>
+  <circle cx="8.1" cy="56.2" r="0.55" fill="currentColor" stroke="none"/></svg><span>120 px</span></div><div class="s s64"><svg viewBox="0 0 64 64" width="64" height="64" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path pathLength="1" d="M15.5 22.5H55C57.5 22.5 59 24 59 26.5V32C59 34 57.5 35.5 55.5 35.4L28 34.4C25.5 34.3 24.4 32.6 23.4 30.8C22.6 29.6 21.6 29.3 20.3 29.3H16.4" stroke-width="1.75"/>
+  <path pathLength="1" d="M23 25.4H56" stroke-width="1"/>
+  <path pathLength="1" d="M27.5 32.3L56.6 33.3" stroke-width="0.75"/>
+  <path pathLength="1" d="M30 29C31.5 27 34 27 35 28.7C36 30.4 38.5 30.4 39.8 28.7C41 27 43.6 27 44.8 28.7C45.8 30.2 48 30.2 49.2 28.9" stroke-width="0.75"/>
+  <circle cx="28.4" cy="29" r="0.6" fill="currentColor" stroke="none"/>
+  <circle cx="51" cy="28.6" r="0.6" fill="currentColor" stroke="none"/>
+  <path pathLength="1" d="M15.5 22.5C11.5 21.6 8 22.6 5.8 25.1C5.2 25.8 5.8 26.8 6.7 26.3C8.4 25.4 10.3 25 12 25" stroke-width="1"/>
+  <path pathLength="1" d="M8.2 22.9L8.6 24.4 M9.7 22.6L10.1 24.1 M11.2 22.3L11.6 23.8" stroke-width="0.75"/>
+  <path pathLength="1" d="M16.7 26.5C16.4 32 15.4 37 14.5 42.2C13.6 47 12 52 10.6 57.5C10 59.8 6 60 5.5 57.3C5.8 52 6.6 46.5 7.5 40.8C8.4 35.5 9.8 30 11.3 25.5C12.3 23.5 15.7 23.8 16.7 26.5Z" stroke-width="1.75"/>
+  <path pathLength="1" d="M13.2 31.5C12.2 38 10.8 45 8.8 52.5" stroke-width="0.75"/>
+  <circle pathLength="1" cx="14" cy="27" r="1.7" stroke-width="1"/>
+  <circle cx="14" cy="27" r="0.7" fill="currentColor" stroke="none"/>
+  <circle pathLength="1" cx="8.1" cy="56.2" r="1.3" stroke-width="1"/>
+  <circle cx="8.1" cy="56.2" r="0.55" fill="currentColor" stroke="none"/></svg><span>64 px</span></div><div class="s s40"><svg viewBox="0 0 64 64" width="40" height="40" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path pathLength="1" d="M15.5 22.5H55C57.5 22.5 59 24 59 26.5V32C59 34 57.5 35.5 55.5 35.4L28 34.4C25.5 34.3 24.4 32.6 23.4 30.8C22.6 29.6 21.6 29.3 20.3 29.3H16.4" stroke-width="1.75"/>
+  <path pathLength="1" d="M23 25.4H56" stroke-width="1"/>
+  <path pathLength="1" d="M27.5 32.3L56.6 33.3" stroke-width="0.75"/>
+  <path pathLength="1" d="M30 29C31.5 27 34 27 35 28.7C36 30.4 38.5 30.4 39.8 28.7C41 27 43.6 27 44.8 28.7C45.8 30.2 48 30.2 49.2 28.9" stroke-width="0.75"/>
+  <circle cx="28.4" cy="29" r="0.6" fill="currentColor" stroke="none"/>
+  <circle cx="51" cy="28.6" r="0.6" fill="currentColor" stroke="none"/>
+  <path pathLength="1" d="M15.5 22.5C11.5 21.6 8 22.6 5.8 25.1C5.2 25.8 5.8 26.8 6.7 26.3C8.4 25.4 10.3 25 12 25" stroke-width="1"/>
+  <path pathLength="1" d="M8.2 22.9L8.6 24.4 M9.7 22.6L10.1 24.1 M11.2 22.3L11.6 23.8" stroke-width="0.75"/>
+  <path pathLength="1" d="M16.7 26.5C16.4 32 15.4 37 14.5 42.2C13.6 47 12 52 10.6 57.5C10 59.8 6 60 5.5 57.3C5.8 52 6.6 46.5 7.5 40.8C8.4 35.5 9.8 30 11.3 25.5C12.3 23.5 15.7 23.8 16.7 26.5Z" stroke-width="1.75"/>
+  <path pathLength="1" d="M13.2 31.5C12.2 38 10.8 45 8.8 52.5" stroke-width="0.75"/>
+  <circle pathLength="1" cx="14" cy="27" r="1.7" stroke-width="1"/>
+  <circle cx="14" cy="27" r="0.7" fill="currentColor" stroke="none"/>
+  <circle pathLength="1" cx="8.1" cy="56.2" r="1.3" stroke-width="1"/>
+  <circle cx="8.1" cy="56.2" r="0.55" fill="currentColor" stroke="none"/></svg><span>40 px</span></div></div></article>
+<article><h2>Křeslo <small>kreslo.svg</small></h2><div class="row"><div class="s s120"><svg viewBox="0 0 64 64" width="120" height="120" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path pathLength="1" d="M43 6.5C43 5 44 4 45.5 4H53.5C55 4 56 5 56 6.5S55 9 53.5 9H45.5C44 9 43 8 43 6.5Z" stroke-width="1.75"/>
+  <path pathLength="1" d="M48.5 9V12.5M51 9V12" stroke-width="1"/>
+  <path pathLength="1" d="M39.5 34.5L42.2 14.2C42.5 12 44.5 10.7 46.7 11L52.4 11.7C54.6 12 56 14 55.6 16.2L52.3 34.5" stroke-width="1.75"/>
+  <path pathLength="1" d="M46.6 13.6L44.3 24.6M51.8 14.2L49.8 24.6" stroke-width="0.75"/>
+  <circle cx="48.7" cy="16.4" r="0.75" fill="currentColor" stroke="none"/>
+  <circle cx="47.6" cy="21.4" r="0.75" fill="currentColor" stroke="none"/>
+  <path pathLength="1" d="M13 37.5C13 35.8 14.3 34.5 16 34.5H47.5C49.5 34.5 51 36 51 38V40C51 41.7 49.7 43 48 43H15.5C14.1 43 13 41.9 13 40.5Z" stroke-width="1.75"/>
+  <path pathLength="1" d="M17 38.6L18.6 38.6 M20.2 38.6L21.8 38.6 M23.4 38.6L25 38.6 M26.6 38.6L28.2 38.6 M29.8 38.6L31.4 38.6 M33 38.6L34.6 38.6 M36.2 38.6L37.8 38.6 M39.4 38.6L41 38.6 M42.6 38.6L44.2 38.6 M45.8 38.6L47.4 38.6" stroke-width="0.75"/>
+  <path pathLength="1" d="M44.5 25H18.5C16.6 25 15.3 26.3 15.3 28S16.6 31 18.5 31H44" stroke-width="1.75"/>
+  <path pathLength="1" d="M19.5 31V34.5M41 31V34.5" stroke-width="1"/>
+  <circle cx="18.4" cy="28" r="0.8" fill="currentColor" stroke="none"/>
+  <path pathLength="1" d="M15 43L11 51.5" stroke-width="1.75"/>
+  <path pathLength="1" d="M5.5 51.5H15.5" stroke-width="1.75"/>
+  <path pathLength="1" d="M7 53.5L8 51.5 M9 53.5L10 51.5 M11 53.5L12 51.5 M13 53.5L14 51.5" stroke-width="0.75"/>
+  <path pathLength="1" d="M28.5 43V54M36 43V54" stroke-width="1.75"/>
+  <path pathLength="1" d="M28.5 46L36 46 M28.5 49.5L36 49.5" stroke-width="0.75"/>
+  <path pathLength="1" d="M33.6 44.5V53" stroke-width="0.75"/>
+  <path pathLength="1" d="M36 51.5L44.5 49.5H48" stroke-width="1"/>
+  <path pathLength="1" d="M15 60H50C49.5 56.5 42.5 54 32.3 54S15.5 56.5 15 60Z" stroke-width="1.75"/>
+  <path pathLength="1" d="M21 58C24 56.8 28 56.3 32.3 56.3" stroke-width="0.75"/></svg><span>120 px</span></div><div class="s s64"><svg viewBox="0 0 64 64" width="64" height="64" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path pathLength="1" d="M43 6.5C43 5 44 4 45.5 4H53.5C55 4 56 5 56 6.5S55 9 53.5 9H45.5C44 9 43 8 43 6.5Z" stroke-width="1.75"/>
+  <path pathLength="1" d="M48.5 9V12.5M51 9V12" stroke-width="1"/>
+  <path pathLength="1" d="M39.5 34.5L42.2 14.2C42.5 12 44.5 10.7 46.7 11L52.4 11.7C54.6 12 56 14 55.6 16.2L52.3 34.5" stroke-width="1.75"/>
+  <path pathLength="1" d="M46.6 13.6L44.3 24.6M51.8 14.2L49.8 24.6" stroke-width="0.75"/>
+  <circle cx="48.7" cy="16.4" r="0.75" fill="currentColor" stroke="none"/>
+  <circle cx="47.6" cy="21.4" r="0.75" fill="currentColor" stroke="none"/>
+  <path pathLength="1" d="M13 37.5C13 35.8 14.3 34.5 16 34.5H47.5C49.5 34.5 51 36 51 38V40C51 41.7 49.7 43 48 43H15.5C14.1 43 13 41.9 13 40.5Z" stroke-width="1.75"/>
+  <path pathLength="1" d="M17 38.6L18.6 38.6 M20.2 38.6L21.8 38.6 M23.4 38.6L25 38.6 M26.6 38.6L28.2 38.6 M29.8 38.6L31.4 38.6 M33 38.6L34.6 38.6 M36.2 38.6L37.8 38.6 M39.4 38.6L41 38.6 M42.6 38.6L44.2 38.6 M45.8 38.6L47.4 38.6" stroke-width="0.75"/>
+  <path pathLength="1" d="M44.5 25H18.5C16.6 25 15.3 26.3 15.3 28S16.6 31 18.5 31H44" stroke-width="1.75"/>
+  <path pathLength="1" d="M19.5 31V34.5M41 31V34.5" stroke-width="1"/>
+  <circle cx="18.4" cy="28" r="0.8" fill="currentColor" stroke="none"/>
+  <path pathLength="1" d="M15 43L11 51.5" stroke-width="1.75"/>
+  <path pathLength="1" d="M5.5 51.5H15.5" stroke-width="1.75"/>
+  <path pathLength="1" d="M7 53.5L8 51.5 M9 53.5L10 51.5 M11 53.5L12 51.5 M13 53.5L14 51.5" stroke-width="0.75"/>
+  <path pathLength="1" d="M28.5 43V54M36 43V54" stroke-width="1.75"/>
+  <path pathLength="1" d="M28.5 46L36 46 M28.5 49.5L36 49.5" stroke-width="0.75"/>
+  <path pathLength="1" d="M33.6 44.5V53" stroke-width="0.75"/>
+  <path pathLength="1" d="M36 51.5L44.5 49.5H48" stroke-width="1"/>
+  <path pathLength="1" d="M15 60H50C49.5 56.5 42.5 54 32.3 54S15.5 56.5 15 60Z" stroke-width="1.75"/>
+  <path pathLength="1" d="M21 58C24 56.8 28 56.3 32.3 56.3" stroke-width="0.75"/></svg><span>64 px</span></div><div class="s s40"><svg viewBox="0 0 64 64" width="40" height="40" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path pathLength="1" d="M43 6.5C43 5 44 4 45.5 4H53.5C55 4 56 5 56 6.5S55 9 53.5 9H45.5C44 9 43 8 43 6.5Z" stroke-width="1.75"/>
+  <path pathLength="1" d="M48.5 9V12.5M51 9V12" stroke-width="1"/>
+  <path pathLength="1" d="M39.5 34.5L42.2 14.2C42.5 12 44.5 10.7 46.7 11L52.4 11.7C54.6 12 56 14 55.6 16.2L52.3 34.5" stroke-width="1.75"/>
+  <path pathLength="1" d="M46.6 13.6L44.3 24.6M51.8 14.2L49.8 24.6" stroke-width="0.75"/>
+  <circle cx="48.7" cy="16.4" r="0.75" fill="currentColor" stroke="none"/>
+  <circle cx="47.6" cy="21.4" r="0.75" fill="currentColor" stroke="none"/>
+  <path pathLength="1" d="M13 37.5C13 35.8 14.3 34.5 16 34.5H47.5C49.5 34.5 51 36 51 38V40C51 41.7 49.7 43 48 43H15.5C14.1 43 13 41.9 13 40.5Z" stroke-width="1.75"/>
+  <path pathLength="1" d="M17 38.6L18.6 38.6 M20.2 38.6L21.8 38.6 M23.4 38.6L25 38.6 M26.6 38.6L28.2 38.6 M29.8 38.6L31.4 38.6 M33 38.6L34.6 38.6 M36.2 38.6L37.8 38.6 M39.4 38.6L41 38.6 M42.6 38.6L44.2 38.6 M45.8 38.6L47.4 38.6" stroke-width="0.75"/>
+  <path pathLength="1" d="M44.5 25H18.5C16.6 25 15.3 26.3 15.3 28S16.6 31 18.5 31H44" stroke-width="1.75"/>
+  <path pathLength="1" d="M19.5 31V34.5M41 31V34.5" stroke-width="1"/>
+  <circle cx="18.4" cy="28" r="0.8" fill="currentColor" stroke="none"/>
+  <path pathLength="1" d="M15 43L11 51.5" stroke-width="1.75"/>
+  <path pathLength="1" d="M5.5 51.5H15.5" stroke-width="1.75"/>
+  <path pathLength="1" d="M7 53.5L8 51.5 M9 53.5L10 51.5 M11 53.5L12 51.5 M13 53.5L14 51.5" stroke-width="0.75"/>
+  <path pathLength="1" d="M28.5 43V54M36 43V54" stroke-width="1.75"/>
+  <path pathLength="1" d="M28.5 46L36 46 M28.5 49.5L36 49.5" stroke-width="0.75"/>
+  <path pathLength="1" d="M33.6 44.5V53" stroke-width="0.75"/>
+  <path pathLength="1" d="M36 51.5L44.5 49.5H48" stroke-width="1"/>
+  <path pathLength="1" d="M15 60H50C49.5 56.5 42.5 54 32.3 54S15.5 56.5 15 60Z" stroke-width="1.75"/>
+  <path pathLength="1" d="M21 58C24 56.8 28 56.3 32.3 56.3" stroke-width="0.75"/></svg><span>40 px</span></div></div></article>
+<article><h2>Hřeben <small>hreben.svg</small></h2><div class="row"><div class="s s120"><svg viewBox="0 0 64 64" width="120" height="120" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path pathLength="1" d="M6 29V26.5C6 24.2 7.8 23 10 22.6C18 21.5 46 21.5 54 22.6C56.2 23 58 24.2 58 26.5V29Z" stroke-width="1.75"/>
+  <path pathLength="1" d="M10.5 25.6C20 24.8 44 24.8 53.5 25.6" stroke-width="0.75"/>
+  <path pathLength="1" d="M8 29V42M11.8 29V42M15.6 29V42M19.4 29V42M23.2 29V42M27 29V42" stroke-width="1.75"/>
+  <path pathLength="1" d="M31 29V42M34 29V42M37 29V42M40 29V42M43 29V42M46 29V42M49 29V42M52 29V42M55 29V42" stroke-width="1"/></svg><span>120 px</span></div><div class="s s64"><svg viewBox="0 0 64 64" width="64" height="64" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path pathLength="1" d="M6 29V26.5C6 24.2 7.8 23 10 22.6C18 21.5 46 21.5 54 22.6C56.2 23 58 24.2 58 26.5V29Z" stroke-width="1.75"/>
+  <path pathLength="1" d="M10.5 25.6C20 24.8 44 24.8 53.5 25.6" stroke-width="0.75"/>
+  <path pathLength="1" d="M8 29V42M11.8 29V42M15.6 29V42M19.4 29V42M23.2 29V42M27 29V42" stroke-width="1.75"/>
+  <path pathLength="1" d="M31 29V42M34 29V42M37 29V42M40 29V42M43 29V42M46 29V42M49 29V42M52 29V42M55 29V42" stroke-width="1"/></svg><span>64 px</span></div><div class="s s40"><svg viewBox="0 0 64 64" width="40" height="40" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path pathLength="1" d="M6 29V26.5C6 24.2 7.8 23 10 22.6C18 21.5 46 21.5 54 22.6C56.2 23 58 24.2 58 26.5V29Z" stroke-width="1.75"/>
+  <path pathLength="1" d="M10.5 25.6C20 24.8 44 24.8 53.5 25.6" stroke-width="0.75"/>
+  <path pathLength="1" d="M8 29V42M11.8 29V42M15.6 29V42M19.4 29V42M23.2 29V42M27 29V42" stroke-width="1.75"/>
+  <path pathLength="1" d="M31 29V42M34 29V42M37 29V42M40 29V42M43 29V42M46 29V42M49 29V42M52 29V42M55 29V42" stroke-width="1"/></svg><span>40 px</span></div></div></article>
+<article><h2>Horký ručník <small>rucnik.svg</small></h2><div class="row"><div class="s s120"><svg viewBox="0 0 64 64" width="120" height="120" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path pathLength="1" d="M19 31.5H48.5C53 31.5 56 36.5 56 42S53 52.5 48.5 52.5H19" stroke-width="1.75"/>
+  <path pathLength="1" d="M19 31.5C13.5 31.5 9.5 36.2 9.5 42S13.5 52.5 19 52.5S28.5 47.8 28.5 42S24.7 33.9 19.6 33.9C15.3 33.9 12.3 37.6 12.3 42S15.4 49.8 19.2 49.8S25.6 46.4 25.6 42.2S22.9 36.6 19.6 36.6S14.6 39.2 14.6 42.4S16.8 47.2 19.4 47.2S23.1 44.8 23.1 42.4S21.4 39.4 19.6 39.4" stroke-width="1"/>
+  <path pathLength="1" d="M32 32.6L32 51.4 M34.6 32.6L34.6 51.4 M37.2 32.6L37.2 51.4" stroke-width="0.75"/>
+  <path pathLength="1" d="M43.5 31.5V52.5M46.5 31.6V52.4" stroke-width="1"/>
+  <path pathLength="1" d="M53.8 35L56.4 34.8 M54 38.4L56.4 38.2 M53.8 41.8L56.4 41.6 M54 45.2L56.4 45 M53.8 48.6L56.4 48.4" stroke-width="0.75"/>
+  <path pathLength="1" d="M5 56H59M8 56C8.5 58 10 59 12 59H52C54 59 55.5 58 56 56" stroke-width="1"/>
+  <path pathLength="1" d="M20 26C17 23 23 20 20 16.5S19 10 21 7.5" stroke-width="1.75"/>
+  <path pathLength="1" d="M31 26C28 23 34 20 31 16.5S30 10 32 7.5" stroke-width="1"/>
+  <path pathLength="1" d="M42 26C39 23 45 20 42 16.5S41 10 43 7.5" stroke-width="1.75"/></svg><span>120 px</span></div><div class="s s64"><svg viewBox="0 0 64 64" width="64" height="64" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path pathLength="1" d="M19 31.5H48.5C53 31.5 56 36.5 56 42S53 52.5 48.5 52.5H19" stroke-width="1.75"/>
+  <path pathLength="1" d="M19 31.5C13.5 31.5 9.5 36.2 9.5 42S13.5 52.5 19 52.5S28.5 47.8 28.5 42S24.7 33.9 19.6 33.9C15.3 33.9 12.3 37.6 12.3 42S15.4 49.8 19.2 49.8S25.6 46.4 25.6 42.2S22.9 36.6 19.6 36.6S14.6 39.2 14.6 42.4S16.8 47.2 19.4 47.2S23.1 44.8 23.1 42.4S21.4 39.4 19.6 39.4" stroke-width="1"/>
+  <path pathLength="1" d="M32 32.6L32 51.4 M34.6 32.6L34.6 51.4 M37.2 32.6L37.2 51.4" stroke-width="0.75"/>
+  <path pathLength="1" d="M43.5 31.5V52.5M46.5 31.6V52.4" stroke-width="1"/>
+  <path pathLength="1" d="M53.8 35L56.4 34.8 M54 38.4L56.4 38.2 M53.8 41.8L56.4 41.6 M54 45.2L56.4 45 M53.8 48.6L56.4 48.4" stroke-width="0.75"/>
+  <path pathLength="1" d="M5 56H59M8 56C8.5 58 10 59 12 59H52C54 59 55.5 58 56 56" stroke-width="1"/>
+  <path pathLength="1" d="M20 26C17 23 23 20 20 16.5S19 10 21 7.5" stroke-width="1.75"/>
+  <path pathLength="1" d="M31 26C28 23 34 20 31 16.5S30 10 32 7.5" stroke-width="1"/>
+  <path pathLength="1" d="M42 26C39 23 45 20 42 16.5S41 10 43 7.5" stroke-width="1.75"/></svg><span>64 px</span></div><div class="s s40"><svg viewBox="0 0 64 64" width="40" height="40" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path pathLength="1" d="M19 31.5H48.5C53 31.5 56 36.5 56 42S53 52.5 48.5 52.5H19" stroke-width="1.75"/>
+  <path pathLength="1" d="M19 31.5C13.5 31.5 9.5 36.2 9.5 42S13.5 52.5 19 52.5S28.5 47.8 28.5 42S24.7 33.9 19.6 33.9C15.3 33.9 12.3 37.6 12.3 42S15.4 49.8 19.2 49.8S25.6 46.4 25.6 42.2S22.9 36.6 19.6 36.6S14.6 39.2 14.6 42.4S16.8 47.2 19.4 47.2S23.1 44.8 23.1 42.4S21.4 39.4 19.6 39.4" stroke-width="1"/>
+  <path pathLength="1" d="M32 32.6L32 51.4 M34.6 32.6L34.6 51.4 M37.2 32.6L37.2 51.4" stroke-width="0.75"/>
+  <path pathLength="1" d="M43.5 31.5V52.5M46.5 31.6V52.4" stroke-width="1"/>
+  <path pathLength="1" d="M53.8 35L56.4 34.8 M54 38.4L56.4 38.2 M53.8 41.8L56.4 41.6 M54 45.2L56.4 45 M53.8 48.6L56.4 48.4" stroke-width="0.75"/>
+  <path pathLength="1" d="M5 56H59M8 56C8.5 58 10 59 12 59H52C54 59 55.5 58 56 56" stroke-width="1"/>
+  <path pathLength="1" d="M20 26C17 23 23 20 20 16.5S19 10 21 7.5" stroke-width="1.75"/>
+  <path pathLength="1" d="M31 26C28 23 34 20 31 16.5S30 10 32 7.5" stroke-width="1"/>
+  <path pathLength="1" d="M42 26C39 23 45 20 42 16.5S41 10 43 7.5" stroke-width="1.75"/></svg><span>40 px</span></div></div></article>
+<article><h2>Štětka <small>stetka.svg</small></h2><div class="row"><div class="s s120"><svg viewBox="0 0 64 64" width="120" height="120" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path pathLength="1" d="M21 30C17 25 16.5 16 22 10.5C25.5 7 29 5.8 32 5.8S38.5 7 42 10.5C47.5 16 47 25 43 30" stroke-width="1.75"/>
+  <path pathLength="1" d="M25 30C23 23 23.5 15 27 10" stroke-width="0.75"/>
+  <path pathLength="1" d="M29 30C28 23 28.5 15 30.5 8.5" stroke-width="0.75"/>
+  <path pathLength="1" d="M33 30C33.5 23 34 15 33.6 7.6" stroke-width="0.75"/>
+  <path pathLength="1" d="M37 30C38.5 23 39.5 16 37.5 9.5" stroke-width="0.75"/>
+  <path pathLength="1" d="M41 30C42.5 24 43 18 41 12.2" stroke-width="0.75"/>
+  <path pathLength="1" d="M22 29C20.8 24 21 18 22.8 14" stroke-width="0.75"/>
+  <circle cx="28.5" cy="12.5" r="0.6" fill="currentColor" stroke="none"/>
+  <circle cx="35.8" cy="14" r="0.6" fill="currentColor" stroke="none"/>
+  <path pathLength="1" d="M18.5 30H45.5V34.5H18.5Z" stroke-width="1.75"/>
+  <path pathLength="1" d="M18.5 32.3H45.5" stroke-width="0.75"/>
+  <path pathLength="1" d="M21 34.5C24.5 38.5 26.2 42.2 25.4 45.8C24.7 49 21 51 20.5 55H43.5C43 51 39.3 49 38.6 45.8C37.8 42.2 39.5 38.5 43 34.5" stroke-width="1.75"/>
+  <path pathLength="1" d="M24.6 41H39.4M24.9 45.5H39.1" stroke-width="0.75"/>
+  <path pathLength="1" d="M27.6 37.5C28.8 40.5 29.1 44 28.4 47" stroke-width="1"/>
+  <path pathLength="1" d="M18 55H46V57.5C46 58.6 45.1 59.5 44 59.5H20C18.9 59.5 18 58.6 18 57.5Z" stroke-width="1.75"/></svg><span>120 px</span></div><div class="s s64"><svg viewBox="0 0 64 64" width="64" height="64" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path pathLength="1" d="M21 30C17 25 16.5 16 22 10.5C25.5 7 29 5.8 32 5.8S38.5 7 42 10.5C47.5 16 47 25 43 30" stroke-width="1.75"/>
+  <path pathLength="1" d="M25 30C23 23 23.5 15 27 10" stroke-width="0.75"/>
+  <path pathLength="1" d="M29 30C28 23 28.5 15 30.5 8.5" stroke-width="0.75"/>
+  <path pathLength="1" d="M33 30C33.5 23 34 15 33.6 7.6" stroke-width="0.75"/>
+  <path pathLength="1" d="M37 30C38.5 23 39.5 16 37.5 9.5" stroke-width="0.75"/>
+  <path pathLength="1" d="M41 30C42.5 24 43 18 41 12.2" stroke-width="0.75"/>
+  <path pathLength="1" d="M22 29C20.8 24 21 18 22.8 14" stroke-width="0.75"/>
+  <circle cx="28.5" cy="12.5" r="0.6" fill="currentColor" stroke="none"/>
+  <circle cx="35.8" cy="14" r="0.6" fill="currentColor" stroke="none"/>
+  <path pathLength="1" d="M18.5 30H45.5V34.5H18.5Z" stroke-width="1.75"/>
+  <path pathLength="1" d="M18.5 32.3H45.5" stroke-width="0.75"/>
+  <path pathLength="1" d="M21 34.5C24.5 38.5 26.2 42.2 25.4 45.8C24.7 49 21 51 20.5 55H43.5C43 51 39.3 49 38.6 45.8C37.8 42.2 39.5 38.5 43 34.5" stroke-width="1.75"/>
+  <path pathLength="1" d="M24.6 41H39.4M24.9 45.5H39.1" stroke-width="0.75"/>
+  <path pathLength="1" d="M27.6 37.5C28.8 40.5 29.1 44 28.4 47" stroke-width="1"/>
+  <path pathLength="1" d="M18 55H46V57.5C46 58.6 45.1 59.5 44 59.5H20C18.9 59.5 18 58.6 18 57.5Z" stroke-width="1.75"/></svg><span>64 px</span></div><div class="s s40"><svg viewBox="0 0 64 64" width="40" height="40" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path pathLength="1" d="M21 30C17 25 16.5 16 22 10.5C25.5 7 29 5.8 32 5.8S38.5 7 42 10.5C47.5 16 47 25 43 30" stroke-width="1.75"/>
+  <path pathLength="1" d="M25 30C23 23 23.5 15 27 10" stroke-width="0.75"/>
+  <path pathLength="1" d="M29 30C28 23 28.5 15 30.5 8.5" stroke-width="0.75"/>
+  <path pathLength="1" d="M33 30C33.5 23 34 15 33.6 7.6" stroke-width="0.75"/>
+  <path pathLength="1" d="M37 30C38.5 23 39.5 16 37.5 9.5" stroke-width="0.75"/>
+  <path pathLength="1" d="M41 30C42.5 24 43 18 41 12.2" stroke-width="0.75"/>
+  <path pathLength="1" d="M22 29C20.8 24 21 18 22.8 14" stroke-width="0.75"/>
+  <circle cx="28.5" cy="12.5" r="0.6" fill="currentColor" stroke="none"/>
+  <circle cx="35.8" cy="14" r="0.6" fill="currentColor" stroke="none"/>
+  <path pathLength="1" d="M18.5 30H45.5V34.5H18.5Z" stroke-width="1.75"/>
+  <path pathLength="1" d="M18.5 32.3H45.5" stroke-width="0.75"/>
+  <path pathLength="1" d="M21 34.5C24.5 38.5 26.2 42.2 25.4 45.8C24.7 49 21 51 20.5 55H43.5C43 51 39.3 49 38.6 45.8C37.8 42.2 39.5 38.5 43 34.5" stroke-width="1.75"/>
+  <path pathLength="1" d="M24.6 41H39.4M24.9 45.5H39.1" stroke-width="0.75"/>
+  <path pathLength="1" d="M27.6 37.5C28.8 40.5 29.1 44 28.4 47" stroke-width="1"/>
+  <path pathLength="1" d="M18 55H46V57.5C46 58.6 45.1 59.5 44 59.5H20C18.9 59.5 18 58.6 18 57.5Z" stroke-width="1.75"/></svg><span>40 px</span></div></div></article>
+<article><h2>Vousy <small>vousy.svg</small></h2><div class="row"><div class="s s120"><svg viewBox="0 0 64 64" width="120" height="120" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path pathLength="1" d="M43.6 28.6C45 24 45.8 19 46 14C46.1 11.8 47.3 10.5 48.9 10.5S51.7 11.8 51.7 14C51.8 22 51.6 29.5 49.5 37.5C47 48 40.5 56.5 32 60C23.5 56.5 17 48 14.5 37.5C12.4 29.5 12.2 22 12.3 14C12.3 11.8 13.5 10.5 15.1 10.5S17.9 11.8 18 14C18.2 19 19 24 20.4 28.6" stroke-width="1.75"/>
+  <path pathLength="1" d="M32 29C28.5 26.5 23 26.3 19.5 29.5C17.5 31.4 15 31.7 13.6 29.8C13.2 29.2 13.9 28.5 14.4 29C15 29.6 16 29.3 16 28.5C15 33.6 19.5 35.5 23.5 34.6C26.8 33.9 29.5 32.4 32 32.4C34.5 32.4 37.2 33.9 40.5 34.6C44.5 35.5 49 33.6 48 28.5C48 29.3 49 29.6 49.6 29C50.1 28.5 50.8 29.2 50.4 29.8C49 31.7 46.5 31.4 44.5 29.5C41 26.3 35.5 26.5 32 29Z" stroke-width="1.75"/>
+  <path pathLength="1" d="M22 30.6C25 29.4 28.4 29.6 31 31M42 30.6C39 29.4 35.6 29.6 33 31" stroke-width="0.75"/>
+  <path pathLength="1" d="M19.5 38C20 44 22.5 49 26.5 53" stroke-width="0.75"/>
+  <path pathLength="1" d="M24.5 38.5C25 44.5 27.5 50 31 55.5" stroke-width="0.75"/>
+  <path pathLength="1" d="M32 37.5V57" stroke-width="0.75"/>
+  <path pathLength="1" d="M39.5 38.5C39 44.5 36.5 50 33 55.5" stroke-width="0.75"/>
+  <path pathLength="1" d="M44.5 38C44 44 41.5 49 37.5 53" stroke-width="0.75"/>
+  <path pathLength="1" d="M15.2 15V26" stroke-width="0.75"/>
+  <path pathLength="1" d="M48.8 15V26" stroke-width="0.75"/>
+  <path pathLength="1" d="M28 37C28.4 41 29 44 30 47" stroke-width="0.75"/>
+  <path pathLength="1" d="M36 37C35.6 41 35 44 34 47" stroke-width="0.75"/></svg><span>120 px</span></div><div class="s s64"><svg viewBox="0 0 64 64" width="64" height="64" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path pathLength="1" d="M43.6 28.6C45 24 45.8 19 46 14C46.1 11.8 47.3 10.5 48.9 10.5S51.7 11.8 51.7 14C51.8 22 51.6 29.5 49.5 37.5C47 48 40.5 56.5 32 60C23.5 56.5 17 48 14.5 37.5C12.4 29.5 12.2 22 12.3 14C12.3 11.8 13.5 10.5 15.1 10.5S17.9 11.8 18 14C18.2 19 19 24 20.4 28.6" stroke-width="1.75"/>
+  <path pathLength="1" d="M32 29C28.5 26.5 23 26.3 19.5 29.5C17.5 31.4 15 31.7 13.6 29.8C13.2 29.2 13.9 28.5 14.4 29C15 29.6 16 29.3 16 28.5C15 33.6 19.5 35.5 23.5 34.6C26.8 33.9 29.5 32.4 32 32.4C34.5 32.4 37.2 33.9 40.5 34.6C44.5 35.5 49 33.6 48 28.5C48 29.3 49 29.6 49.6 29C50.1 28.5 50.8 29.2 50.4 29.8C49 31.7 46.5 31.4 44.5 29.5C41 26.3 35.5 26.5 32 29Z" stroke-width="1.75"/>
+  <path pathLength="1" d="M22 30.6C25 29.4 28.4 29.6 31 31M42 30.6C39 29.4 35.6 29.6 33 31" stroke-width="0.75"/>
+  <path pathLength="1" d="M19.5 38C20 44 22.5 49 26.5 53" stroke-width="0.75"/>
+  <path pathLength="1" d="M24.5 38.5C25 44.5 27.5 50 31 55.5" stroke-width="0.75"/>
+  <path pathLength="1" d="M32 37.5V57" stroke-width="0.75"/>
+  <path pathLength="1" d="M39.5 38.5C39 44.5 36.5 50 33 55.5" stroke-width="0.75"/>
+  <path pathLength="1" d="M44.5 38C44 44 41.5 49 37.5 53" stroke-width="0.75"/>
+  <path pathLength="1" d="M15.2 15V26" stroke-width="0.75"/>
+  <path pathLength="1" d="M48.8 15V26" stroke-width="0.75"/>
+  <path pathLength="1" d="M28 37C28.4 41 29 44 30 47" stroke-width="0.75"/>
+  <path pathLength="1" d="M36 37C35.6 41 35 44 34 47" stroke-width="0.75"/></svg><span>64 px</span></div><div class="s s40"><svg viewBox="0 0 64 64" width="40" height="40" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path pathLength="1" d="M43.6 28.6C45 24 45.8 19 46 14C46.1 11.8 47.3 10.5 48.9 10.5S51.7 11.8 51.7 14C51.8 22 51.6 29.5 49.5 37.5C47 48 40.5 56.5 32 60C23.5 56.5 17 48 14.5 37.5C12.4 29.5 12.2 22 12.3 14C12.3 11.8 13.5 10.5 15.1 10.5S17.9 11.8 18 14C18.2 19 19 24 20.4 28.6" stroke-width="1.75"/>
+  <path pathLength="1" d="M32 29C28.5 26.5 23 26.3 19.5 29.5C17.5 31.4 15 31.7 13.6 29.8C13.2 29.2 13.9 28.5 14.4 29C15 29.6 16 29.3 16 28.5C15 33.6 19.5 35.5 23.5 34.6C26.8 33.9 29.5 32.4 32 32.4C34.5 32.4 37.2 33.9 40.5 34.6C44.5 35.5 49 33.6 48 28.5C48 29.3 49 29.6 49.6 29C50.1 28.5 50.8 29.2 50.4 29.8C49 31.7 46.5 31.4 44.5 29.5C41 26.3 35.5 26.5 32 29Z" stroke-width="1.75"/>
+  <path pathLength="1" d="M22 30.6C25 29.4 28.4 29.6 31 31M42 30.6C39 29.4 35.6 29.6 33 31" stroke-width="0.75"/>
+  <path pathLength="1" d="M19.5 38C20 44 22.5 49 26.5 53" stroke-width="0.75"/>
+  <path pathLength="1" d="M24.5 38.5C25 44.5 27.5 50 31 55.5" stroke-width="0.75"/>
+  <path pathLength="1" d="M32 37.5V57" stroke-width="0.75"/>
+  <path pathLength="1" d="M39.5 38.5C39 44.5 36.5 50 33 55.5" stroke-width="0.75"/>
+  <path pathLength="1" d="M44.5 38C44 44 41.5 49 37.5 53" stroke-width="0.75"/>
+  <path pathLength="1" d="M15.2 15V26" stroke-width="0.75"/>
+  <path pathLength="1" d="M48.8 15V26" stroke-width="0.75"/>
+  <path pathLength="1" d="M28 37C28.4 41 29 44 30 47" stroke-width="0.75"/>
+  <path pathLength="1" d="M36 37C35.6 41 35 44 34 47" stroke-width="0.75"/></svg><span>40 px</span></div></div></article>
+<article><h2>Koruna <small>koruna.svg</small></h2><div class="row"><div class="s s120"><svg viewBox="0 0 64 64" width="120" height="120" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path pathLength="1" d="M13 45L8.5 20L21 31L32 13L43 31L55.5 20L51 45Z" stroke-width="1.75"/>
+  <circle pathLength="1" cx="8.2" cy="17.6" r="2.1" stroke-width="1"/>
+  <circle pathLength="1" cx="55.8" cy="17.6" r="2.1" stroke-width="1"/>
+  <path pathLength="1" d="M32 4.5V10.5M29.5 7.2H34.5" stroke-width="1"/>
+  <circle cx="8.2" cy="17.6" r="0.8" fill="currentColor" stroke="none"/>
+  <circle cx="55.8" cy="17.6" r="0.8" fill="currentColor" stroke="none"/>
+  <path pathLength="1" d="M17.5 33.6C19.9 37 19.3 39.4 17.5 39.4S15.1 37 17.5 33.6Z" stroke-width="1"/>
+  <path pathLength="1" d="M32 26.6C34.4 30 33.8 32.4 32 32.4S29.6 30 32 26.6Z" stroke-width="1"/>
+  <path pathLength="1" d="M46.5 33.6C48.9 37 48.3 39.4 46.5 39.4S44.1 37 46.5 33.6Z" stroke-width="1"/>
+  <path pathLength="1" d="M11 45H53C54.1 45 55 45.9 55 47V52C55 53.1 54.1 54 53 54H11C9.9 54 9 53.1 9 52V47C9 45.9 9.9 45 11 45Z" stroke-width="1.75"/>
+  <path pathLength="1" d="M28.5 49.5L32 47L35.5 49.5L32 52Z" stroke-width="1"/>
+  <circle pathLength="1" cx="18" cy="49.5" r="1.7" stroke-width="1"/>
+  <circle cx="18" cy="49.5" r="0.6" fill="currentColor" stroke="none"/>
+  <circle pathLength="1" cx="46" cy="49.5" r="1.7" stroke-width="1"/>
+  <circle cx="46" cy="49.5" r="0.6" fill="currentColor" stroke="none"/>
+  <path pathLength="1" d="M12.5 47L12.5 52 M14.1 47L14.1 52 M22 47L22 52 M23.6 47L23.6 52 M25.2 47L25.2 52 M39.2 47L39.2 52 M40.8 47L40.8 52 M42.4 47L42.4 52 M49.9 47L49.9 52 M51.5 47L51.5 52" stroke-width="0.75"/>
+  <path pathLength="1" d="M15.6 42.5L12.6 25.5L21.6 33.8L32 17L42.4 33.8L51.4 25.5L48.4 42.5" stroke-width="0.75"/></svg><span>120 px</span></div><div class="s s64"><svg viewBox="0 0 64 64" width="64" height="64" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path pathLength="1" d="M13 45L8.5 20L21 31L32 13L43 31L55.5 20L51 45Z" stroke-width="1.75"/>
+  <circle pathLength="1" cx="8.2" cy="17.6" r="2.1" stroke-width="1"/>
+  <circle pathLength="1" cx="55.8" cy="17.6" r="2.1" stroke-width="1"/>
+  <path pathLength="1" d="M32 4.5V10.5M29.5 7.2H34.5" stroke-width="1"/>
+  <circle cx="8.2" cy="17.6" r="0.8" fill="currentColor" stroke="none"/>
+  <circle cx="55.8" cy="17.6" r="0.8" fill="currentColor" stroke="none"/>
+  <path pathLength="1" d="M17.5 33.6C19.9 37 19.3 39.4 17.5 39.4S15.1 37 17.5 33.6Z" stroke-width="1"/>
+  <path pathLength="1" d="M32 26.6C34.4 30 33.8 32.4 32 32.4S29.6 30 32 26.6Z" stroke-width="1"/>
+  <path pathLength="1" d="M46.5 33.6C48.9 37 48.3 39.4 46.5 39.4S44.1 37 46.5 33.6Z" stroke-width="1"/>
+  <path pathLength="1" d="M11 45H53C54.1 45 55 45.9 55 47V52C55 53.1 54.1 54 53 54H11C9.9 54 9 53.1 9 52V47C9 45.9 9.9 45 11 45Z" stroke-width="1.75"/>
+  <path pathLength="1" d="M28.5 49.5L32 47L35.5 49.5L32 52Z" stroke-width="1"/>
+  <circle pathLength="1" cx="18" cy="49.5" r="1.7" stroke-width="1"/>
+  <circle cx="18" cy="49.5" r="0.6" fill="currentColor" stroke="none"/>
+  <circle pathLength="1" cx="46" cy="49.5" r="1.7" stroke-width="1"/>
+  <circle cx="46" cy="49.5" r="0.6" fill="currentColor" stroke="none"/>
+  <path pathLength="1" d="M12.5 47L12.5 52 M14.1 47L14.1 52 M22 47L22 52 M23.6 47L23.6 52 M25.2 47L25.2 52 M39.2 47L39.2 52 M40.8 47L40.8 52 M42.4 47L42.4 52 M49.9 47L49.9 52 M51.5 47L51.5 52" stroke-width="0.75"/>
+  <path pathLength="1" d="M15.6 42.5L12.6 25.5L21.6 33.8L32 17L42.4 33.8L51.4 25.5L48.4 42.5" stroke-width="0.75"/></svg><span>64 px</span></div><div class="s s40"><svg viewBox="0 0 64 64" width="40" height="40" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path pathLength="1" d="M13 45L8.5 20L21 31L32 13L43 31L55.5 20L51 45Z" stroke-width="1.75"/>
+  <circle pathLength="1" cx="8.2" cy="17.6" r="2.1" stroke-width="1"/>
+  <circle pathLength="1" cx="55.8" cy="17.6" r="2.1" stroke-width="1"/>
+  <path pathLength="1" d="M32 4.5V10.5M29.5 7.2H34.5" stroke-width="1"/>
+  <circle cx="8.2" cy="17.6" r="0.8" fill="currentColor" stroke="none"/>
+  <circle cx="55.8" cy="17.6" r="0.8" fill="currentColor" stroke="none"/>
+  <path pathLength="1" d="M17.5 33.6C19.9 37 19.3 39.4 17.5 39.4S15.1 37 17.5 33.6Z" stroke-width="1"/>
+  <path pathLength="1" d="M32 26.6C34.4 30 33.8 32.4 32 32.4S29.6 30 32 26.6Z" stroke-width="1"/>
+  <path pathLength="1" d="M46.5 33.6C48.9 37 48.3 39.4 46.5 39.4S44.1 37 46.5 33.6Z" stroke-width="1"/>
+  <path pathLength="1" d="M11 45H53C54.1 45 55 45.9 55 47V52C55 53.1 54.1 54 53 54H11C9.9 54 9 53.1 9 52V47C9 45.9 9.9 45 11 45Z" stroke-width="1.75"/>
+  <path pathLength="1" d="M28.5 49.5L32 47L35.5 49.5L32 52Z" stroke-width="1"/>
+  <circle pathLength="1" cx="18" cy="49.5" r="1.7" stroke-width="1"/>
+  <circle cx="18" cy="49.5" r="0.6" fill="currentColor" stroke="none"/>
+  <circle pathLength="1" cx="46" cy="49.5" r="1.7" stroke-width="1"/>
+  <circle cx="46" cy="49.5" r="0.6" fill="currentColor" stroke="none"/>
+  <path pathLength="1" d="M12.5 47L12.5 52 M14.1 47L14.1 52 M22 47L22 52 M23.6 47L23.6 52 M25.2 47L25.2 52 M39.2 47L39.2 52 M40.8 47L40.8 52 M42.4 47L42.4 52 M49.9 47L49.9 52 M51.5 47L51.5 52" stroke-width="0.75"/>
+  <path pathLength="1" d="M15.6 42.5L12.6 25.5L21.6 33.8L32 17L42.4 33.8L51.4 25.5L48.4 42.5" stroke-width="0.75"/></svg><span>40 px</span></div></div></article>
+<article><h2>Káva <small>kava.svg</small></h2><div class="row"><div class="s s120"><svg viewBox="0 0 64 64" width="120" height="120" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path pathLength="1" d="M11 30H43V35C43 44.5 37 50.5 27 50.5S11 44.5 11 35Z" stroke-width="1.75"/>
+  <path pathLength="1" d="M11 30C11 31.6 18.2 32.8 27 32.8S43 31.6 43 30" stroke-width="1"/>
+  <path pathLength="1" d="M43 34C48.5 32.5 52.5 34.5 52 39C51.5 43 47.5 45 41.6 44" stroke-width="1.75"/>
+  <path pathLength="1" d="M43 37C46.5 36.3 48.8 37.2 48.6 39.3C48.4 41 46.4 41.8 42.6 41.4" stroke-width="1"/>
+  <path pathLength="1" d="M11.4 37H42.6" stroke-width="0.75"/>
+  <circle cx="15" cy="39.3" r="0.6" fill="currentColor" stroke="none"/>
+  <circle cx="21" cy="39.3" r="0.6" fill="currentColor" stroke="none"/>
+  <circle cx="27" cy="39.3" r="0.6" fill="currentColor" stroke="none"/>
+  <circle cx="33" cy="39.3" r="0.6" fill="currentColor" stroke="none"/>
+  <circle cx="39" cy="39.3" r="0.6" fill="currentColor" stroke="none"/>
+  <path pathLength="1" d="M39.6 40.5C39 44.6 36.4 47.3 32.6 48.3" stroke-width="0.75"/>
+  <path pathLength="1" d="M5 52.5C5 55.3 15 57.5 28.5 57.5S52 55.3 52 52.5" stroke-width="1.75"/>
+  <path pathLength="1" d="M5 52.5C9 51 14 50.6 17.5 50.4M39.5 50.4C43 50.6 48 51 52 52.5" stroke-width="1"/>
+  <path pathLength="1" d="M14 55.2C20 56.2 37 56.2 43 55.2" stroke-width="0.75"/>
+  <path pathLength="1" d="M21 26C18.5 23 23.5 20.5 21 17.5S20 11.5 22 9" stroke-width="1.75"/>
+  <path pathLength="1" d="M28.5 25C26 22 31 19 28.5 15.5S27.5 8.5 29.5 5.5" stroke-width="1"/>
+  <path pathLength="1" d="M35.5 26C33 23 38 20.5 35.5 17.5S34.5 11.5 36.5 9" stroke-width="1.75"/></svg><span>120 px</span></div><div class="s s64"><svg viewBox="0 0 64 64" width="64" height="64" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path pathLength="1" d="M11 30H43V35C43 44.5 37 50.5 27 50.5S11 44.5 11 35Z" stroke-width="1.75"/>
+  <path pathLength="1" d="M11 30C11 31.6 18.2 32.8 27 32.8S43 31.6 43 30" stroke-width="1"/>
+  <path pathLength="1" d="M43 34C48.5 32.5 52.5 34.5 52 39C51.5 43 47.5 45 41.6 44" stroke-width="1.75"/>
+  <path pathLength="1" d="M43 37C46.5 36.3 48.8 37.2 48.6 39.3C48.4 41 46.4 41.8 42.6 41.4" stroke-width="1"/>
+  <path pathLength="1" d="M11.4 37H42.6" stroke-width="0.75"/>
+  <circle cx="15" cy="39.3" r="0.6" fill="currentColor" stroke="none"/>
+  <circle cx="21" cy="39.3" r="0.6" fill="currentColor" stroke="none"/>
+  <circle cx="27" cy="39.3" r="0.6" fill="currentColor" stroke="none"/>
+  <circle cx="33" cy="39.3" r="0.6" fill="currentColor" stroke="none"/>
+  <circle cx="39" cy="39.3" r="0.6" fill="currentColor" stroke="none"/>
+  <path pathLength="1" d="M39.6 40.5C39 44.6 36.4 47.3 32.6 48.3" stroke-width="0.75"/>
+  <path pathLength="1" d="M5 52.5C5 55.3 15 57.5 28.5 57.5S52 55.3 52 52.5" stroke-width="1.75"/>
+  <path pathLength="1" d="M5 52.5C9 51 14 50.6 17.5 50.4M39.5 50.4C43 50.6 48 51 52 52.5" stroke-width="1"/>
+  <path pathLength="1" d="M14 55.2C20 56.2 37 56.2 43 55.2" stroke-width="0.75"/>
+  <path pathLength="1" d="M21 26C18.5 23 23.5 20.5 21 17.5S20 11.5 22 9" stroke-width="1.75"/>
+  <path pathLength="1" d="M28.5 25C26 22 31 19 28.5 15.5S27.5 8.5 29.5 5.5" stroke-width="1"/>
+  <path pathLength="1" d="M35.5 26C33 23 38 20.5 35.5 17.5S34.5 11.5 36.5 9" stroke-width="1.75"/></svg><span>64 px</span></div><div class="s s40"><svg viewBox="0 0 64 64" width="40" height="40" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path pathLength="1" d="M11 30H43V35C43 44.5 37 50.5 27 50.5S11 44.5 11 35Z" stroke-width="1.75"/>
+  <path pathLength="1" d="M11 30C11 31.6 18.2 32.8 27 32.8S43 31.6 43 30" stroke-width="1"/>
+  <path pathLength="1" d="M43 34C48.5 32.5 52.5 34.5 52 39C51.5 43 47.5 45 41.6 44" stroke-width="1.75"/>
+  <path pathLength="1" d="M43 37C46.5 36.3 48.8 37.2 48.6 39.3C48.4 41 46.4 41.8 42.6 41.4" stroke-width="1"/>
+  <path pathLength="1" d="M11.4 37H42.6" stroke-width="0.75"/>
+  <circle cx="15" cy="39.3" r="0.6" fill="currentColor" stroke="none"/>
+  <circle cx="21" cy="39.3" r="0.6" fill="currentColor" stroke="none"/>
+  <circle cx="27" cy="39.3" r="0.6" fill="currentColor" stroke="none"/>
+  <circle cx="33" cy="39.3" r="0.6" fill="currentColor" stroke="none"/>
+  <circle cx="39" cy="39.3" r="0.6" fill="currentColor" stroke="none"/>
+  <path pathLength="1" d="M39.6 40.5C39 44.6 36.4 47.3 32.6 48.3" stroke-width="0.75"/>
+  <path pathLength="1" d="M5 52.5C5 55.3 15 57.5 28.5 57.5S52 55.3 52 52.5" stroke-width="1.75"/>
+  <path pathLength="1" d="M5 52.5C9 51 14 50.6 17.5 50.4M39.5 50.4C43 50.6 48 51 52 52.5" stroke-width="1"/>
+  <path pathLength="1" d="M14 55.2C20 56.2 37 56.2 43 55.2" stroke-width="0.75"/>
+  <path pathLength="1" d="M21 26C18.5 23 23.5 20.5 21 17.5S20 11.5 22 9" stroke-width="1.75"/>
+  <path pathLength="1" d="M28.5 25C26 22 31 19 28.5 15.5S27.5 8.5 29.5 5.5" stroke-width="1"/>
+  <path pathLength="1" d="M35.5 26C33 23 38 20.5 35.5 17.5S34.5 11.5 36.5 9" stroke-width="1.75"/></svg><span>40 px</span></div></div></article>
+<article><h2>Pomáda <small>pomada.svg</small></h2><div class="row"><div class="s s120"><svg viewBox="0 0 64 64" width="120" height="120" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path pathLength="1" d="M10 23C10 19.1 19.8 16 32 16S54 19.1 54 23S44.2 30 32 30S10 26.9 10 23Z" stroke-width="1.75"/>
+  <path pathLength="1" d="M10 23V28.5C10 32.4 19.8 35.5 32 35.5S54 32.4 54 28.5V23" stroke-width="1.75"/>
+  <path pathLength="1" d="M12.5 27.2L12.5 30.53 M15.75 27.79L15.75 31.38 M19 28.32L19 32.15 M22.25 28.77L22.25 32.79 M25.5 29.11L25.5 33.29 M28.75 29.33L28.75 33.6 M32 29.4L32 33.7 M35.25 29.33L35.25 33.6 M38.5 29.11L38.5 33.29 M41.75 28.77L41.75 32.79 M45 28.32L45 32.15 M48.25 27.79L48.25 31.38 M51.5 27.2L51.5 30.53" stroke-width="0.75"/>
+  <path pathLength="1" d="M19 23C19 21 24.8 19.6 32 19.6S45 21 45 23S39.2 26.4 32 26.4S19 25 19 23Z" stroke-width="1"/>
+  <path pathLength="1" d="M32 22.6C30 21.5 27.5 21.6 26.3 22.8C25.6 23.5 24.6 23.4 24.4 22.6C24.6 24.5 27.5 24.6 29.5 24C30.6 23.7 31.3 23.5 32 23.5C32.7 23.5 33.4 23.7 34.5 24C36.5 24.6 39.4 24.5 39.6 22.6C39.4 23.4 38.4 23.5 37.7 22.8C36.5 21.6 34 21.5 32 22.6Z" stroke-width="0.75"/>
+  <path pathLength="1" d="M11.5 33V44.5C11.5 48.4 20.7 51.5 32 51.5S52.5 48.4 52.5 44.5V33" stroke-width="1.75"/>
+  <path pathLength="1" d="M11.5 46.4C14 49.6 22 51.9 32 51.9" stroke-width="0.75"/>
+  <path pathLength="1" d="M11.5 39.5C11.5 42.6 20.7 45 32 45S52.5 42.6 52.5 39.5" stroke-width="0.75"/>
+  <path pathLength="1" d="M16 37.6V45.5" stroke-width="1"/>
+  <path pathLength="1" d="M14 19.6C16 18.5 19 17.8 21.5 17.4" stroke-width="1"/></svg><span>120 px</span></div><div class="s s64"><svg viewBox="0 0 64 64" width="64" height="64" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path pathLength="1" d="M10 23C10 19.1 19.8 16 32 16S54 19.1 54 23S44.2 30 32 30S10 26.9 10 23Z" stroke-width="1.75"/>
+  <path pathLength="1" d="M10 23V28.5C10 32.4 19.8 35.5 32 35.5S54 32.4 54 28.5V23" stroke-width="1.75"/>
+  <path pathLength="1" d="M12.5 27.2L12.5 30.53 M15.75 27.79L15.75 31.38 M19 28.32L19 32.15 M22.25 28.77L22.25 32.79 M25.5 29.11L25.5 33.29 M28.75 29.33L28.75 33.6 M32 29.4L32 33.7 M35.25 29.33L35.25 33.6 M38.5 29.11L38.5 33.29 M41.75 28.77L41.75 32.79 M45 28.32L45 32.15 M48.25 27.79L48.25 31.38 M51.5 27.2L51.5 30.53" stroke-width="0.75"/>
+  <path pathLength="1" d="M19 23C19 21 24.8 19.6 32 19.6S45 21 45 23S39.2 26.4 32 26.4S19 25 19 23Z" stroke-width="1"/>
+  <path pathLength="1" d="M32 22.6C30 21.5 27.5 21.6 26.3 22.8C25.6 23.5 24.6 23.4 24.4 22.6C24.6 24.5 27.5 24.6 29.5 24C30.6 23.7 31.3 23.5 32 23.5C32.7 23.5 33.4 23.7 34.5 24C36.5 24.6 39.4 24.5 39.6 22.6C39.4 23.4 38.4 23.5 37.7 22.8C36.5 21.6 34 21.5 32 22.6Z" stroke-width="0.75"/>
+  <path pathLength="1" d="M11.5 33V44.5C11.5 48.4 20.7 51.5 32 51.5S52.5 48.4 52.5 44.5V33" stroke-width="1.75"/>
+  <path pathLength="1" d="M11.5 46.4C14 49.6 22 51.9 32 51.9" stroke-width="0.75"/>
+  <path pathLength="1" d="M11.5 39.5C11.5 42.6 20.7 45 32 45S52.5 42.6 52.5 39.5" stroke-width="0.75"/>
+  <path pathLength="1" d="M16 37.6V45.5" stroke-width="1"/>
+  <path pathLength="1" d="M14 19.6C16 18.5 19 17.8 21.5 17.4" stroke-width="1"/></svg><span>64 px</span></div><div class="s s40"><svg viewBox="0 0 64 64" width="40" height="40" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path pathLength="1" d="M10 23C10 19.1 19.8 16 32 16S54 19.1 54 23S44.2 30 32 30S10 26.9 10 23Z" stroke-width="1.75"/>
+  <path pathLength="1" d="M10 23V28.5C10 32.4 19.8 35.5 32 35.5S54 32.4 54 28.5V23" stroke-width="1.75"/>
+  <path pathLength="1" d="M12.5 27.2L12.5 30.53 M15.75 27.79L15.75 31.38 M19 28.32L19 32.15 M22.25 28.77L22.25 32.79 M25.5 29.11L25.5 33.29 M28.75 29.33L28.75 33.6 M32 29.4L32 33.7 M35.25 29.33L35.25 33.6 M38.5 29.11L38.5 33.29 M41.75 28.77L41.75 32.79 M45 28.32L45 32.15 M48.25 27.79L48.25 31.38 M51.5 27.2L51.5 30.53" stroke-width="0.75"/>
+  <path pathLength="1" d="M19 23C19 21 24.8 19.6 32 19.6S45 21 45 23S39.2 26.4 32 26.4S19 25 19 23Z" stroke-width="1"/>
+  <path pathLength="1" d="M32 22.6C30 21.5 27.5 21.6 26.3 22.8C25.6 23.5 24.6 23.4 24.4 22.6C24.6 24.5 27.5 24.6 29.5 24C30.6 23.7 31.3 23.5 32 23.5C32.7 23.5 33.4 23.7 34.5 24C36.5 24.6 39.4 24.5 39.6 22.6C39.4 23.4 38.4 23.5 37.7 22.8C36.5 21.6 34 21.5 32 22.6Z" stroke-width="0.75"/>
+  <path pathLength="1" d="M11.5 33V44.5C11.5 48.4 20.7 51.5 32 51.5S52.5 48.4 52.5 44.5V33" stroke-width="1.75"/>
+  <path pathLength="1" d="M11.5 46.4C14 49.6 22 51.9 32 51.9" stroke-width="0.75"/>
+  <path pathLength="1" d="M11.5 39.5C11.5 42.6 20.7 45 32 45S52.5 42.6 52.5 39.5" stroke-width="0.75"/>
+  <path pathLength="1" d="M16 37.6V45.5" stroke-width="1"/>
+  <path pathLength="1" d="M14 19.6C16 18.5 19 17.8 21.5 17.4" stroke-width="1"/></svg><span>40 px</span></div></div></article>
+<article><h2>Barber sloup <small>sloup.svg</small></h2><div class="row"><div class="s s120"><svg viewBox="0 0 64 64" width="120" height="120" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle pathLength="1" cx="32" cy="5.2" r="2.2" stroke-width="1"/>
+  <circle cx="32" cy="5.2" r="0.7" fill="currentColor" stroke="none"/>
+  <path pathLength="1" d="M22.5 14.5C22.5 10.3 26.8 7.4 32 7.4S41.5 10.3 41.5 14.5Z" stroke-width="1.75"/>
+  <path pathLength="1" d="M20.5 14.5H43.5V17.5H20.5Z" stroke-width="1"/>
+  <path pathLength="1" d="M23.5 17.5V47.5M40.5 17.5V47.5" stroke-width="1.75"/>
+  <path pathLength="1" d="M23.5 24.5Q32 22.4 40.5 17.5M23.5 28Q32 25.9 40.5 21M23.5 34Q32 31.9 40.5 27M23.5 37.5Q32 35.4 40.5 30.5M23.5 43.5Q32 41.4 40.5 36.5M23.5 47Q32 44.9 40.5 40M36.86 47.5Q38.68 48.15 40.5 46" stroke-width="1"/>
+  <path pathLength="1" d="M25.5 24.28L25.5 26.58 M28.3 23.12L28.3 25.42 M31.1 21.97L31.1 24.27 M33.9 20.82L33.9 23.12 M36.7 19.66L36.7 21.96 M39.5 18.51L39.5 20.81 M25.5 33.78L25.5 36.08 M28.3 32.62L28.3 34.92 M31.1 31.47L31.1 33.77 M33.9 30.32L33.9 32.62 M36.7 29.16L36.7 31.46 M39.5 28.01L39.5 30.31 M25.5 43.28L25.5 45.58 M28.3 42.12L28.3 44.42 M31.1 40.97L31.1 43.27 M33.9 39.82L33.9 42.12 M36.7 38.66L36.7 40.96 M39.5 37.51L39.5 39.81" stroke-width="0.75"/>
+  <path pathLength="1" d="M37.6 19.5V45.5" stroke-width="0.75"/>
+  <path pathLength="1" d="M20.5 47.5H43.5V50.5H20.5Z" stroke-width="1"/>
+  <path pathLength="1" d="M22.5 50.5C22.5 54.7 26.8 57.6 32 57.6S41.5 54.7 41.5 50.5" stroke-width="1.75"/>
+  <circle pathLength="1" cx="32" cy="59.8" r="1.8" stroke-width="1"/></svg><span>120 px</span></div><div class="s s64"><svg viewBox="0 0 64 64" width="64" height="64" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle pathLength="1" cx="32" cy="5.2" r="2.2" stroke-width="1"/>
+  <circle cx="32" cy="5.2" r="0.7" fill="currentColor" stroke="none"/>
+  <path pathLength="1" d="M22.5 14.5C22.5 10.3 26.8 7.4 32 7.4S41.5 10.3 41.5 14.5Z" stroke-width="1.75"/>
+  <path pathLength="1" d="M20.5 14.5H43.5V17.5H20.5Z" stroke-width="1"/>
+  <path pathLength="1" d="M23.5 17.5V47.5M40.5 17.5V47.5" stroke-width="1.75"/>
+  <path pathLength="1" d="M23.5 24.5Q32 22.4 40.5 17.5M23.5 28Q32 25.9 40.5 21M23.5 34Q32 31.9 40.5 27M23.5 37.5Q32 35.4 40.5 30.5M23.5 43.5Q32 41.4 40.5 36.5M23.5 47Q32 44.9 40.5 40M36.86 47.5Q38.68 48.15 40.5 46" stroke-width="1"/>
+  <path pathLength="1" d="M25.5 24.28L25.5 26.58 M28.3 23.12L28.3 25.42 M31.1 21.97L31.1 24.27 M33.9 20.82L33.9 23.12 M36.7 19.66L36.7 21.96 M39.5 18.51L39.5 20.81 M25.5 33.78L25.5 36.08 M28.3 32.62L28.3 34.92 M31.1 31.47L31.1 33.77 M33.9 30.32L33.9 32.62 M36.7 29.16L36.7 31.46 M39.5 28.01L39.5 30.31 M25.5 43.28L25.5 45.58 M28.3 42.12L28.3 44.42 M31.1 40.97L31.1 43.27 M33.9 39.82L33.9 42.12 M36.7 38.66L36.7 40.96 M39.5 37.51L39.5 39.81" stroke-width="0.75"/>
+  <path pathLength="1" d="M37.6 19.5V45.5" stroke-width="0.75"/>
+  <path pathLength="1" d="M20.5 47.5H43.5V50.5H20.5Z" stroke-width="1"/>
+  <path pathLength="1" d="M22.5 50.5C22.5 54.7 26.8 57.6 32 57.6S41.5 54.7 41.5 50.5" stroke-width="1.75"/>
+  <circle pathLength="1" cx="32" cy="59.8" r="1.8" stroke-width="1"/></svg><span>64 px</span></div><div class="s s40"><svg viewBox="0 0 64 64" width="40" height="40" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle pathLength="1" cx="32" cy="5.2" r="2.2" stroke-width="1"/>
+  <circle cx="32" cy="5.2" r="0.7" fill="currentColor" stroke="none"/>
+  <path pathLength="1" d="M22.5 14.5C22.5 10.3 26.8 7.4 32 7.4S41.5 10.3 41.5 14.5Z" stroke-width="1.75"/>
+  <path pathLength="1" d="M20.5 14.5H43.5V17.5H20.5Z" stroke-width="1"/>
+  <path pathLength="1" d="M23.5 17.5V47.5M40.5 17.5V47.5" stroke-width="1.75"/>
+  <path pathLength="1" d="M23.5 24.5Q32 22.4 40.5 17.5M23.5 28Q32 25.9 40.5 21M23.5 34Q32 31.9 40.5 27M23.5 37.5Q32 35.4 40.5 30.5M23.5 43.5Q32 41.4 40.5 36.5M23.5 47Q32 44.9 40.5 40M36.86 47.5Q38.68 48.15 40.5 46" stroke-width="1"/>
+  <path pathLength="1" d="M25.5 24.28L25.5 26.58 M28.3 23.12L28.3 25.42 M31.1 21.97L31.1 24.27 M33.9 20.82L33.9 23.12 M36.7 19.66L36.7 21.96 M39.5 18.51L39.5 20.81 M25.5 33.78L25.5 36.08 M28.3 32.62L28.3 34.92 M31.1 31.47L31.1 33.77 M33.9 30.32L33.9 32.62 M36.7 29.16L36.7 31.46 M39.5 28.01L39.5 30.31 M25.5 43.28L25.5 45.58 M28.3 42.12L28.3 44.42 M31.1 40.97L31.1 43.27 M33.9 39.82L33.9 42.12 M36.7 38.66L36.7 40.96 M39.5 37.51L39.5 39.81" stroke-width="0.75"/>
+  <path pathLength="1" d="M37.6 19.5V45.5" stroke-width="0.75"/>
+  <path pathLength="1" d="M20.5 47.5H43.5V50.5H20.5Z" stroke-width="1"/>
+  <path pathLength="1" d="M22.5 50.5C22.5 54.7 26.8 57.6 32 57.6S41.5 54.7 41.5 50.5" stroke-width="1.75"/>
+  <circle pathLength="1" cx="32" cy="59.8" r="1.8" stroke-width="1"/></svg><span>40 px</span></div></div></article>
+</div>
 </main>
 </body>
 </html>

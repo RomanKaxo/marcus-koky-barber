@@ -1,7 +1,19 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-  <path pathLength="1" d="M16 15h16l2 7-2.3 16a5 5 0 0 1-5 4h-5.4a5 5 0 0 1-5-4L14 22l2-7Z"/>
-  <path pathLength="1" d="M15 15V6h18v9M19.5 6v5M24 6v5M28.5 6v5"/>
-  <path pathLength="1" d="M15 21h18M18 36h12"/>
-  <path pathLength="1" d="M22 26h4v5h-4Z"/>
-  <path pathLength="1" d="M24 42v2"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+  <path pathLength="1" d="M18.5 19.5C18.5 17.5 19.8 16.5 21.5 16.5H42.5C44.2 16.5 45.5 17.5 45.5 19.5L43 51.5C42.7 55 40.5 57 37 57H27C23.5 57 21.3 55 21 51.5Z" stroke-width="1.75"/>
+  <path pathLength="1" d="M17 16.5H47M19.5 16.5V13.5H44.5V16.5" stroke-width="1"/>
+  <path pathLength="1" d="M21.3 13.5L21.3 11 M23.43 13.5L23.43 11 M25.56 13.5L25.56 11 M27.69 13.5L27.69 11 M29.82 13.5L29.82 11 M31.95 13.5L31.95 11 M34.08 13.5L34.08 11 M36.21 13.5L36.21 11 M38.34 13.5L38.34 11 M40.47 13.5L40.47 11 M42.6 13.5L42.6 11" stroke-width="0.75"/>
+  <path pathLength="1" d="M16.5 16.5C16 11 18 6.5 22 5H42C46 6.5 48 11 47.5 16.5" stroke-width="1.75"/>
+  <path pathLength="1" d="M22 5.5L22 13.5 M26 5.5L26 13.5 M30 5.5L30 13.5 M34 5.5L34 13.5 M38 5.5L38 13.5 M42 5.5L42 13.5" stroke-width="1"/>
+  <circle pathLength="1" cx="25" cy="20.5" r="1.6" stroke-width="1"/>
+  <path pathLength="1" d="M24 21.5L26 19.5" stroke-width="0.75"/>
+  <circle pathLength="1" cx="39" cy="20.5" r="1.6" stroke-width="1"/>
+  <path pathLength="1" d="M38 21.5L40 19.5" stroke-width="0.75"/>
+  <path pathLength="1" d="M27 26.5H37C38 26.5 38.5 27 38.5 28V33C38.5 34 38 34.5 37 34.5H27C26 34.5 25.5 34 25.5 33V28C25.5 27 26 26.5 27 26.5Z" stroke-width="1"/>
+  <path pathLength="1" d="M29 30.5L32 28.5L35 30.5L32 32.5Z" stroke-width="0.75"/>
+  <path pathLength="1" d="M45 27.5H47.5V35H44.4" stroke-width="1"/>
+  <circle cx="46.4" cy="29.5" r="0.7" fill="currentColor" stroke="none"/>
+  <path pathLength="1" d="M22.5 40L41.5 40 M22.62 42L41.38 42 M22.74 44L41.26 44 M22.86 46L41.14 46 M22.98 48L41.02 48 M23.1 50L40.9 50" stroke-width="0.75"/>
+  <path pathLength="1" d="M22.3 21.5L23.6 37" stroke-width="1"/>
+  <path pathLength="1" d="M29.5 57V58.5H34.5V57" stroke-width="1"/>
+  <path pathLength="1" d="M32 58.5C32 61 34.5 61.5 37 61.5S41 62 42 60.5" stroke-width="1"/>
 </svg>
