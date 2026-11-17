@@ -2,7 +2,6 @@
 (() => {
   'use strict';
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
-  const mobile = window.matchMedia('(max-width: 759px)');
   const ENDPOINT = 'api/rezervace.php';
   const NL_ENDPOINT = 'api/newsletter.php';
   // Na náhledu (GitHub Pages, lokální soubor) není PHP: formulář jen předvede úspěch, nic neodešle.
@@ -156,8 +155,22 @@
         open(null);
       })();
     } else if (bookingHash()) open(null);
-    else if (mobile.matches && !seen && !location.hash) {
-      window.setTimeout(() => { if (!document.documentElement.classList.contains('menu-open')) open(null); }, 1600);
+    else if (!seen && !location.hash) welcome();
+
+    // uvítací okno: jednou za návštěvu (sessionStorage), tlačítko Rezervovat z něj otevře rezervační okno
+    function welcome() {
+      const wl = document.getElementById('welcome');
+      if (!wl) return;
+      wl.addEventListener('click', (e) => {
+        if (e.target === wl || e.target.closest('[data-close]') || e.target.closest('[data-booking]')) wl.close();
+      });
+      wl.addEventListener('close', () => document.documentElement.classList.remove('dialog-open'));
+      window.setTimeout(() => {
+        if (dialog.open || document.documentElement.classList.contains('menu-open')) return;
+        wl.showModal();
+        document.documentElement.classList.add('dialog-open');
+        try { sessionStorage.setItem('mkb-popup', '1'); } catch { /* bez úložiště */ }
+      }, 900);
     }
 
     // validace
