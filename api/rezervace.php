@@ -31,6 +31,8 @@ $email   = field('email', 120);
 $sluzba  = field('sluzba', 120);
 $den     = field('den', 10);
 $cas     = field('cas', 40);
+$holic   = field('holic', 40);
+if (!in_array($holic, ['Je mi to jedno', 'Marcus', 'Michal'], true)) $holic = 'Je mi to jedno';
 $pozn    = mb_substr(trim((string)($_POST['poznamka'] ?? '')), 0, 1000);
 
 $chyby = [];
@@ -79,7 +81,7 @@ $headers = fn(string $replyTo) => implode("\r\n", [
 ]);
 
 $proMarcuse = "Nová rezervace z webu\n\n"
-    . "Jméno:    $jmeno\nTelefon:  $telefon\nE-mail:   $email\nSlužba:   $sluzba\nKdy:      $kdy\n"
+    . "Jméno:    $jmeno\nTelefon:  $telefon\nE-mail:   $email\nHolič:    $holic\nSlužba:   $sluzba\nKdy:      $kdy\n"
     . ($sleva !== '' ? "$sleva (kampaň č. $kampan)\n" : '')
     . ($slevaStav === false ? "Sleva:    klient přišel přes slevový odkaz, ale sleva neplatí (neplatný/prošlý odkaz nebo zvýhodněná služba)\n" : '')
     . ($pozn !== '' ? "Poznámka: $pozn\n" : '')
@@ -88,7 +90,7 @@ $ok = mail(TO, $enc("Rezervace: $jmeno, $kdy"), $proMarcuse, $headers($email));
 if (!$ok) reply(500, ['ok' => false, 'error' => 'E-mail se nepodařilo odeslat.']);
 
 $proKlienta = "Ahoj $jmeno,\n\ndíky za rezervaci v Marcus Koky Barber. Přišlo mi:\n\n"
-    . "Služba: $sluzba\nKdy:    $kdy\n"
+    . "Holič:  $holic\nSlužba: $sluzba\nKdy:    $kdy\n"
     . ($sleva !== '' ? "$sleva\n" : '')
     . "\n"
     . "Termín ti potvrdím telefonem nebo e-mailem. Kdyby se něco změnilo, zavolej na +420 732 165 547.\n\n"

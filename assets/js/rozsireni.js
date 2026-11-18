@@ -114,6 +114,28 @@
       summary();
     };
 
+    // 0 — výběr holiče: Elos má vlastní rezervační systém, ostatní jdou do formuláře
+    const pick = dialog.querySelector('#bd-pick');
+    const who = dialog.querySelector('#bd-who');
+    const showForm = (holic) => {
+      form.elements.holic.value = holic;
+      who.querySelector('b').textContent = holic;
+      who.hidden = false;
+      pick.hidden = true; form.hidden = false; done.hidden = true;
+      dialog.setAttribute('aria-labelledby', 'bd-title');
+    };
+    const showPick = () => {
+      pick.hidden = false; form.hidden = true; done.hidden = true;
+      dialog.setAttribute('aria-labelledby', 'bd-pick-title');
+      pick.querySelector('.bd-barber')?.focus({ preventScroll: true });
+    };
+    pick.addEventListener('click', (e) => {
+      const b = e.target.closest('[data-holic]');
+      if (b) { showForm(b.dataset.holic); dialog.querySelector('#bd-service').focus({ preventScroll: true }); return; }
+      if (e.target.closest('[data-elos]')) dialog.close();
+    });
+    who.querySelector('button').addEventListener('click', showPick);
+
     const open = (trigger, service) => {
       if (dialog.open) return;
       opener = trigger || null;
@@ -123,9 +145,9 @@
         if (o) serviceSelect.value = o.value;
       }
       syncService();
-      form.hidden = false; done.hidden = true;
       summary();
       dialog.showModal();
+      if (trigger?.dataset?.barber) showForm(trigger.dataset.barber); else showPick();
       document.documentElement.classList.add('dialog-open');
       try { sessionStorage.setItem('mkb-popup', '1'); } catch { /* bez úložiště */ }
     };
@@ -225,7 +247,7 @@
           if (data.get('novinky')) subscribe(data.get('email'), 'rezervace').catch(() => { /* rezervace je hlavní, odběr jen navíc */ });
         }
         dialog.querySelector('.bd-done-name').textContent = form.elements.jmeno.value.trim().split(/\s+/)[0] || 'králi';
-        dialog.querySelector('.bd-done-recap').textContent = `${sumService.textContent} · ${sumWhen.textContent}`;
+        dialog.querySelector(".bd-done-recap").textContent = `${data.get("holic") && data.get("holic") !== "Je mi to jedno" ? data.get("holic") + " · " : ""}${sumService.textContent} · ${sumWhen.textContent}`;
         const discLine = discount && selected && discountApplies(selected.value)
           ? ` Sleva ${discount.pct} % z newsletteru: ${discountPrice(Number(selected.price))} Kč místo ${selected.price} Kč.` : '';
         dialog.querySelector('.bd-done-recap').textContent += discLine && (DEMO || json?.sleva) ? ` ·${discLine}` : '';
