@@ -337,6 +337,60 @@
     });
   }
 
+  /* ---------- úvod: video z interiéru ----------
+     Soubory assets/video/hero.webm + hero.mp4 se načtou, až je rámeček vidět, a přehrávají se jen ve viditelné
+     části stránky. Při omezení pohybu (prefers-reduced-motion) se nenačte nic a zůstane poster; video jde pustit
+     tlačítkem. Když soubor chybí nebo ho prohlížeč neumí, zůstane poster s pomalým přiblížením. */
+  const media = document.querySelector('.hero-media[data-video]');
+  const video = media?.querySelector('video');
+  if (video) {
+    const toggle = media.querySelector('.hero-video-toggle');
+    const sources = [...video.querySelectorAll('source[data-src]')];
+    let loaded = false;
+    let visible = false;
+    let wanted = !reduced.matches;
+    const label = () => {
+      toggle.classList.toggle('is-paused', !wanted);
+      toggle.setAttribute('aria-label', wanted ? 'Pozastavit video' : 'Přehrát video');
+    };
+    const fail = () => { media.classList.remove('is-playing'); video.remove(); toggle.remove(); };
+    const sync = () => {
+      if (!video.isConnected) return;
+      if (!(wanted && visible)) { video.pause(); return; }
+      if (!loaded) {
+        loaded = true;
+        sources.forEach((source) => { source.src = source.dataset.src; });
+        sources[sources.length - 1]?.addEventListener('error', fail);
+        video.load();
+      }
+      video.muted = true;
+      video.play().catch((err) => { if (err.name === 'NotAllowedError') { wanted = false; label(); } });
+    };
+    video.addEventListener('playing', () => media.classList.add('is-playing'));
+    toggle.addEventListener('click', () => { wanted = !wanted; label(); sync(); });
+    reduced.addEventListener('change', (e) => { if (e.matches) { wanted = false; label(); sync(); } });
+    label();
+    toggle.hidden = false;
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver((entries) => { visible = entries[entries.length - 1].isIntersecting; sync(); }, { threshold: 0.25 }).observe(media);
+    } else { visible = true; sync(); }
+  }
+
+  /* ---------- fotka holiče: stačí vyplnit data-photo="cesta" (v sekci Holiči i ve výběru v rezervaci) ---------- */
+  document.querySelectorAll('[data-photo]').forEach((slot) => {
+    const src = slot.dataset.photo;
+    if (!src) return;
+    const img = new Image();
+    img.className = 'plate-img';
+    img.alt = slot.dataset.photoAlt || '';
+    img.loading = 'lazy';
+    img.decoding = 'async';
+    img.addEventListener('error', () => { img.remove(); slot.classList.remove('has-photo'); });
+    img.src = src;
+    slot.prepend(img);
+    slot.classList.add('has-photo');
+  });
+
   /* ---------- pás s ikonami: zdvojení obsahu pro plynulou smyčku ---------- */
   document.querySelectorAll('.marquee-track').forEach((track) => {
     track.innerHTML += track.innerHTML;

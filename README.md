@@ -19,7 +19,7 @@ nedovoluje vložení do iframe.
 ## Podklady
 
 - Fakta, ceník, reference a fotky pocházejí ze současného webu marcuskoky.cz (stav 21. 10. 2026).
-- `assets/img/`: logo vytažené ze skutečného loga (zlatá a černá varianta), fotka Marcuse a pět fotek střihů
+- `assets/img/`: logo vytažené ze skutečného loga (zlatá a černá varianta), fotka Marcuse (na webu se už nezobrazuje) a pět fotek střihů
   ze salonu. Fotky nemají barevné filtry ani ztmavující překryvy. `og.jpg` je náhled pro sdílení.
 - `assets/fonts/`: Playfair Display a Manrope, licence SIL OFL 1.1, viz `fonts.css`.
 - Texty napsal Elaris podle zadání, kód postavil Codex a výsledek doladil Claude.
@@ -56,10 +56,68 @@ Pro ostrý provoz chybí server (ukládání, e-maily, správa termínů pro Mar
   klientovi. Honeypot pole `web`, limit 5 odeslání za hodinu z jedné IP. Odesílatel `rezervace@marcuskoky.cz` musí
   hosting povolit (SPF). Na GitHub Pages PHP neběží, formulář tam jen předvede úspěch.
 - Odkaz na Termino zůstává v okně jako alternativa a jako záloha bez JavaScriptu.
-- Sekce Holiči: Marcus + dvě místa pro další holiče (fotka a text doplníme).
+- Sekce Holiči: Marcus, Michal a Elos, zatím bez fotek (viz oddíl níže).
 - Animace: nástup úvodu, ceny se načítají od nuly, ikony služeb se vykreslí, pás s ikonami, barberský pruh.
   Vše respektuje `prefers-reduced-motion`.
 - Vlastní ikony v `assets/icons/` (nakreslil Codex, náhled `assets/icons/nahled.html`).
+
+## Úvod s videem, holiči bez fotek, výběr holiče (24. 11. 2026)
+
+Úpravy podle připomínek majitele. Fotka Marcuse (`marcus-studio.jpg`) už na webu není vidět: úvod má video
+z interiéru, sekce Holiči a výběr holiče mají štítky s iniciálou, uvítací okno má snímek interiéru. Soubor
+v `assets/img/` zůstává kvůli `og.jpg` a e-mailu (`email-hero.jpg`).
+
+### Video v úvodu
+
+Soubory ve složce `assets/video/`:
+
+| Soubor | Formát |
+| --- | --- |
+| `hero.mp4` | H.264 (MP4, `faststart`), bez zvukové stopy, 30 fps, do 8 MB, smyčka 10–30 s |
+| `hero.webm` | VP9, bez zvuku, stejný střih (prohlížeč si vybere, WebM je první) |
+| `hero-poster.jpg` | jeden snímek z videa, stejný poměr stran; ukazuje se před načtením, při omezení pohybu a bez JS |
+
+- Ideál je 1080p. Současné video je na výšku 360×640 (9:16), proto běží v úzkém rámečku vedle nadpisu
+  (300–400 px na desktopu, 230–300 px na tabletu) a na mobilu jako pruh přes šířku nad textem. Přes celou šířku
+  desktopu by bylo rozmazané. Až bude video ve vyšším rozlišení, stačí vyměnit soubory; pro video na šířku uprav
+  `aspect-ratio` u `.hero-media` v `assets/css/style.css` a atributy `width`/`height` u `<video>` a posteru.
+- Převod ze zdroje:
+  `ffmpeg -i zdroj.mov -an -c:v libx264 -crf 24 -preset slow -pix_fmt yuv420p -movflags +faststart hero.mp4`,
+  `ffmpeg -i zdroj.mov -an -c:v libvpx-vp9 -crf 34 -b:v 0 hero.webm`,
+  `ffmpeg -ss 4 -i hero.mp4 -frames:v 1 -q:v 3 hero-poster.jpg`.
+- Chování (`assets/js/rozsireni.js`, blok „úvod: video z interiéru“): `<video muted loop playsinline
+  preload="metadata" poster>` má zdroje v `data-src`. Načtou se, až je rámeček vidět (IntersectionObserver),
+  video hraje jen ve viditelné části stránky a jde pozastavit tlačítkem v rohu. Atribut `autoplay` v HTML
+  záměrně není: při `prefers-reduced-motion` se nic nenačte a zůstane poster s tlačítkem Přehrát.
+- Když soubor chybí nebo ho prohlížeč nepřehraje, zůstane poster, který se pomalu přibližuje (CSS `drift`).
+
+### Holiči bez fotek a pozdější vložení fotky
+
+Místo fotky má každý holič štítek (`.barber-plate`): velká iniciála v Playfair, citát z jeho textu, Instagram
+a krátký popisek. Stejná iniciála je ve výběru holiče v rezervačním okně (`.bd-barber-pic`).
+
+Fotku vložíš jedním atributem, na obou místech stejně:
+
+```html
+<figure class="barber-photo barber-plate" data-photo="assets/img/holic-michal.jpg">
+<span class="bd-barber-pic" data-photo="assets/img/holic-michal.jpg" aria-hidden="true">M</span>
+```
+
+Skript přidá obrázek a třídu `.has-photo`; iniciála a citát se schovají, pruh s Instagramem zůstane. Když se
+fotka nenačte, vrátí se štítek. Doporučený formát: na šířku 4:3 (na mobilu se ořízne na 4:5), aspoň 1280 px,
+obličej v horní třetině. Popis pro čtečky jde doplnit atributem `data-photo-alt`.
+
+### Výběr holiče a uvítací okno
+
+- Výběr holiče: tři karty (Marcus, Michal, Elos) přijíždějí střídavě zleva a zprava (560 ms, po 100 ms za
+  sebou), „Je mi to jedno“ je menší volba pod nimi. Elos dál vede na Reservio v novém okně (`data-elos`),
+  ostatní pokračují do formuláře (`data-holic`).
+- Uvítací okno: žluté tlačítko „Zavřít ✕“ (48 px vysoké) je pevně v pravém horním rohu okna a neodjíždí
+  s obsahem. Okno se zavře i klikem mimo a klávesou Esc. V okně jsou dvě nabídky první návštěvy vedle sebe
+  (na mobilu pod sebou): střih 499 Kč místo 640 Kč a kompletka 799 Kč místo 1 120 Kč (stejně jako ceník a zbytek webu).
+- Ověřeno v headless Chromiu na 1440 a 390 px (plus 820, 1100, 1920 a nízké výšky): bez chyb v konzoli a bez
+  vodorovného posuvu, s omezením pohybu se video nenačte a karty stojí na místě. Neověřeno: Safari na iPhonu
+  (automatické spuštění videa), skutečné fotky holičů.
 
 ## Newsletter (listopad 2026)
 

@@ -27,7 +27,7 @@
 <script src="assets/js/main.js" defer>
 </script>
 <script src="assets/js/rozsireni.js" defer></script>
-<link rel="preload" as="image" href="assets/img/marcus-studio.webp" type="image/webp" fetchpriority="high">
+<link rel="preload" as="image" href="assets/video/hero-poster.jpg" fetchpriority="high">
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BarberShop", "name": "Marcus Koky Barber", "description": "Pánský barbershop v Brně v Ponávka Tower. Pánské střihy nůžkami i strojkem, fade, úprava vousů a holení s horkým ručníkem.", "image": "https://romankaxo.github.io/marcus-koky-barber/assets/img/og.jpg", "url": "https://romankaxo.github.io/marcus-koky-barber/", "telephone": "+420732165547", "email": "info@marcuskoky.cz", "address": {"@type": "PostalAddress", "streetAddress": "Bratislavská 201/14", "addressLocality": "Brno-střed-Zábrdovice", "postalCode": "602 00", "addressCountry": "CZ"}, "priceRange": "390–1120 Kč", "openingHoursSpecification": [{"@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday"], "opens": "14:00", "closes": "20:00"}, {"@type": "OpeningHoursSpecification", "dayOfWeek": ["Tuesday", "Wednesday", "Thursday", "Friday"], "opens": "09:00", "closes": "20:00"}], "sameAs": ["https://www.instagram.com/marcus_koky_barber/", "https://www.facebook.com/profile.php?id=61557123255250"], "@id": "https://romankaxo.github.io/marcus-koky-barber/#barbershop", "areaServed": {"@type": "City", "name": "Brno"}, "hasOfferCatalog": {"@type": "OfferCatalog", "name": "Ceník", "itemListElement": [{"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Klasický střih (služba od 12 let)"}, "price": "640", "priceCurrency": "CZK"}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Střih strojkem"}, "price": "540", "priceCurrency": "CZK"}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Střih dlouhých vlasů"}, "price": "860", "priceCurrency": "CZK"}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Úprava vousů HOT TOWEL"}, "price": "560", "priceCurrency": "CZK"}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Úprava vousů strojkem"}, "price": "430", "priceCurrency": "CZK"}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Holení celé tváře HOT TOWEL"}, "price": "590", "priceCurrency": "CZK"}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Klasický střih a úprava vousů HOT TOWEL"}, "price": "1120", "priceCurrency": "CZK"}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Klasický střih a úprava vousů strojkem"}, "price": "1050", "priceCurrency": "CZK"}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Střih strojkem a úprava vousů HOT TOWEL"}, "price": "1020", "priceCurrency": "CZK"}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Střih strojkem a úprava vousů strojkem"}, "price": "950", "priceCurrency": "CZK"}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Klasický střih a holení celé tváře"}, "price": "1090", "priceCurrency": "CZK"}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Střih strojkem a holení celé tváře"}, "price": "990", "priceCurrency": "CZK"}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Barvení vousů"}, "price": "220", "priceCurrency": "CZK"}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Dětský střih"}, "price": "390", "priceCurrency": "CZK"}]}, "potentialAction": {"@type": "ReserveAction", "target": "https://local.termino.eu/embed/marcus-koky-barber", "name": "Rezervovat termín online"}}</script>
 </head>
 <body>
@@ -61,11 +61,8 @@
 </header>
 <main id="obsah" tabindex="-1">
 <section class="hero" id="uvod" aria-labelledby="hero-title">
-<picture class="hero-picture">
-<source srcset="assets/img/marcus-studio.webp" type="image/webp">
-<img src="assets/img/marcus-studio.jpg" width="1920" height="839" alt="Marcus sedí v křesle ve svém barbershopu" fetchpriority="high">
-</picture>
-<div class="container hero-content">
+<div class="container hero-grid">
+<div class="hero-content">
 <p class="eyebrow">Barber · Brno · Ponávka Tower</p>
 <h1 id="hero-title">Království<br>s&nbsp;černou duší<br>a&nbsp;<em>zlatým srdcem</em>.</h1>
 <p class="hero-intro">Jsem Marcus, barber z&nbsp;Brna, a&nbsp;pánskému stříhání se věnuji už nějaký ten pátek. Nůžky, strojek, břitva a&nbsp;horký ručník – přijď, pokud chceš vypadat jako opravdový král.</p>
@@ -84,6 +81,17 @@
 </span>
 <span>Po 14:00–20:00 · Út–Pá 9:00–20:00 · So–Ne dle domluvy</span>
 </p>
+</div>
+<!-- Video v úvodu: soubory assets/video/hero.webm + hero.mp4 + hero-poster.jpg (formát viz README).
+     Spouští ho assets/js/rozsireni.js, až je vidět. Bez videa, bez JS a při omezení pohybu zůstane jen poster. -->
+<figure class="hero-media" data-video>
+<img class="hero-poster" src="assets/video/hero-poster.jpg" width="360" height="640" alt="Interiér barbershopu: dvě černo-zlatá křesla před zrcadly" fetchpriority="high">
+<video class="hero-video" muted loop playsinline preload="metadata" poster="assets/video/hero-poster.jpg" width="360" height="640" aria-label="Video z interiéru barbershopu" tabindex="-1">
+<source data-src="assets/video/hero.webm" type="video/webm">
+<source data-src="assets/video/hero.mp4" type="video/mp4">
+</video>
+<button type="button" class="hero-video-toggle" aria-label="Pozastavit video" hidden><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path class="i-pause" d="M9 6v12M15 6v12"/><path class="i-play" d="M8 5l11 7-11 7z"/></svg></button>
+</figure>
 </div>
 <div class="hero-foot container">
 <span>Marcus Koky Barber</span>
@@ -439,41 +447,47 @@
 </div>
 <div class="team-list">
 <article class="barber" data-reveal>
-<div class="barber-photo">
-<picture>
-<source srcset="assets/img/marcus-studio.webp" type="image/webp">
-<img src="assets/img/marcus-studio.jpg" width="1920" height="839" alt="Marcus v křesle ve svém barbershopu v Brně" loading="lazy">
-</picture>
-</div>
+<!-- Fotka později: doplň cestu do data-photo (např. data-photo="assets/img/holic-marcus.jpg") a monogram s citátem se schovají. -->
+<figure class="barber-photo barber-plate" data-photo="">
+<span class="plate-initial" aria-hidden="true">M</span>
+<blockquote class="plate-quote" lang="en"><p>Black soul. Golden mind. Sharp blades.</p></blockquote>
+<figcaption class="plate-foot"><a href="https://www.instagram.com/marcus_koky_barber/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".7"/></svg>@marcus_koky_barber</a><span>Zakladatel a&nbsp;majitel</span></figcaption>
+</figure>
 <div class="barber-text">
 <p class="barber-role">Barber · Brno</p>
 <h3>Marcus</h3>
-<p>Nůžky, strojek, břitva i&nbsp;horký ručník. Klasika i&nbsp;fade, ke každému individuálně a&nbsp;vždycky se šálkem dobré kávy.</p>
+<p>Barber, zakladatel a&nbsp;majitel svého černého království. Vlastní styl, vlastní pravidla a&nbsp;jasná vize. Správný střih není jen o&nbsp;vzhledu, je o&nbsp;postoji, sebevědomí a&nbsp;energii, se kterou odcházíš.</p><details class="barber-more"><summary>Celý příběh</summary><p>Barberství pro mě není jen práce. Je to řemeslo, vášeň a&nbsp;způsob, jak dát každému střihu vlastní charakter. Roky zkušeností, cit pro detail a&nbsp;neustálá chuť posouvat hranice jsou tím, co mě žene dál.</p><p>Tady se nehraje na pozlátko. Tady rozhoduje styl, kvalita a&nbsp;přístup. Nechci, abys byl jen dalším zákazníkem v&nbsp;pořadí. Chci, abys byl součástí něčeho většího. Součástí BLCK KNGDM FAMILY.</p><p><strong>Black soul. Golden mind. Sharp blades.</strong></p></details>
 <ul class="barber-tags"><li>Klasický střih</li><li>Fade</li><li>Vousy HOT TOWEL</li></ul>
 <a class="button button--yellow" href="https://local.termino.eu/embed/marcus-koky-barber" target="_blank" rel="noopener" data-booking data-barber="Marcus">Rezervovat k&nbsp;Marcusovi<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
 </div>
 </article>
-<article class="barber barber--placeholder" data-reveal>
-<div class="barber-photo">
-<div class="photo-placeholder"><img src="assets/img/emblem-gold.png" width="331" height="362" alt="" loading="lazy"><span>Fotka holiče</span></div>
-</div>
+<article class="barber" data-reveal>
+<!-- Fotka později: doplň cestu do data-photo (např. data-photo="assets/img/holic-michal.jpg") a monogram s citátem se schovají. -->
+<figure class="barber-photo barber-plate" data-photo="">
+<span class="plate-initial" aria-hidden="true">M</span>
+<blockquote class="plate-quote"><p>Moderní střihy, výrazné přechody, maximální kontrast a&nbsp;designy.</p></blockquote>
+<figcaption class="plate-foot"><a href="https://www.instagram.com/rikejmibarber/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".7"/></svg>@rikejmibarber</a><span>Rikejmibarber</span></figcaption>
+</figure>
 <div class="barber-text">
 <p class="barber-role">Barber · Brno</p>
 <h3>Michal</h3>
-<p>Sem přijde pár vět o&nbsp;holiči: v&nbsp;čem je nejlepší, jak dlouho stříhá a&nbsp;co ho baví. Text doplníme podle podkladů.</p>
-<ul class="barber-tags"><li>Specializace</li><li>Specializace</li></ul>
+<p>RIKEJMIBARBER. Je mu 18 a&nbsp;k&nbsp;barberství ho přivedly vlastní špatné zkušenosti se střihy. Moderní střihy, výrazné přechody, maximální kontrast a&nbsp;designy, s&nbsp;důrazem na detail a&nbsp;individuální přístup.</p><details class="barber-more"><summary>Celý příběh</summary><p>Chtěl jsem dělat věci jinak a&nbsp;dopřát ostatním výsledek, se kterým budou opravdu spokojení. Zakládám si na detailech, komunikaci a&nbsp;individuálním přístupu.</p><p>Barberství pro mě není jen o&nbsp;střihu, ale hlavně o&nbsp;důvěře, vztazích a&nbsp;sebevědomí. Chci, aby každý odcházel nejen s&nbsp;novým účesem, ale také s&nbsp;lepším pocitem ze sebe.</p><p>Mým cílem je neustále překonávat svoje hranice a&nbsp;jednou si vybudovat vlastní barbershop.</p></details>
+<ul class="barber-tags"><li>Moderní střihy</li><li>Výrazné přechody</li><li>Designy</li></ul>
 <a class="button button--outline" href="https://local.termino.eu/embed/marcus-koky-barber" target="_blank" rel="noopener" data-booking data-barber="Michal">Rezervovat k&nbsp;Michalovi<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
 </div>
 </article>
-<article class="barber barber--placeholder" data-reveal>
-<div class="barber-photo">
-<div class="photo-placeholder"><img src="assets/img/emblem-gold.png" width="331" height="362" alt="" loading="lazy"><span>Fotka holiče</span></div>
-</div>
+<article class="barber" data-reveal>
+<!-- Fotka později: doplň cestu do data-photo (např. data-photo="assets/img/holic-elos.jpg") a monogram s citátem se schovají. -->
+<figure class="barber-photo barber-plate" data-photo="">
+<span class="plate-initial" aria-hidden="true">E</span>
+<blockquote class="plate-quote"><p>Dobrý barber nemění jen účes. Může změnit i&nbsp;to, jak se chlap vidí.</p></blockquote>
+<figcaption class="plate-foot"><a href="https://www.instagram.com/elos_holic/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".7"/></svg>@elos_holic</a><span>Vlastní rukopis</span></figcaption>
+</figure>
 <div class="barber-text">
 <p class="barber-role">Barber · Brno</p>
 <h3>Elos</h3>
-<p>Sem přijde pár vět o&nbsp;holiči: v&nbsp;čem je nejlepší, jak dlouho stříhá a&nbsp;co ho baví. Text doplníme podle podkladů.</p>
-<ul class="barber-tags"><li>Specializace</li><li>Specializace</li></ul>
+<p>Barber s&nbsp;vlastním rukopisem. Stříhal i&nbsp;známé osobnosti z&nbsp;hudební a&nbsp;sportovní scény. Každý zákazník si u&nbsp;něj zaslouží individuální přístup a&nbsp;odchází nejen lépe ostříhaný, ale i&nbsp;o&nbsp;něco silnější.</p><details class="barber-more"><summary>Celý příběh</summary><p>Barberství pro mě není jen práce, ale vášeň, řemeslo a&nbsp;životní styl. Není jen o&nbsp;střihu a&nbsp;atmosféře, ale především o&nbsp;lidech, vztazích a&nbsp;důvěře.</p><p>Střih je vlastně jen produkt, za který si zaplatíš. To nejdůležitější je pro mě něco jiného: zvedat chlapům sebevědomí a&nbsp;pomáhat jim cítit se líp.</p><p>Protože dobrý barber nemění jen účes. Může změnit i&nbsp;to, jak se chlap vidí.</p></details>
+<ul class="barber-tags"><li>Vlastní rukopis</li><li>Individuální přístup</li></ul>
 <a class="button button--outline" href="https://eloshair.reservio.com/services" target="_blank" rel="noopener" data-elos>Rezervovat k&nbsp;Elosovi<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
 </div>
 </article>
@@ -742,12 +756,13 @@
 <button type="button" class="bd-close" data-close aria-label="Zavřít"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
 </header>
 <div class="bd-body">
-<div class="bd-barbers" role="list">
-<button type="button" class="bd-barber bd-barber--any" role="listitem" data-holic="Je mi to jedno"><span class="bd-barber-pic"><img src="assets/img/emblem-gold.png" width="331" height="362" alt=""></span><span class="bd-barber-name">Je mi to jedno<small>Kdo bude mít volno</small></span><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
-<button type="button" class="bd-barber" role="listitem" data-holic="Marcus"><span class="bd-barber-pic"><img src="assets/img/marcus-studio.jpg" width="1920" height="839" alt=""></span><span class="bd-barber-name">Marcus<small>Klasika, fade, vousy</small></span><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
-<button type="button" class="bd-barber" role="listitem" data-holic="Michal"><span class="bd-barber-pic"><img src="assets/img/emblem-gold.png" width="331" height="362" alt=""></span><span class="bd-barber-name">Michal<small>Barber</small></span><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
-<a class="bd-barber" role="listitem" href="https://eloshair.reservio.com/services" target="_blank" rel="noopener" data-elos><span class="bd-barber-pic"><img src="assets/img/emblem-gold.png" width="331" height="362" alt=""></span><span class="bd-barber-name">Elos<small>Vlastní rezervace, otevře se v&nbsp;novém okně</small></span><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
-</div>
+<!-- Tři holiči přijíždějí střídavě zleva a zprava (rozsireni.css). Fotka později: cesta do data-photo u .bd-barber-pic. -->
+<ul class="bd-barbers">
+<li><button class="bd-barber" type="button" data-holic="Marcus"><span class="bd-barber-pic" data-photo="" aria-hidden="true">M</span><span class="bd-barber-name">Marcus<small>Klasický střih, fade, vousy HOT TOWEL</small><small class="bd-barber-ig">@marcus_koky_barber</small></span><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button></li>
+<li><button class="bd-barber" type="button" data-holic="Michal"><span class="bd-barber-pic" data-photo="" aria-hidden="true">M</span><span class="bd-barber-name">Michal<small>Moderní střihy, výrazné přechody, designy</small><small class="bd-barber-ig">@rikejmibarber</small></span><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button></li>
+<li><a class="bd-barber" href="https://eloshair.reservio.com/services" target="_blank" rel="noopener" data-elos><span class="bd-barber-pic" data-photo="" aria-hidden="true">E</span><span class="bd-barber-name">Elos<small>Vlastní rezervace, otevře se v&nbsp;novém okně</small><small class="bd-barber-ig">@elos_holic</small></span><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></a></li>
+</ul>
+<button type="button" class="bd-any" data-holic="Je mi to jedno">Je mi to jedno, vezmu první volný termín<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
 </div>
 </div>
 <form class="bd-form" id="bd-form" novalidate hidden>
@@ -814,13 +829,18 @@
 </div>
 </dialog>
 <dialog class="welcome" id="welcome" aria-labelledby="wl-title" aria-describedby="wl-text">
-<picture class="wl-photo"><source srcset="assets/img/marcus-studio.webp" type="image/webp"><img src="assets/img/marcus-studio.jpg" width="1920" height="839" alt=""></picture>
+<button type="button" class="wl-close" data-close aria-label="Zavřít"><span>Zavřít</span><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+<picture class="wl-photo"><img src="assets/video/hero-poster.jpg" width="360" height="640" alt=""></picture>
 <div class="wl-body" tabindex="-1" autofocus>
-<button type="button" class="bd-close wl-close" data-close aria-label="Zavřít"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
 <p class="eyebrow">Barber · Brno · Ponávka Tower</p>
 <h2 id="wl-title">Vítej, <em>králi</em>.</h2>
 <p class="wl-text" id="wl-text">Jsem Marcus. Stříhám nůžkami i&nbsp;strojkem, vousy dělám s&nbsp;horkým ručníkem. Termín si zarezervuješ online za minutu a&nbsp;platíš až v&nbsp;salonu.</p>
-<p class="wl-perk"><b>499&nbsp;Kč</b><span>Poprvé u&nbsp;mě? Klasický střih za první návštěvu místo 640&nbsp;Kč.</span></p>
+<!-- Nabídky první návštěvy (Marcusova hlasovka 24. 11. 2026): 499 Kč střih, 799 Kč kompletka jako na zbytku webu. -->
+<p class="wl-offers-title">Poprvé u&nbsp;mě?</p>
+<ul class="wl-offers">
+<li><b>499&nbsp;Kč</b><span>První klasický střih <s>640&nbsp;Kč</s></span></li>
+<li><b>799&nbsp;Kč</b><span>První kompletka: střih a&nbsp;vousy HOT TOWEL <s>1&nbsp;120&nbsp;Kč</s></span></li>
+</ul>
 <div class="wl-actions">
 <a class="button button--yellow" href="https://local.termino.eu/embed/marcus-koky-barber" target="_blank" rel="noopener" data-booking>Rezervovat termín<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
 <button type="button" class="wl-later" data-close>Nejdřív se rozhlédnu</button>
