@@ -6,7 +6,7 @@
   const SERVICES = [
     { group: 'První návštěva', note: 'jen poprvé', items: [
       ['first-cut', 'Klasický střih', 'služba od 12 let', 499],
-      ['first-cut-beard', 'Klasický střih a úprava vousů HOT TOWEL', '', 799],
+      ['first-cut-beard', 'Klasický střih a úprava vousů HOT TOWEL', '', 777],
     ] },
     { group: 'Střih', items: [
       ['cut', 'Klasický střih', 'služba od 12 let', 640],

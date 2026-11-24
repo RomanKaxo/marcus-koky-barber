@@ -8,7 +8,7 @@
   const HOURS = { 1: [14, 20], 2: [9, 20], 3: [9, 20], 4: [9, 20], 5: [9, 20] };
   // Ceník z webu (stejný jako na rezervace.html).
   const PRICE_LIST = [
-    { group: 'První návštěva', items: [['Klasický střih (první návštěva)', 499], ['Klasický střih a úprava vousů HOT TOWEL (první návštěva)', 799]] },
+    { group: 'První návštěva', items: [['Klasický střih (první návštěva)', 499], ['Klasický střih a úprava vousů HOT TOWEL (první návštěva)', 777]] },
     { group: 'Střih', items: [['Klasický střih', 640], ['Střih strojkem', 540], ['Střih dlouhých vlasů', 860], ['Dětský střih', 390]] },
     { group: 'Vousy a holení', items: [['Úprava vousů HOT TOWEL', 560], ['Úprava vousů strojkem', 430], ['Holení celé tváře HOT TOWEL', 590], ['Barvení vousů', 220]] },
     { group: 'Full-service', items: [['Klasický střih a úprava vousů HOT TOWEL', 1120], ['Klasický střih a úprava vousů strojkem', 1050],

@@ -13,7 +13,7 @@
 
   /* ---------- rezervační okno ---------- */
   const SERVICES = [
-    { tab: 'První návštěva', items: [['Klasický střih', 499, 'první návštěva'], ['Střih + vousy HOT TOWEL', 799, 'první návštěva']] },
+    { tab: 'První návštěva', items: [['Klasický střih', 499, 'první návštěva'], ['Střih + vousy HOT TOWEL', 777, 'první návštěva']] },
     { tab: 'Střih', items: [['Klasický střih', 640, 'od 12 let'], ['Střih strojkem', 540], ['Střih dlouhých vlasů', 860], ['Dětský střih', 390]] },
     { tab: 'Vousy', items: [['Úprava vousů HOT TOWEL', 560], ['Úprava vousů strojkem', 430], ['Holení celé tváře HOT TOWEL', 590], ['Barvení vousů', 220]] },
     { tab: 'Kombinace', items: [['Klasický střih + vousy HOT TOWEL', 1120], ['Klasický střih + vousy strojkem', 1050], ['Střih strojkem + vousy HOT TOWEL', 1020], ['Střih strojkem + vousy strojkem', 950], ['Klasický střih + holení tváře', 1090], ['Střih strojkem + holení tváře', 990]] },

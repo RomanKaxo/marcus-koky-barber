@@ -114,7 +114,7 @@ obličej v horní třetině. Popis pro čtečky jde doplnit atributem `data-phot
   ostatní pokračují do formuláře (`data-holic`).
 - Uvítací okno: žluté tlačítko „Zavřít ✕“ (48 px vysoké) je pevně v pravém horním rohu okna a neodjíždí
   s obsahem. Okno se zavře i klikem mimo a klávesou Esc. V okně jsou dvě nabídky první návštěvy vedle sebe
-  (na mobilu pod sebou): střih 499 Kč místo 640 Kč a kompletka 799 Kč místo 1 120 Kč (stejně jako ceník a zbytek webu).
+  (na mobilu pod sebou): střih 499 Kč místo 640 Kč a kompletka 777 Kč místo 1 120 Kč (stejně jako ceník a zbytek webu, Marcusova hlasovka 24. 11.).
 - Ověřeno v headless Chromiu na 1440 a 390 px (plus 820, 1100, 1920 a nízké výšky): bez chyb v konzoli a bez
   vodorovného posuvu, s omezením pohybu se video nenačte a karty stojí na místě. Neověřeno: Safari na iPhonu
   (automatické spuštění videa), skutečné fotky holičů.
