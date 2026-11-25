@@ -140,7 +140,16 @@
       if (dialog.open) return;
       opener = trigger || null;
       renderDays(); renderTimes();
-      if (service) {
+      const price = trigger?.dataset?.price;
+      if (price) {
+        // položka z ceníku: vyber stejnou službu (podle ceny a skupiny) v rezervačním okně
+        const tab = trigger.dataset.tab;
+        const group = (o) => o.parentElement?.label || '';
+        const opts = [...serviceSelect.options].filter((x) => x.dataset.price === price);
+        const special = ['První návštěva', '14denní restart'].includes(tab);
+        const o = opts.find((x) => special ? group(x) === tab : !['První návštěva', '14denní restart'].includes(group(x))) || opts[0];
+        if (o) serviceSelect.value = o.value;
+      } else if (service) {
         const o = [...serviceSelect.options].find((x) => x.value.startsWith('První návštěva: Klasický střih'));
         if (o) serviceSelect.value = o.value;
       }
@@ -153,6 +162,11 @@
     };
     dialog.addEventListener('close', () => { document.documentElement.classList.remove('dialog-open'); opener?.focus?.(); });
     dialog.addEventListener('click', (e) => { if (e.target === dialog || e.target.closest('[data-close]')) dialog.close(); });
+    // položky ceníku (role=button) jdou otevřít i klávesou Enter / mezerníkem
+    document.addEventListener('keydown', (e) => {
+      const li = e.target.closest?.('li[data-booking]');
+      if (li && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); open(li, null); }
+    });
     document.addEventListener('click', (e) => {
       const link = e.target.closest('[data-booking]');
       if (!link || e.metaKey || e.ctrlKey || e.shiftKey || e.button === 1) return;
