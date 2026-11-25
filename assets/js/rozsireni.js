@@ -410,3 +410,14 @@
     track.innerHTML += track.innerHTML;
   });
 })();
+
+// Úvod: rozbalení celého příběhu BLCK KNGDM
+(() => {
+  const btn = document.querySelector('.story-toggle');
+  const box = document.getElementById('pribeh');
+  if (!btn || !box) return;
+  const set = (open) => { box.classList.toggle('is-open', open); btn.setAttribute('aria-expanded', String(open)); btn.firstChild.textContent = open ? 'Skrýt příběh' : 'Celý příběh'; };
+  btn.addEventListener('click', () => set(btn.getAttribute('aria-expanded') !== 'true'));
+  const fromHash = () => { if (location.hash === '#pribeh') { set(true); btn.scrollIntoView({ block: 'center' }); } };
+  window.addEventListener('hashchange', fromHash); fromHash();
+})();
