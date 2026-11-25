@@ -461,3 +461,26 @@ li.price-item[data-booking]:focus-visible { outline: 2px solid var(--yellow); ou
 .story-sign { margin-bottom: 26px !important; border-left: 0 !important; padding-left: 0 !important; font-size: 14px !important; letter-spacing: .04em; }
 .story-sign span { color: var(--gold); font-style: italic; }
 @media (prefers-reduced-motion: reduce) { .story, .story-inner > *, .story-plus::before, .story-plus::after { transition: none; } }
+
+/* ---------- Michalova zpětná vazba 25. 11.: holiči swipem na mobilu, newsletter v okně, menší mezera pod úvodem ---------- */
+.team-dots, .team-hint { display: none; }
+@media (max-width: 759px) {
+  .hero-content { padding-bottom: 36px; }
+  .team-list { display: flex; gap: 14px; margin-inline: calc(var(--gutter) * -1); padding-inline: var(--gutter); overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding-inline: var(--gutter); overscroll-behavior-x: contain; scrollbar-width: none; }
+  .team-list::-webkit-scrollbar { display: none; }
+  .team-list .barber { flex: 0 0 86%; align-content: start; align-items: start; gap: 22px; padding-bottom: 6px; scroll-snap-align: start; }
+  .team-list [data-reveal], .team-list[data-reveal] { opacity: 1 !important; transform: none !important; }
+  .team-list .barber-plate { min-height: 230px; }
+  .team-list .barber-text > p:not(.barber-role) { display: -webkit-box; -webkit-line-clamp: 6; -webkit-box-orient: vertical; overflow: hidden; }
+  .team-dots { display: flex; justify-content: center; gap: 8px; margin-top: 22px; }
+  .team-dots span { width: 8px; height: 8px; border-radius: 50%; background: rgba(232,196,102,.3); transition: width .3s var(--ease), background .3s; }
+  .team-dots span.is-on { width: 24px; border-radius: 4px; background: var(--gold); }
+  .team-hint { display: block; margin-top: 10px; text-align: center; color: var(--muted); font-size: 13px; letter-spacing: .04em; }
+}
+.nl-dialog { width: min(980px, calc(100% - 32px)); max-height: calc(100dvh - 32px); margin: auto; padding: 0; border: 0; background: transparent; color: var(--text); overflow: auto; }
+.nl-dialog[open] { animation: dialog-in .45s var(--ease); }
+.nl-dialog::backdrop { background: rgba(0,0,0,.78); backdrop-filter: blur(6px); }
+.nl-dialog .nl-box { background: var(--layer); }
+.nl-dialog .nl-close { position: absolute; top: 14px; right: 14px; z-index: 3; }
+@media (max-width: 759px) { .nl-dialog .nl-box { padding-top: 64px; } }
+@media (prefers-reduced-motion: reduce) { .nl-dialog[open] { animation: none; } .team-dots span { transition: none; } }

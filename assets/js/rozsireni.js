@@ -421,3 +421,54 @@
   const fromHash = () => { if (location.hash === '#pribeh') { set(true); btn.scrollIntoView({ block: 'center' }); } };
   window.addEventListener('hashchange', fromHash); fromHash();
 })();
+
+// Holiči na mobilu: tečky podle karty, na kterou je swipnuto
+(() => {
+  const list = document.getElementById('team-list');
+  const dots = document.querySelectorAll('.team-dots span');
+  if (!list || !dots.length) return;
+  const sync = () => {
+    const cards = [...list.children];
+    const x = list.scrollLeft;
+    let i = 0, best = Infinity;
+    cards.forEach((c, n) => { const d = Math.abs(c.offsetLeft - list.offsetLeft - x - parseFloat(getComputedStyle(list).paddingLeft)); if (d < best) { best = d; i = n; } });
+    dots.forEach((d, n) => d.classList.toggle('is-on', n === i));
+  };
+  list.addEventListener('scroll', () => requestAnimationFrame(sync), { passive: true });
+})();
+
+// Newsletter ve vyskakovacím okně: odkaz #novinky ho otevře; sám se ukáže jednou za 14 dní,
+// až návštěvník projde dvě třetiny stránky (nikdy přes jiné okno, nikdy hned po uvítacím okně).
+(() => {
+  const nl = document.getElementById('novinky');
+  if (!nl || typeof nl.showModal !== 'function') return;
+  const KEY = 'mkb-nl-popup';
+  const otherOpen = () => [...document.querySelectorAll('dialog[open]')].some((d) => d !== nl) || document.documentElement.classList.contains('menu-open');
+  const show = () => {
+    if (nl.open || otherOpen()) return false;
+    nl.showModal();
+    document.documentElement.classList.add('dialog-open');
+    try { localStorage.setItem(KEY, String(Date.now())); } catch { /* bez úložiště */ }
+    return true;
+  };
+  nl.addEventListener('click', (e) => { if (e.target === nl || e.target.closest('[data-close]')) nl.close(); });
+  nl.addEventListener('close', () => {
+    document.documentElement.classList.remove('dialog-open');
+    if (location.hash === '#novinky') history.replaceState(null, '', location.pathname + location.search);
+  });
+  document.addEventListener('click', (e) => {
+    const a = e.target.closest('a[href="#novinky"]');
+    if (a) { e.preventDefault(); show(); }
+  });
+  if (location.hash === '#novinky') { window.setTimeout(show, 400); return; }
+  let last = 0;
+  try { last = Number(localStorage.getItem(KEY)) || 0; } catch { /* bez úložiště */ }
+  if (Date.now() - last < 14 * 864e5) return;
+  const start = Date.now();
+  const onScroll = () => {
+    const depth = (scrollY + innerHeight) / document.documentElement.scrollHeight;
+    if (depth < 0.66 || Date.now() - start < 20000) return;
+    if (show()) removeEventListener('scroll', onScroll);
+  };
+  addEventListener('scroll', onScroll, { passive: true });
+})();
